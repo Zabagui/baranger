@@ -1,0 +1,59 @@
+#a0 { left: 10px;}
+#a1 { left: -15px;}
+#a2 { left: -40px;}
+#a3 { left: -65px;}
+#a4 { left: -90px;}
+#a5 { left: -115px;}
+#a6 { left: -140px;}
+
+/*main method*/
+ul#tngnav {
+	margin:0;
+}
+
+#tngnav li { font-size: 11px; font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif; display:inline; margin:0; padding:0; }
+#tngnav a#a0 { left: 10px;}
+#tngnav a#a1 { left: -15px;}
+#tngnav a#a2 { left: -40px;}
+#tngnav a#a3 { left: -65px;}
+#tngnav a#a4 { left: -90px;}
+#tngnav a#a5 { left: -115px;}
+#tngnav a#a6 { left: -140px;}
+
+/*inactive tab*/
+#tngnav a {
+	 float:left;
+      background:url("../img/tableft.gif") no-repeat left top;
+      margin:0;
+      padding:0 0 0 4px;
+}
+
+#tngnav a span {
+      float:left;
+      display:block;
+      background:url("../img/tabright.gif") no-repeat right top;
+      padding:5px 15px 4px 6px;
+      color:#9F9584;
+      }
+ 
+#tngnav a:hover span {
+      color:#FFF;
+      }
+
+#tngnav a:hover {
+      background-position:0% -42px;
+      }
+ 
+#tngnav a:hover span {
+      background-position:100% -42px;
+      }
+      
+#tngnav a.here {
+background-position:0% -42px;
+      }
+      
+#tngnav a.here span {
+              background-position:100% -42px;
+              color:#FFF;
+      }      
+

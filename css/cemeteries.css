@@ -1,0 +1,36 @@
+#header {
+	margin: 0 0 10px 0;
+}
+
+#cemwrapper {
+    font-size: 12px;
+  	text-align: left;
+	margin: 10px auto;
+	padding: 0px;
+	border:0;
+	width: 100%;
+}
+
+#col0, #col1, #col2 {
+	float: left;
+	width: 30%;
+	margin:5px;
+}
+
+#col1, #col2 {
+	border-left:1px solid black;
+	padding-left:10px;
+}
+
+.cemcountry {
+	padding:5px;
+}
+
+.pad3 {
+	padding: 3px;
+}
+
+.cemblock {
+	padding-left: 16px;
+}
+

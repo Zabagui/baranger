@@ -1,0 +1,28 @@
+body {
+  background: none;
+}
+
+#mast {
+  background-color: #9FBFDF;
+  background-image: -webkit-linear-gradient(to bottom, #9FBFDF 0%, #2e5d85 100%);
+  background-image: linear-gradient(to bottom, #9FBFDF 0%, #2e5d85 100%);
+  border-top: 1px solid #9FBFDF;
+}
+
+.mhead ul li {
+  background-color: #9FBFDF;
+  color: #000099;
+}
+
+.mhead li a {
+  background-color: #9FBFDF;
+  border-bottom: 1px solid #69692B;
+  border-top: 1px solid #E0E0B9;
+ /* replaced text-shadow: black 1px 1px 0px; */
+  font-weight: bold;
+  color: #000099;
+}
+  
+.mapcol {
+	width:70%;
+}

@@ -1,0 +1,127 @@
+/* calendar */
+#calHeader {
+	font-size: 14pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+#calLegend {
+	font-size: 9pt;
+	font-weight: bold;
+	margin-top: 8px;
+	padding: 4px;
+	text-align: center;
+}
+
+#calWrapper {
+	width: 100%;
+}
+
+a.calDate {
+	color: #000;
+	float: left;
+	font-size: 11pt;
+	font-weight: bold;
+}
+
+a.calMore {
+	font-size: 8pt;
+	line-height: 24px;
+	margin-left: 16px;
+}
+
+a.calEvent {
+	font-size: 8pt;
+}
+
+a.hidden {
+	background-color:silver;
+	font-style:italic;
+	padding:2px;
+}
+
+a.nothidden {
+	padding:2px;
+}
+
+div.calEvents {
+	margin-left: 16px;
+	position: relative;
+	top: -14px;
+	font-size: 8pt;
+}
+
+div.calKey {
+	margin: 8px;
+	font-weight: bold;
+}
+
+img.calIcon {
+	margin: 2px;
+	position: relative;
+	top: 2px;
+}
+
+table.calTip {
+	background-color: #fff;
+	border: 1px solid #5576BE;
+	padding: 0;
+}
+
+table.calendar {
+	background-color: #eee;
+	border: 1px solid #999;
+	margin: 4px 0px;
+}
+
+td.calDay {
+	background-color: #fff;
+	border: 1px solid #999;
+	height: 110px;
+	margin: 4px;
+	padding: 2px;
+	text-align: left;
+	vertical-align: top;
+	width: 14%;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+th.calDay {
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+td.calSkip {
+	height: 110px;
+	width: 14%;
+}
+
+td.calToday {
+	background-color:#FFF5E4;
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-bottom: 2px solid #999;
+	border-right: 2px solid #999;
+	height: 110px;
+	margin: 4px;
+	padding: 2px;
+	text-align: left;
+	vertical-align: top;
+	width: 14%;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+li.flat {
+	display: inline;
+	list-style: none;
+	margin: 0px 8px;
+}
+
+ul.flat {
+	display: inline;
+}

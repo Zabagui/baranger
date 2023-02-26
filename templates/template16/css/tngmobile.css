@@ -1,0 +1,29 @@
+body {
+  background-image: none;
+  background-color: #f0ede6;
+}
+
+.homebody {
+	background-color : #c5bcaf;
+}
+
+#mast {
+  background-color: #5e8db5;
+  background-image: -webkit-linear-gradient(to bottom, #5e8db5 0%, #2e5d85 100%);
+  background-image: linear-gradient(to bottom, #5e8db5 0%, #2e5d85 100%);
+  border-top: 1px solid #000066;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #5e8db5;
+  border-bottom: 1px solid #000066;
+  border-top: 1px solid #ddd4c7;
+}
+
+#tpage {
+	margin-top: 0px;
+}

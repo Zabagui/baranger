@@ -1,0 +1,7 @@
+﻿@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+
+.mmaintitle {font-family: 'Philosopher';font-size: 28pt;text-shadow: 0.6px 0.6px #000;color: #931813;}
+body {background-color: #fff;}
+#mast {background: #931813; background-image: linear-gradient(#931813, #f43034, #931813); border-top: 1px solid #7777777;}
+.mhead ul li {color: #931813;}
+.mhead li a, .mhead li a:hover {background-color: #f43034; border-bottom: 1px solid #aaaaaa; border-top: 1px solid #dddddd; color: #fff;}

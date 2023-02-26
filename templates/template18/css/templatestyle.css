@@ -1,0 +1,420 @@
+/* templatestyle.css for template 18 overrides to TNG genstyle.css   */
+
+/* @import url('https://fonts.googleapis.com/css?family=Dancing+Script|Dosis:400,500'); */
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/dancing-script-v24-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/dancing-script-v24-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/dancing-script-v24-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/dancing-script-v24-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/dancing-script-v24-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/dancing-script-v24-latin-regular.svg#DancingScript') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/dosis-v27-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/dosis-v27-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/dosis-v27-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/dosis-v27-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/dosis-v27-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/dosis-v27-latin-regular.svg#Dosis') format('svg'); /* Legacy iOS */
+}
+
+#tmenu {
+	display: inline-block;
+	margin-top: 30px;
+	vertical-align: top;
+}
+
+#tmenu ul{
+	display: inline-block;
+	list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#tmenu ul li {
+    float: left;
+    line-height: .5em;
+    font-size: 12pt;
+}
+
+#tmenu ul li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+	font-family: 'Dosis', sans-serif;
+	font-weight: 500;
+}
+
+#big-block-1, #big-block-3 {
+	margin: 0px;
+	background-color: #8fc1e3;
+}
+
+.homebody, .theader {
+	margin: 0px;
+	background-color: #31708E;
+}
+
+#tngcontent {
+	background-color: #f4f4f4;
+	padding: 0 20px 0;
+}
+
+.theader, .tblock, .tblock-dark, #tfooter {
+	padding: 15px 50px 20px 50px;
+}
+
+.tsubtitle, #tfooter, .tblock-dark a, .tblock-dark a:link, .tblcok-dark a:visited, #tfooter a, #tfooter a:link, #tfooter a:visited {
+	color: #eee;
+}
+
+.entry-title, .other-features h2 {
+	color: #5bc1ab;
+	font-family: 'Dosis', sans-serif;
+}
+
+.entry-header a, #big-block-3 h2 a {
+	text-decoration: none;
+}
+
+#big-block-3 h2, .other-features h2 {
+	font-family: 'Dosis', sans-serif;
+	font-size: 22px;
+}
+
+#big-block-3 {
+	color: #333;
+}
+
+.entry-content, .mainsection {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.mainsection {
+	font-size: 12pt;
+}
+
+.entry-content {
+	font-size: 11pt;
+	color: #ddd;
+}
+
+#home-search-box {
+	padding:15px;
+	background-color: #efefef;
+	color: #333;
+	border-radius: 12px;
+}
+
+#home-search-box a {
+	color: #31708E;
+}
+
+.tsubtitle {
+	font-family: 'Dosis', sans-serif;
+	font-weight: 400;
+	font-size: 13pt;
+}
+
+#tfooter a:hover, #tfooter a:active {
+	color: #FFF;
+}
+
+#thomemast {
+	display: inline-block;
+	padding-right:30px;
+}
+
+#thomemast h1 {
+	font-family: 'Dancing Script', cursive;
+	font-size: 36pt;
+	text-shadow: 1.5px 1.5px #333;
+}
+
+.quote {
+	max-width: 25%;
+	background-color: #eee;
+	opacity: .75;
+	padding: 10px;
+	border-radius: 12px;
+	font-size: 9pt;
+}
+
+.theader h1, #subfooter p, #subfooter a {
+	color: #5bc1ab;
+}
+
+.theader h1, .tblock h2, .tfooter h2, .linkcol h2 {
+	margin: 5px 0px;
+}
+
+.tblock {
+	margin:0px;
+}
+
+#big-block-2, #tfooter {
+	background-color: #31708E;
+}
+
+#tfooter {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
+
+.linkcol {
+	display:block;
+	float:left;
+	width:30%;
+	margin-right:30px;
+	font-size: 11pt;
+}
+
+.linkcol2 {
+	display:inline-block;
+	width:80%;
+}
+
+#linkarea ul {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+.fancy_list {
+	list-style: none;
+	padding-left: 0px;
+	margin-left: 0px;
+}
+
+.fancy_list li {
+  line-height: 125%;
+  padding: 0 0 5px 20px;
+  background-image: url('../img/bullet.png');
+  background-repeat: no-repeat;
+  letter-spacing: .6px;
+  font-size: 11pt;
+}
+
+.newspaper2 {
+	-webkit-column-count:4; /* Safari and Chrome */
+	column-count:4;
+	padding-top: 15px;
+}
+
+.mainsection p:first-of-type {
+	margin-top: 0;
+}
+
+.two-cols {
+	column-count:2;
+}
+
+.two-cols img {
+	float:left;
+	padding:0 20px 15px 0;
+}
+
+.other-features {
+	display: inline-block;
+	vertical-align: top;
+	padding-right: 60px;
+}
+
+/* header: heading text */
+.header, .plainheader {
+	color: #31708E;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #1d3e4e;
+}
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback, .bar, .page, .LB_closeAjaxWindow,
+.tablesaw-cell-label {
+	background-color: #31708E;
+}
+
+/* databack: background color for data areas */
+.databack, .reportcol li:hover {
+	background-color: #deebf4;
+}
+
+a.admincell:hover, a.leftlink:hover {
+	background-color: #47a28f;
+}
+
+/* sideback: background color for side and top frames */
+.admincell {
+	background-color: #31708E;
+	background-image: none;
+}
+
+.adminbody {
+	background-color: #8fc1e3;
+}
+
+.sideback {
+	background-color: #31708E;
+	background-image: none;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#8fc1e3;
+;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#31708E;
+	color:#fff;
+}
+
+.LB_window {
+	background: #deebf4;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #999;
+}
+
+.titlebox {
+	background-color: #f6f6f6;
+}
+
+ul.tngdd {
+    background-color:#eee;
+}
+
+ul.tngdd a {
+	color: #1d3e4e;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#c9f2e7;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #8fc1e3 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#999;
+	border-right-color:#999;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #444;
+	border-right:1px solid #444;
+	color: #ffffff;
+	background: #31708E url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #8fc1e3;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #F2F0EE;  
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+ul.home-menus, ul.fancy_list {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	line-height: 1.5;
+}
+
+.emailimg {
+	width: 40px;
+	height: 26px;
+	margin: 0px 8px 0px 0px;
+	float: left;
+	border: 0px;
+}
+
+.fambackground {
+	background-color: #8fc1e3;
+}
+
+@media (max-width: 1100px) {
+	.linkcol {
+		width:40%;
+	}
+	#tmenu ul{
+		margin-left:-15px;
+	}
+}
+@media (max-width: 750px) {
+	.linkcol {
+		float:none;
+		width:100%;
+	}
+	.theader, .tblock, .tblock-dark, #tfooter {
+		padding: 5px 10px 5px 10px;
+	}
+	#thomemast h1 {
+		font-size: 18pt;
+	}
+	#tmenu ul li {
+	    font-size: 9pt;
+	}
+	#tmenu {
+		margin-top:5px;
+	}
+	.tsubtitle {
+		font-size:9pt;
+	}
+	.newspaper2 {
+		-webkit-column-count:2; /* Safari and Chrome */
+		column-count:2;
+	}
+	#big-block-1 {
+		height:150px;
+	}
+}
+@media (max-width: 500px) {
+	#tmenu ul li a {
+		padding: 14px 10px;
+	}
+	#tmenu ul{
+		margin-left:-10px;
+	}
+	.two-cols {
+		column-count:1;
+	}
+	.newspaper2 {
+		-webkit-column-count:1; /* Safari and Chrome */
+		column-count:1;
+	}
+}

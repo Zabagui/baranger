@@ -1,0 +1,15 @@
+#mast {
+  background: #676037;
+  border-top: 1px solid #bdb89b;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #8a835c;
+  border-bottom: 1px solid #373007;
+  border-top: 1px solid #bdb89b;
+  text-shadow: black 1px 1px 0px;
+}

@@ -1,0 +1,1601 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<link href="css/genstyle.css" rel="stylesheet">
+	<title>Installation Instructions</title>
+<style>
+body, table {
+	font-size: 12pt;
+}
+.red {
+	color: red;
+}
+.blue {
+	color: blue;
+}
+.green {
+	color: green;
+}
+li {
+	font-size: 12pt;
+}
+
+
+</style>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/net.js"></script>
+<script type="text/javascript">
+var allvisible = 0;
+
+plus = new Image(9,9);
+plus.src = "img/tng_plus.gif";
+minus = new Image(9,9);
+minus.src = "img/tng_minus.gif";
+
+function doBackend(strParams,oTarget) {
+	var url = 'ajx_tnginstall.php';
+	var loader1 = new net.ContentLoader(url,PutMessage,null,"POST",strParams);
+	var msgDiv = document.getElementById(oTarget);
+	var msgTxt = document.createTextNode('Please wait, attempting to process...');
+	//msgDiv.appendChild(msgTxt);
+	msgDiv.innerHTML = "";
+	msgDiv.className = "blue";
+	msgDiv.appendChild(msgTxt);
+}
+
+function doFolder(foldertype,form,oTarget){
+	var strParams = "subroutine=folder&foldertype=" + foldertype + "&foldername=" + form.foldername.value + "&oldname=" + form.oldname.value + "&targetdiv=" + oTarget;
+	form.oldname.value = form.foldername.value;
+	doBackend(strParams,oTarget);
+}
+
+function doPerms(oTarget){
+	var strParams = "subroutine=perms&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+}
+
+function doDBParams(form,oTarget){
+	var strParams = "subroutine=settings" + "&database_host=" + form.database_host.value +
+		"&database_name=" + encodeURIComponent(form.database_name.value) + "&database_username=" + encodeURIComponent(form.database_username.value) +
+		"&database_password=" + encodeURIComponent(form.database_password.value) + "&database_port=" + encodeURIComponent(form.database_port.value) + 
+		"&database_socket=" + encodeURIComponent(form.database_socket.value) + "&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+	return false;
+}
+
+function doTables(form,oTarget){
+	var strParams = "subroutine=tables&targetdiv=" + oTarget;
+	for( i = 0; i < form.elements.length; i++ ) {
+		strParams = strParams + "&" + form.elements[i].name + "=" + form.elements[i].value
+	}
+	doBackend(strParams,oTarget);
+
+	return false;
+}
+
+function createUser(form,oTarget) {
+	//validate input, all fields required
+	var msgfield = document.getElementById(oTarget);
+	if(!form.newusername.value || !form.newpassword.value || !form.newrealname.value || !form.newemail.value) {
+		msgfield.innerHTML = "All fields are required. Please enter something for each field";
+		msgfield.className = "red";
+	}
+	else if( !checkEmail(form.newemail.value)) {
+		msgfield.innerHTML = "Please enter a valid email address.";
+		msgfield.className = "red";
+	}
+	else if(form.newpassword.value != form.newpassword2.value) {
+		msgfield.innerHTML = "Please enter your password the same way both times";
+		msgfield.className = "red";
+	}
+	else {
+		var strParams = "subroutine=user&username=" + encodeURIComponent(form.newusername.value) + "&password=" + encodeURIComponent(form.newpassword.value) + "&realname=" + form.newrealname.value + "&email=" + encodeURIComponent(form.newemail.value) + "&targetdiv=" + oTarget;
+		doBackend(strParams,oTarget);
+	}
+	return false;
+}
+
+function createTree(form,oTarget) {
+	//validate input, all fields required
+	var msgfield = document.getElementById(oTarget);
+	form.newtreeid.value = form.newtreeid.value.replace(/[^a-zA-Z0-9]+/g,'');
+	if(!form.newtreeid.value || !form.newtreename.value) {
+		msgfield.innerHTML = "All fields are required. Please enter something for each field";
+		msgfield.className = "red";
+	}
+	else {
+		var strParams = "subroutine=tree&newtreeid=" + form.newtreeid.value + "&newtreename=" + form.newtreename.value + "&targetdiv=" + oTarget;
+		doBackend(strParams,oTarget);
+	}
+	return false;
+}
+
+function setLang(form,oTarget) {
+	var msgfield = document.getElementById(oTarget);
+	var newlanguage = form.newlanguage.options[form.newlanguage.selectedIndex].value;
+	var strParams = "subroutine=charset&newcharset=" + form.newcharset.value + "&newlanguage=" + newlanguage + "&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+
+	return false;
+}
+
+function setTemplate(form,oTarget) {
+	var msgfield = document.getElementById(oTarget);
+	var newtemplate = form.newtemplate.options[form.newtemplate.selectedIndex].value;
+	var strParams = "subroutine=template&" + "&newtemplate=" + newtemplate + "&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+
+	return false;
+}
+
+function matchCharset(lang,csfield) {
+	var langname = lang.options[lang.selectedIndex].text;
+	if(langname.indexOf('UTF-8') >= 0)
+		document.getElementById(csfield).value = 'UTF-8';
+	else if(langname.indexOf('ISO-8859-1') >= 0)
+		document.getElementById(csfield).value = 'ISO-8859-1';
+	else if(langname.indexOf('ISO-8859-2') >= 0)
+		document.getElementById(csfield).value = 'ISO-8859-2';
+}
+
+var languages = new Object();
+languages["English-UTF8"] = "English (UTF-8)";
+languages["English"] = "English (ISO-8859-1)";
+languages["Afrikaans-UTF8"] = "Afrikaans (UTF-8)";
+languages["Afrikaans"] = "Afrikaans (ISO-8859-1)";
+languages["Arabic-UTF8"] = "Arabic (UTF-8)";
+languages["Chinese-UTF8"] = "Chinese (UTF-8)";
+languages["PortugueseBR-UTF8"] = "Brazilian Portuguese (UTF-8)";
+languages["PortugueseBR"] = "Brazilian Portuguese (ISO-8859-1)";
+languages["Czech-UTF8"] = "Czech (UTF-8)";
+languages["Czech"] = "Czech (ISO-8859-2)";
+languages["Croatian-UTF8"] = "Croatian (UTF-8)";
+languages["Croatian"] = "Croatian (ISO-8859-1)";
+languages["Danish-UTF8"] = "Danish (UTF-8)";
+languages["Danish"] = "Danish (ISO-8859-1)";
+languages["Dutch-UTF8"] = "Dutch (UTF-8)";
+languages["Dutch"] = "Dutch (ISO-8859-1)";
+languages["Finnish-UTF8"] = "Finnish (UTF-8)";
+languages["Finnish"] = "Finnish (ISO-8859-1)";
+languages["French-UTF8"] = "French (UTF-8)";
+languages["French"] = "French (ISO-8859-1)";
+languages["FrenchQC-UTF8"] = "French (Quebec) (UTF-8)";
+languages["German-UTF8"] = "German (UTF-8)";
+languages["German"] = "German (ISO-8859-1)";
+languages["Greek-UTF8"] = "Greek (UTF-8)";
+languages["Hungarian-UTF8"] = "Hungarian (UTF-8)";
+languages["Icelandic-UTF8"] = "Icelandic (UTF-8)";
+languages["Icelandic"] = "Icelandic (ISO-8859-1)";
+languages["Italian-UTF8"] = "Italian (UTF-8)";
+languages["Italian"] = "Italian (ISO-8859-1)";
+languages["Norwegian-UTF8"] = "Norwegian (UTF-8)";
+languages["Norwegian"] = "Norwegian (ISO-8859-1)";
+languages["Polish-UTF8"] = "Polish (UTF-8)";
+languages["Polish"] = "Polish (ISO-8859-2)";
+languages["Romanian-UTF8"] = "Romanian (UTF-8)";
+languages["Romanian"] = "Romanian (ISO-8859-1)";
+languages["Russian-UTF8"] = "Russian (UTF-8)";
+languages["Serbian-UTF8"] = "Serbian (UTF-8)";
+languages["Serbian"] = "Serbian (ISO-8859-1)";
+languages["SerbianCyrillic-UTF8"] = "Serbian Cyrillic (UTF-8)";
+languages["Slovak-UTF8"] = "Slovak (UTF-8)";
+languages["Slovak"] = "Slovak (ISO-8859-1)";
+languages["Spanish-UTF8"] = "Spanish (UTF-8)";
+languages["Spanish"] = "Spanish (ISO-8859-1)";
+languages["Swedish-UTF8"] = "Swedish (UTF-8)";
+languages["Swedish"] = "Swedish (ISO-8859-1)";
+languages["Turkish-UTF8"] = "Turkish (UTF-8)";
+
+function showLanguageOptions() {
+	//languages.each(function(item) {
+		//document.write('<option value="' + item + '">' + languages[item] + '</option>\n');
+	//});
+	for(var i in languages) {
+		document.write('<option value="' + i + '">' + languages[i] + '</option>\n');
+	}
+}
+
+function getTextNodes(node) {
+	var type1ctr = 0;
+	var textNodes = new Array();
+
+	for(var i = 0; i < node.childNodes.length; i++ ) {
+		if( node.childNodes[i].nodeType == "1" ) {
+			textNodes[type1ctr] = node.childNodes[i];
+			type1ctr++;
+		}
+	}
+
+	return textNodes;
+}
+
+function PutMessage(){
+	var xmlDoc = this.req.responseXML.documentElement;
+	var xStuff = xmlDoc.getElementsByTagName('installElement')[0];
+	var installNodes = getTextNodes(xStuff);
+
+	var divName = installNodes[0].firstChild.nodeValue;
+	var newclass = installNodes[1].firstChild.nodeValue;
+
+	var msgDiv = document.getElementById(divName);
+	var xMsg = xmlDoc.getElementsByTagName('message')[0];
+	var msgNodes = getTextNodes(xMsg);
+	var msgTxt = document.createTextNode(msgNodes[0].firstChild.nodeValue);
+
+	msgDiv.className = newclass;
+	msgDiv.innerHTML = "";
+	msgDiv.appendChild(msgTxt);
+}           
+
+function toggleItem( itemImage, itemContents ) {
+	if( itemContents.style.display == 'none' ) {
+		itemContents.style.display = '';
+		document.images[itemImage].src = minus.src;
+	}
+	else {
+		itemContents.style.display = 'none';
+		document.images[itemImage].src = plus.src;
+	}
+}
+
+function showAll() {
+	var item;
+	
+	for( var i = 0; i < 27; i++ ) {
+		item = "s" + i ;
+		document.getElementById(item).style.display = '';
+	}
+	allvisible = 1;
+}
+
+function hideAll() {
+	var item;
+	
+	for( var i = 0; i < 27; i++ ) {
+		item = "s" + i ;
+		document.getElementById(item).style.display = 'none';
+	}
+	allvisible = 0;
+}
+
+function startAt(step) {
+	hideAll();
+	document.getElementById(step).style.display='';
+}
+
+function nextStep(current) {
+	var curstep = "s" + current;
+	var nxtstep = "s" + (parseInt(current) + 1);
+	
+	if( allvisible )
+		hideAll();
+	else
+		document.getElementById(curstep).style.display='none';
+	document.getElementById(nxtstep).style.display='';
+}
+
+function prevStep(current) {
+	var curstep = "s" + current;
+	var prvstep = "s" + (parseInt(current) - 1);
+	
+	if( allvisible )
+		hideAll();
+	else
+		document.getElementById(curstep).style.display='none';
+	document.getElementById(prvstep).style.display='';
+}
+
+function toc(disp) {
+	document.getElementById("toc").style.display = disp;
+}
+</script>
+</head>
+
+<body>
+<h1>TNG Installation Instructions</h1>
+
+<table style="height:100%">
+	<tr>
+		<td width="250" valign="top" style="background-color:#f9f9f9; border:1px solid silver; padding:5px">
+			<ul style="list-style: none; margin-left: 0px; padding-left: 0px;">
+			<li><p><a href="javascript: startAt('s0');"><strong>Welcome / Begin Installation</strong></a></p></li>
+			<li><a href="javascript: startAt('s1');"><strong>More Information</strong></a></li>
+			<li><img src="img/tng_plus.gif" name="plus1" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus1',document.getElementById('list1'));"> <a href="javascript: startAt('s1');"><strong>Files</strong></a>
+				<ol style="display:none;" id="list1">
+				<li><a href="javascript: startAt('s1');">Extract Files</a></li>
+				<li><a href="javascript: startAt('s2');">Connect to Your Remote Web Site</a></li>
+				<li><a href="javascript: startAt('s3');">Setting up Your Remote Environment</a></li>
+				<li><a href="javascript: startAt('s4');">Uploading Files to Your Site</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus2" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus2',document.getElementById('list2'));"> <a href="javascript: startAt('s5');"><strong>Permissions</strong></a>
+				<ol style="display:none;" id="list2">
+				<li><a href="javascript: startAt('s5');">Explanation of "Permissions"</a></li>
+				<li><a href="javascript: startAt('s6');">Setting Permissions</a></li>
+				<li><a href="javascript: startAt('s7');">Advanced Settings</a></li>
+				</ol>
+			</li>
+			<li><img src="img/spacer.gif" width="9" height="9" border="0" alt=""> <a href="javascript: startAt('s8');"><strong>Folders</strong></a></li>
+			<li><img src="img/spacer.gif" width="9" height="9" border="0" alt=""> <a href="javascript: startAt('s9');"><strong>Languages & Character Sets</strong></a></li>
+			<li><img src="img/tng_plus.gif" name="plus5" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus5',document.getElementById('list5'));"> <a href="javascript: startAt('s10');"><strong>Database Tables</strong></a>
+				<ol style="display:none;" id="list5">
+				<li><a href="javascript: startAt('s10');">Establish a Database Connection</a></li>
+				<li><a href="javascript: startAt('s11');">Create the Database Tables</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus6" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus6',document.getElementById('list6'));"> <a href="javascript: startAt('s12');"><strong>Other Settings</strong></a>
+				<ol style="display:none;" id="list6">
+				<li><a href="javascript: startAt('s12');">General Settings</a></li>
+				<li><a href="javascript: startAt('s13');">Chart, Import, Log and Map settings</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus7" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus7',document.getElementById('list7'));"> <a href="javascript: startAt('s14');"><strong>Your Data</strong></a>
+				<ol style="display:none;" id="list7">
+				<li><a href="javascript: startAt('s14');">Setting up Users</a></li>
+				<li><a href="javascript: startAt('s15');">Setting up Trees</a></li>
+				<li><a href="javascript: startAt('s16');">Importing a GEDCOM</a></li>
+				<li><a href="javascript: startAt('s17');">Custom Event Types</a></li>
+				<li><a href="javascript: startAt('s18');">Manual Data Entry</a></li>
+				<li><a href="javascript: startAt('s19');">Secondary Processes</a></li>
+				<li><a href="javascript: startAt('s20');">Media (Photos, Histories, Headstones, etc.)</a></li>
+				<li><a href="javascript: startAt('s21');">Utilities: Backup/Optimize/Restore</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus8" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus8',document.getElementById('list8'));"> <a href="javascript: startAt('s22');"><strong>Customizing Your TNG Pages</strong></a>
+				<ol style="display:none;" id="list8">
+				<li><a href="javascript: startAt('s22');">Templates</a></li>
+				<li><a href="javascript: startAt('s23');">Style Sheets</a></li>
+				<li><a href="javascript: startAt('s24');">Header, Footer and "Meta" Files</a></li>
+				<li><a href="javascript: startAt('s25');">Home Page</a></li>
+				</ol>
+			</li>
+			<li><img src="img/spacer.gif" width="9" height="9" border="0" alt=""> <a href="javascript: startAt('s26');"><strong>Final Notes</strong></a><br /></li>
+			</ul>
+
+			<p style="font-size:10pt"><a href="javascript: showAll();">Single-page guide (show everything at once)</a> | <a href="javascript: hideAll();startAt('s0');">Hide all</a></p>
+
+			<span style="font-size:10pt">TNG Support: <a href="mailto:darrin@lythgoes.net">darrin@lythgoes.net</a><br />
+			TNG Forum: <a href="https://tng.community" target="_blank">https://tng.community</a><br />
+			TNG Wiki: <a href="https://tng.lythgoes.net/wiki" target="_blank">https://tng.lythgoes.net/wiki</a><br />
+			TNG info: <a href="https://tngsitebuilding.com" target="_blank">https://www.tngsitebuilding.com</a><br />
+			PHP info: <a href="https://php.net" target="_blank">https://www.php.net</a><br/>
+			MySQL info: <a href="https://mysql.com" target="_blank">https://www.mysql.com</a><br /><br />
+			Product Updates: <br /><a href="mailto:tngusers-subscribe@lythgoes.net">tngusers-subscribe@lythgoes.net</a><br />
+			User Discussion: <br /><a href="mailto:tngusers2-subscribe@lythgoes.net">tngusers2-subscribe@lythgoes.net</a><br /><br />
+			<a href="https://lythgoes.net/mailman/listinfo/tngusers2_lythgoes.net">Discussion List Options</a><br />
+			<a href="https://lythgoes.net/pipermail/tngusers2_lythgoes.net/">Discussion List Archives</a><br />
+			</span>
+		</td>
+		<td width="10">&nbsp;</td>
+		<td valign="top">
+			<ul style="list-style-type: none; margin-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; padding: 0;">
+			<li style="display:'';" id="s0">
+
+			<h2>Welcome to the TNG installation guide!</h2>
+
+			<div id="google_translate_element"></div><script type="text/javascript">
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+			}
+			</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+			<p><strong>IMPORTANT:</strong> This is the <strong>FULL INSTALLATION</strong> guide. If you are upgrading an existing installation, please exit this page immediately and refer	instead to the readme file that came with your upgrade!</p>
+
+			<h2>Begin Here</h2>
+
+			<p>Please complete these steps IN ORDER. If you stop part way and come back later, you can start again where you left off (if you start over from the beginning and permissions cannot be set on some files, that's OK). If you have questions, please look over at the corresponding steps in the <a href="javascript: startAt('s1');">More Information</a> section.</p>
+			<ol>
+				<li><p><b>Upload or copy all files and folders from the TNG zip file</b> to the location on your web site where you plan
+					to run TNG. This can be the root folder or any subfolder (Note: The "root" folder is where your home page lives. It may be named "public_html" or "www".</p>
+				</li>
+
+				<li><p>If you were viewing this guide on your home computer, close the page now and browse to it on your website instead (for example, "https://www.mysite.com/readme.html"). 
+					<b>Use a browser, not an FTP program!</b> If you need to view this page in another language, you will see an option for that when you view it from your site.</p></li>
+
+				<li><p><b>Set permissions:</b><br/>
+					Some files and folders need to be made writeable. If you've done this before and have already completed step 4 below, you may see a message saying that the permissions on those folders can't be renamed. That's OK. :)
+					<table>
+					  <tr>
+					    <td valign="top">
+							<form action="setperms" method="get" style="margin:0px">
+							<input name="perms" type="button" value="Set Permissions" onclick="doPerms('permMsgEx')">
+							</form>
+						</td>
+					    <td valign="top" id="permMsgEx">&nbsp;</td>
+					  </tr>
+					</table></p>
+				</li>
+
+				<li><p><b>Rename two folders:</b><br/>
+					For security reasons, we recommend you choose different names for the GEDCOM and Backups folders. If you've completed this step before, you'll get an error here. Don't worry, just keep going.
+					<table>
+						<tr>
+							<td><span class="normal">Backups Folder:</span></td>
+							<td>
+								<form action="" method="get" style="margin:0px" name="backupsfrmEx" id="backupsfrmEx" onsubmit="if( document.backupsfrmEx.foldername.value != '' ) {doFolder('backuppath',document.backupsfrmEx,'buFolderMsgEx');} return false;">
+								<input type="text" value="backups" name="foldername" size="30"><input type="hidden" value="backups" name="oldname"/>
+								<input type="submit" value="Rename Folder"/>
+								</form>
+							</td>
+						    <td>
+								<div id="buFolderMsgEx"></div>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="normal">GEDCOM Folder:</span></td>
+							<td>
+								<form action="" method="get" style="margin:0px" name="gedcomfrmEx" id="gedcomfrmEx" onsubmit="if( document.gedcomfrmEx.foldername.value != '' ) {doFolder('gedpath',document.gedcomfrmEx,'gedFolderMsgEx');} return false;">
+								<input type="text" value="gedcom" name="foldername" size="30"><input type="hidden" value="gedcom" name="oldname"/>
+								<input type="submit" value="Rename Folder"/>
+								</form>
+							</td>
+						    <td>
+								<div id="gedFolderMsgEx"></div>
+							</td>
+						</tr>
+					</table>
+					</p>
+				</li>
+
+				<li><p><b>Choose your language and character set:</b><br/>
+					If the choices you see are what you want, then you don't need to do anything here. If your language includes a lot of special characters, choose the UTF-8 variant.
+					<form action="#" onsubmit="return setLang(this,'langMsg');">
+					<table class="normal">
+						<tr>
+							<td>Language:</td>
+							<td>
+								<select name="newlanguage" onchange="matchCharset(this,'newcharset1');">
+									<script type="text/javascript">showLanguageOptions();</script>
+								</select>
+								<input type="hidden" name="newcharset" id="newcharset1" value="UTF-8"/>
+							</td>
+						</tr>
+						<tr><td><input name="setlang" type="submit" value="Save"></td></tr>
+						<tr><td id="langMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Establish a connection to your database:</b><br/>
+					If you don't know this information, ask your web host. They may want you to create the database yourself, but they can show you how. Most people will not need to enter anything for the Port or Socket. Note: If you are creating your database and the database user, make sure your database user is granted ALL rights to the database before completing this step.
+					<form action="setdbparams" method="get" style="margin:0px" name="dbparamsfrmEx" onsubmit="return doDBParams(document.dbparamsfrmEx,'dbMsgEx');">
+					<table>
+						<tr><td><span class="normal">Host Name:</span></td><td><input type="text" value="localhost" name="database_host" size="20"></td></tr>
+						<tr><td><span class="normal">Database Name:</span></td><td><input type="text" value="" name="database_name" size="20"></td></tr>
+						<tr><td><span class="normal">Database Username:</span></td><td><input type="text" value="" name="database_username" size="20"></td></tr>
+						<tr><td><span class="normal">Database Password:</span></td><td><input type="text" value="" name="database_password" size="20"></td></tr>
+						<tr><td><span class="normal">Database Port:</span></td><td><input type="text" value="" name="database_port" size="20"> (leave blank for default)</td></tr>
+						<tr><td><span class="normal">Database Socket:</span></td><td><input type="text" value="" name="database_socket" size="20"> (leave blank for default)</td></tr>
+						<tr>
+							<td><input name="dbparams" type="submit" value="Save and Verify"/></td>
+						    <td id="dbMsgEx"></td>
+						</tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Create the database tables:</b><br/>
+					This uses default table names with a "tng_" prefix. If you want to use a different prefix, enter it below. If you're using UTF-8 as your character set, you should set the collation to utf8_general_ci, utf8_unicode_ci or similar. If you're not using UTF-8, latin_swedish_ci is a common choice. If you're not sure,
+					<a href="https://www.google.com/search?q=what+mysql+database+collation+should+i+use" target="_blank">look here</a>, or
+					blank out the box below to use the default assigned to your database by your host.
+					<form action="createtables" method="get" style="margin:0px" name="tablesfrm">
+					<table class="normal">
+						<tr><td>Table Prefix:</td><td><input type="text" name="table_prefix" id="table_prefix1" value="tng_"/></td></tr>
+						<tr><td>Database Collation:</td><td><input type="text" name="collation" id="collation1" value="utf8_general_ci"/> (leave blank to use your database's default collation)</td></tr>
+						<tr>
+							<td><input name="dbparams" type="button" value="Save and Create" onclick="doTables(document.tablesfrm,'tableMsgEx')"></td>
+						    <td id="tableMsgEx" colspan="2"></td>
+						</tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Create a user for yourself:</b><br/>
+				All fields are required. More information about this user can be entered later.
+					<form action="#" onsubmit="return createUser(this,'userMsg');">
+					<table class="normal">
+						<tr><td>Username:</td><td><input type="text" name="newusername" value=""/></td></tr>
+						<tr><td>Password:</td><td><input type="password" name="newpassword" value=""/></td></tr>
+						<tr><td>Password again:</td><td><input type="password" name="newpassword2" value=""/></td></tr>
+						<tr><td>Your real name:</td><td><input type="text" name="newrealname" value=""/></td></tr>
+						<tr><td>Your email:</td><td><input type="text" name="newemail" value=""/></td></tr>
+						<tr><td><input name="usercreate" type="submit" value="Create User"></td></tr>
+						<tr><td id="userMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Create a "tree" (a container) for your genealogy:</b><br/>
+				Both fields are required. More information about this tree can be entered later. You can create more trees later if necessary.
+					<form action="#" onsubmit="return createTree(this,'treeMsg');">
+					<table class="normal">
+						<tr><td>Tree ID:</td><td><input type="text" name="newtreeid" value="tree1"/>  (should be short, alphanumeric only, no spaces)</td></tr>
+						<tr><td>Tree Name:</td><td><input type="text" name="newtreename" value="My Genealogy"/></td></tr>
+						<tr><td><input name="treecreate" type="submit" value="Create Tree"></td></tr>
+						<tr><td id="treeMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Select a template (or theme)</b>:<br/>
+				This is optional (if you like plain vanilla or plan to build your own design from scratch). Otherwise, see the choices at <a href="https://tngsitebuilding.com/templates.php" target="_blank">https://tngsitebuilding.com/templates.php</a>). You may change the template again later from Admin/Setup/Template Settings.
+					<form action="#" onsubmit="return setTemplate(this,'templateMsg');">
+					<table class="normal">
+						<tr>
+							<td>Template Number:</td>
+							<td>
+								<select name="newtemplate">
+									<option value=""></option>
+									<option value="21">21</option>
+									<option value="20">20</option>
+									<option value="19">19</option>
+									<option value="18">18</option>
+									<option value="17">17</option>
+									<option value="16">16</option>
+									<option value="15">15</option>
+									<option value="14">14</option>
+									<option value="13">13</option>
+		 							<option value="12">12</option>
+									<option value="11">11</option>
+									<option value="10">10</option>
+									<option value="9">9</option>
+									<option value="8">8</option>
+									<option value="7">7</option>
+									<option value="6">6</option>
+									<option value="5">5</option>
+									<option value="4">4</option>
+									<option value="3">3</option>
+									<option value="2">2</option>
+									<option value="1">1</option>
+								</select>
+							</td>
+						</tr>
+						<tr><td><input name="tempselect" type="submit" value="Select Template"></td></tr>
+						<tr><td id="templateMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+			</ol>
+
+			<p>TNG is now installed and ready to use! Before you dive in, you might benefit by visiting the
+				<a href="javascript: startAt('s1');">More Information</a> section and reviewing the following topics:</p>
+				<ul style="list-style:disc">
+					<li><a href="javascript: startAt('s12');"><strong>Other Settings</strong></a></li>
+					<li><a href="javascript: startAt('s14');"><strong>Your Data</strong></a></li>
+					<li><a href="javascript: startAt('s22');"><strong>Customizing Your TNG Pages</strong></a></li>
+					<li><a href="javascript: startAt('s26');"><strong>Final Notes</strong></a></li>
+				</ul>
+			<p>You might also want to read the <a href="https://tng.lythgoes.net/wiki/index.php?title=Category:Getting_Started" target="_blank">Getting Started</a> articles on the TNG Wiki for additional information.</p>
+
+			<p>&gt; Go to your <a href="index.php">home page</a></p>
+			<p>&gt; Go to the <a href="admin.php">Admin menu</a></p><br/><br/>
+
+			</li>
+
+			<li style="display:none;" id="s1">
+			<h2>More Information</h2>
+
+			<p>This section describes the basic installation in more detail. 
+
+			<h3>Files</h3>
+
+			<p><strong>Step 1: Extract Files</strong></p>
+
+			<p>The file you downloaded is a <b>zip</b> file, which means it actually contains quite a few files all "zipped up"
+			together. Please find this file and unzip or <b>extract</b> the included files to a new folder or directory (name doesn't matter)
+			on the hard drive of your local computer. Your operating system may be able to handle this operation, but
+			if not, there are several specialized utilities can find on the Internet to do this job for you.
+			A few you might look at are <a href="https://www.winzip.com" target="_blank">WinZip</a> or
+			<a href="https://www.pkzip.com" target="_blank">PKZip</a> for Windows, or
+			<a href="https://www.maczipit.com/" target="_blank">ZipIt</a> or <a href="https://www.stuffit.com" target="_blank">StuffIt</a> for Mac.</p>
+
+			<p>Some files should extract into subfolders (for example, "css", "img", "js", "languages", and various media-related folders, among others). If you don't see any subfolders after performing the extraction, please delete the files you extracted and perform the extraction process again
+				with different options.</p>
+
+
+			<a href="javascript: nextStep(1);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s2">
+			<h3>Files</h3>
+
+			<p><strong>Step 2: Connect to Your Remote Web Site</strong></p>
+
+			<p>Connect to the remote web site where you plan to install TNG. This could be done using a
+			control panel <b>file manager</b> shown to you by your hosting provider, or using an <b>FTP program</b>
+			(FTP stands for "File Transfer Protocol"). If you use the FTP method, you will need to know your
+			FTP host name, username and password. </p>
+
+			<p>Once you get to your site, navigate to the folder where your site's home page resides.
+			From here on, we will refer to this folder as the <b>root</b> folder (even though it probably
+			isn't called that). If you're setting up a new site, the folder might be called "www", and your
+			home page will likely be called "index.html", "index.htm" or "default.htm.</p>
+
+			<a href="javascript: prevStep(2);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(2);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s3">
+			<h3>Files</h3>
+
+			<p><strong>Step 3: Setting up Your Remote Environment</strong></p>
+
+			<p>Now that you've found your <b>root</b> folder, you need to decide whether you want your web address to
+			point directly to your TNG installation, or if you want to keep a separate home page. </p>
+
+			<p>If you want your address (ie, https://www.yoursite.com) to take you directly to your genealogy,
+			you will need to delete any existing home page or plan to merge it with TNG's home page, which is called "index.php".
+			You will be installing TNG in the root folder, so
+			you can then skip the rest of this step. For you, the <b>root</b> folder and the <b>genealogy</b> folder will
+			be the same.</p>
+
+			<p>If you plan to set up a larger environment of which genealogy
+			is just one section, you might want to create a subfolder on your site to hold your TNG files. You can name this folder
+			anything you'd like, but we will refer to it from here on as the <b>genealogy</b> folder.</p>
+
+			<a href="javascript: prevStep(3);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(3);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s4">
+			<h3>Files</h3>
+
+			<p><strong>Step 4: Uploading Files to Your Site</strong></p>
+
+			<p>Using an FTP program or an online file manager, upload all the extracted TNG files from your local computer to your remote site, putting all files
+			in their respective folders. If the folders cannot be uploaded as a group, create the folders on your site first,
+			then upload the files within those folders to the corresponding locations. All files not in a subfolder should go in your <b>genealogy</b> folder. Remember,
+			the "genealogy" folder is just whichever location you choose to hold your TNG files. It does not have to be named "genealogy".</p>
+
+			<p>Note: Some hosting providers might allow you to upload the zip file and extract it there on your remote site. If your online file
+			manager will only let you upload a few files at a time, uploading the zip file would save you a lot of time. </p>
+
+			<p><strong>IMPORTANT:</strong> If you are viewing this "readme" page on your home computer, finish this step and then
+			load the readme.html page from your remote site instead (for example, "https://www.mysite.com/readme.html"). 
+			<b>Use a browser, not an FTP program!</b> This will make the rest of the installation much easier.</p>
+
+			<a href="javascript: prevStep(4);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(4);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s5">
+			<h3>Permissions</h3>
+
+			<p><strong>Step 1: Explanation of "Permissions"</strong></p>
+
+			<p>You will now be asked to set the "permissions" on some files and folders. If you have a
+			good understanding of permissions, please feel free to skip over this explanation to the next step.
+			Otherwise, please read this. You may be able to set your permissions with the click of a single
+			button in the next step, but you will still benefit from this explanation.</p>
+
+			<p>So what are permissions? Permissions dictate who can do what with which files. In other words,
+			you can say who has "permission" to write to or read from a certain file. TNG requires that everyone
+			be able to write to some files and folders, so we will need to set those permissions accordingly. </p>
+
+			<p>Some people like to refer to these permissions as a three-digit number. Others prefer a string of "rwx" characters,
+			and still others just speak of "read, write and execute". When you are setting permissions, you may
+			encounter any of these three methods.</p>
+
+			<p>With each permission you set, you are granting rights to three different entities: the "owner" (that's you),
+			the "group", and the "world" (includes all visitors to your site, even you). That's why permissions
+			always come in groups of three.</p>
+
+			<p>If you follow the number method, each number represents a sum of read, write and execute for the
+			different entities. Read = 4, Write = 2 and Execute = 1, so if we tell you to set a file to "664",
+			it means that the owner and group will have Read and Write permissions (4+2), the world will have only
+			Read permissions (4), and no one will have Execute permissions.</p>
+
+			<p>Using the "rwx" method, 664 would then be represented as rw-rw-r-- (the "-" character means that a
+			permission is omitted).</p>
+
+			<p>Note: Mac OS X users could use the DonationWare software called BatChmod (available at
+			<a href="https://www.versiontracker.com" target="_blank">VersionTracker.com</a> or
+			<a href="https://www.macupdate.com" target="_blank">MacUpdate.com</a>) or Fetch (available at <a href="https://fetchsoftworks.com/fetch/download/">Fetchsoftworks.com</a>) to do the permissions settings in a
+			user-friendly environment.</p>
+
+			<p>For more information, please see the TNG Wiki article <a href="https://tng.lythgoes.net/wiki/index.php?title=Permissions_Explained" target="_blank">Permissions Explained</a>.</p>
+
+			<a href="javascript: prevStep(5);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(5);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s6">
+			<h3>Permissions</h3>
+
+			<p><strong>Step 2: Setting Permissions</strong></p>
+
+			<p>If you are viewing this page from your web site, you may be able to set all required permissions by
+			clicking this button (go ahead and try it):</p>
+
+			<table>
+			  <tr>
+			    <td valign="top">
+					<form action="setperms" method="get" style="margin:0px">
+					<input name="perms" type="button" value="Set Permissions" onclick="doPerms('permMsg')">
+					</form>
+				</td>
+			    <td valign="top" id="permMsg">&nbsp;</td>
+			  </tr>
+			</table>
+
+			<p>If that operation was not successful, please read the following:</p>
+
+			<p>Within your <b>genealogy</b> folder, find the files <b>adminlog.txt, config.php, genlog.txt, importconfig.php, logconfig.php, mapconfig.php, pedconfig.php, subroot.php
+			and whatsnew.txt</b> and give them all <b>Read/Write</b> permissions (666, or rw-rw-rw-)
+			using your file manager or FTP program. Each
+			FTP program or file manager is different in the method used to set permissions, so please ask your
+			hosting provider or read the documentation on your software for more detailed instructions if necessary.</p>
+
+			<p><b>NOTE:</b> In some cases, 664 permissions (or rw-rw-r--) may be enough for each of the files mentioned above. </p>
+
+			<p>You may also need to change permissions on the photos, histories, documents, headstones, media, gedcom, gendex and backups folders.
+				755 should work in most cases, but if you have trouble uploading media, importing or backing up, try 777 instead.</p>
+
+			<a href="javascript: prevStep(6);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(6);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s7">
+			<h3>Permissions</h3>
+
+			<p><strong>Step 3: Advanced Settings</strong></p>
+
+			<p>If you are not your own site administrator (you're using a hosting provider), the environment will most likely be all set up for you already,
+			and you probably won't have access to your PHP configuration anyway, so in most cases you can skip this step. </p>
+
+			<p>If you are the site administrator, however, please make sure that your <b>php.ini</b> file (part of PHP, not TNG) contains the following settings: </p>
+
+			<p><b>file_uploads = On<br />
+			error_reporting = E_ALL & ~E_NOTICE</b></p>
+
+			<p>If you can find a line in php.ini referencing the value <b>LimitRequestBody</b> then comment it out or
+			delete it, as this will prevent you from uploading files larger than the size indicated on that line
+			(sometimes this value is located in the php.conf file, so look for it there if you don't find it in
+			php.ini). </p>
+
+			<p>You may also wish to increase the value for <b>upload_max_filesize</b> if you have a large
+			GEDCOM file. It could also be advantageous to set <b>output_buffering</b> to "On".</p>
+
+			<p>If your PHP installation is on a Windows machine, you may have to change the <b>session.save_path</b>
+			variable to point to your Windows temporary folder (i.e., C:\Temp). If you make changes to your php.ini
+			file, you must restart your PHP service before the changes take effect.</p>
+
+			<a href="javascript: prevStep(7);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(7);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s8">
+			<h3>Folders</h3>
+
+			<p>Now you will have the chance to rename a few of the subfolders inside the <b>genealogy</b> folder on your
+			remote site. These folders were included in the TNG zip file and should already be on your site. Renaming them is mostly optional, but it is <b>HIGHLY RECOMMENDED</b>
+			that you rename your <b>backups</b> and <b>gedcom</b> folders to something else besides "backups" and "gedcom" to protect
+			your data from others who may know the TNG folder structure.</p>
+
+			<table>
+				<tr>
+					<td valign="top"><span class="normal">Multimedia Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="mediafrm" id="mediafrm" onsubmit="if( document.mediafrm.foldername.value != '' ) {doFolder('mediapath',document.mediafrm,'mediaFolderMsg');} return false">
+						<input type="text" value="media" name="foldername" size="30"><input type="hidden" value="media" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="mediaFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Photos Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="photosfrm" id="photosfrm" onsubmit="if( document.photosfrm.foldername.value != '' ) {doFolder('photopath',document.photosfrm,'phFolderMsg');} return false;">
+						<input type="text" value="photos" name="foldername" size="30"><input type="hidden" value="photos" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="phFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Documents Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="documentsfrm" id="documentsfrm" onsubmit="if( document.documentsfrm.foldername.value != '' ) {doFolder('documentpath',document.documentsfrm,'docFolderMsg');} return false;">
+						<input type="text" value="documents" name="foldername" size="30"><input type="hidden" value="documents" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="docFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Histories Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="historiesfrm" id="historiesfrm" onsubmit="if( document.historiesfrm.foldername.value != '' ) {doFolder('historypath',document.historiesfrm,'histFolderMsg');} return false;">
+						<input type="text" value="histories" name="foldername" size="30"><input type="hidden" value="histories" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="histFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Headstones Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="headstonesfrm" id="headstonesfrm" onsubmit="if( document.headstonesfrm.foldername.value != '' ) {doFolder('headstonepath',document.headstonesfrm,'hsFolderMsg');} return false;">
+						<input type="text" value="headstones" name="foldername" size="30"><input type="hidden" value="headstones" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="hsFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">GENDEX Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="gendexfrm" id="gendexfrm" onsubmit="if( document.gendexfrm.foldername.value != '' ) {doFolder('gendexfile',document.gendexfrm,'gendexFolderMsg');} return false;">
+						<input type="text" value="gendex" name="foldername" size="30"><input type="hidden" value="gendex" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="gendexFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Backups Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="backupsfrm" id="backupsfrm" onsubmit="if( document.backupsfrm.foldername.value != '' ) {doFolder('backuppath',document.backupsfrm,'buFolderMsg');} return false;">
+						<input type="text" value="backups" name="foldername" size="30"><input type="hidden" value="backups" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="buFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">GEDCOM Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="gedcomfrm" id="gedcomfrm" onsubmit="if( document.gedcomfrm.foldername.value != '' ) {doFolder('gedpath',document.gedcomfrm,'gedFolderMsg');} return false;">
+						<input type="text" value="gedcom" name="foldername" size="30"><input type="hidden" value="gedcom" name="oldname"/>
+						<input type="submit" value="Rename Folder"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="gedFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mods Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="modsfrm" id="modsfrm" onsubmit="if( document.modsfrm.foldername.value != '' ) {doFolder('modspath',document.modsfrm,'modsFolderMsg');} return false;">
+						<input type="text" value="mods" name="foldername" size="30"><input type="hidden" value="mods" name="oldname"/>
+						<input type="submit" value="Rename Folder">
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="modsFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Extensions Folder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="extensionsfrm" id="extensionsfrm" onsubmit="if( document.extensionsfrm.foldername.value != '' ) {doFolder('extspath',document.extensionsfrm,'extsFolderMsg');} return false;">
+						<input type="text" value="extensions" name="foldername" size="30"><input type="hidden" value="extensions" name="oldname"/>
+						<input type="submit" value="Rename Folder">
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="extsFolderMsg"></div>
+					</td>
+				</tr>
+			</table>
+
+			<p>If the above process fails to rename the folders, you will need to use your FTP program or online file manager
+			to rename them. If you need to do that, make the changes within TNG as well after the installation is complete by going
+			to the <b>Admin/Setup area</b> at https://www.yoursite.com/genealogy/admin_setup.php (if you're reading this
+			from your web site, click here: <a href="admin_setup.php" target="_blank">admin_setup.php</a>.
+			From there go to "Setup" and click on "General Settings" and "Import Settings".</p>
+
+			<p>Set the permissions on these folders to 755, or rwx r-x r-x). If 755 doesn't work, try 777 (rwx rwx rwx) instead.
+			If the operation to create these folders earlier in this guide was successful, then they should already have the
+			needed permissions.</p>
+
+			<p><strong>NOTE:</strong> If you discover later that you cannot add media or cannot write to these folders, it could mean that the folders were
+			created with the wrong "owner". Usually this will only happen if you're running your own server. If your folders have the wrong owner, you
+			will need to use an FTP program to manually set the owner or recreate the folders.</p>
+
+			<a href="javascript: prevStep(8);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(8);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s9">
+			<h3>Languages and Character Sets</h3>
+
+			<p>The default language is English, using the UTF-8 character set. If you don't make any changes, that is the language everyone will see when they visit your site for the first time.</p>
+
+			<p>To change your default language and/or character set, please select a new language from the list below.
+			You can read more about <a href="https://tng.lythgoes.net/wiki/index.php?title=Installing_TNG_as_UTF-8" target="_blank">using TNG with UTF-8 here</a>.</p>
+			<p>If you want to support multiple languages, you can do that later from the Admin/Languages area.</p>
+
+			<form action="#" onsubmit="return setLang(this,'langMsg2');">
+			<table class="normal">
+				<tr>
+					<td>Language:</td>
+					<td>
+						<select name="newlanguage" onchange="matchCharset(this,'newcharset2');">
+							<script type="text/javascript">showLanguageOptions();</script>
+						</select>
+					</td>
+				</tr>
+				<tr><td>Character Set:</td><td><input type="text" name="newcharset" id="newcharset2" value="UTF-8"/></td></tr>
+				<tr><td><input name="setlang" type="submit" value="Save"></td></tr>
+				<tr><td id="langMsg2" colspan="2"></td></tr>
+			</table>
+			</form>
+
+			<a href="javascript: prevStep(9);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(9);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s10">
+			<h3>Database Tables</h3>
+
+			<p><strong>Step 1: Establish a Database Connection</strong></p>
+
+			<p>It is now necessary to establish a connection with your <b>MySQL database</b>. This database must be created before proceeding!
+			In most cases your provider will already have created the database for you. If not, your provider will likely have given you access to
+			an online "control panel" that you can use to create the database yourself. In most cases TNG cannot create it for you, so please make sure that
+			you have a database, then return to this step. You can find more information on creating a database on 
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=Database_-_Creating" target="_blank">this page</a> on the TNG Wiki. Note: If you plan to use TNG
+			with a content management system like Drupal, Joomla or something else, you must use the same database for both TNG and the CMS.</p>
+
+			<p>Next, you will need
+			to enter the correct database connection information here before TNG can do anything besides let you edit the settings.
+			If you don't know the requested information, please ask your hosting provider to give it to you.
+			Here's a brief description of each item:</p>
+
+			<p><b>Host Name:</b> The computer where your database resides. It's usually the same one your web site is on,
+			so the value here is most always "localhost" (no quotes).</p>
+
+			<p><b>Database Name:</b> Sometimes a hosting provider will set up a database for you and will tell you the name.
+			Other times they will expect you to create your own database using your "control panel". TNG will
+			attempt to do that for you here if the database name you enter does not exist, but in many cases the host will not let this happen
+			from a script. If that's the case, you will need to create an empty MySQL database using your
+			control panel and give it a name yourself before entering the information below.</p>
+
+			<p><b>Database Username and Password:</b> This information is specific to the database and may be different than any
+			other username and password your host has given you. If you had to set up the database yourself, you may also
+			need to set up a user and give it a name and password. If so, make sure you give this user ALL rights and
+			assign it to the database. The assignment may be a separate step.</p>
+			
+			<p><b>Database Port and Socket:</b> Most people will not need to enter anything here, but if your hosting provider gives you a port or socket, enter them here.</p>
+			
+			<p>More information on these parameters is available on <a href="https://tng.lythgoes.net/wiki/index.php?title=Setup_-_Database" target="_blank">this page</a> on the TNG Wiki. 
+
+			<p>Enter your information here, then click "Save and Verify" below:</p>
+			<form action="setdbparams" method="get" style="margin:0px" name="dbparamsfrm" onsubmit="return doDBParams(document.dbparamsfrm,'dbMsg');">
+			<table>
+				<tr><td valign="top"><span class="normal">Host Name:</span></td><td><input type="text" value="localhost" name="database_host" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database Name:</span></td><td><input type="text" value="" name="database_name" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database Username:</span></td><td><input type="text" value="" name="database_username" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database Password:</span></td><td><input type="text" value="" name="database_password" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database Port:</span></td><td><input type="text" value="" name="database_port" size="20"> (leave blank for default)</td></tr>
+				<tr><td valign="top"><span class="normal">Database Socket:</span></td><td><input type="text" value="" name="database_socket" size="20"> (leave blank for default)</td></tr>
+				<tr>
+					<td valign="top"><input name="dbparams" type="submit" value="Save and Verify"></td>
+				    <td valign="top" id="dbMsg"></td>
+				</tr>
+			</table>
+			</form>
+
+			<p>This information should have been saved in your TNG <b>General Settings</b>. You can enter the information directly
+			by going to the <b>Admin/Setup area</b> at https://www.yoursite.com/genealogy/admin_setup.php (if you're reading this
+			from your web site, click here: <a href="admin_setup.php" target="_blank">admin_setup.php</a>.
+			From there go to "Setup" and click on "General Settings."</p>
+
+			<p><b>What might cause this operation to fail?</b> Here are some things to watch for:</p>
+
+			<p>1.	Always check to make sure you have spelled everything correctly and have the right case.<br />
+			2.	Some database utilities add a prefix to your database and/or username. You may think you set up a database named "genealogy", but in reality it may have been named "prefix_genealogy". Be sure to look at what was created to make sure you have the right name.<br />
+			3.	Sometimes the host name requires a port number (ie, "localhost:3306") or a socket path (ie, "localhost:/path/to/socket"). Check with your hosting provider.<br />
+			4.	Some providers require that your database name and your database username are the same. Others make your control panel username/password match your database username/password.<br />
+			5.	You may have just forgotten to assign the user to your database.</p>
+
+			<a href="javascript: prevStep(10);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(10);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s11">
+			<h3>Database Tables</h3>
+
+			<p><strong>Step 2: Create the Database Tables</strong></p>
+
+			<p>Next you will need to create the database tables. To do that, make any necessary adjustments to table
+			names, then click the button below.</p>
+
+			<p>If you're using UTF-8 as your character set, you should change the Collation to utf8_unicode_ci, utf8_general_ci or similar. If you're not sure,
+					<a href="https://www.google.com/search?q=what+mysql+database+collation+should+i+use" target="_blank">look here</a>.</p>
+
+			<p><b>IMPORTANT:</b> If you created the tables previously, doing this will erase ALL of your existing TNG data!</p>
+
+			<form action="createtables" method="get" style="margin:0px" name="tablesfrm2" onsubmit="return doTables(document.tablesfrm2,'tableMsg');">
+			<table>
+				<tr>
+					<td valign="top">
+						<table>
+							<tr><td valign="top"><span class="normal">People:</span></td><td><input type="text" value="tng_people" name="people_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Families:</span></td><td><input type="text" value="tng_families" name="families_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Children:</span></td><td><input type="text" value="tng_children" name="children_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Albums:</span></td><td><input type="text" value="tng_albums" name="albums_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Album Links:</span></td><td><input type="text" value="tng_albumplinks" name="album2entities_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Album Media:</span></td><td><input type="text" value="tng_albumlinks" name="albumlinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Media:</span></td><td><input type="text" value="tng_media" name="media_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Media Links:</span></td><td><input type="text" value="tng_medialinks" name="medialinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Media Types:</span></td><td><input type="text" value="tng_mediatypes" name="mediatypes_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Addresses:</span></td><td><input type="text" value="tng_addresses" name="address_table" size="20"></td></tr>
+					 		<tr><td valign="top"><span class="normal">Languages:</span></td><td><input type="text" value="tng_languages" name="languages_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Places:</span></td><td><input type="text" value="tng_places" name="places_table" size="20"></td></tr>
+						</table>
+					</td>
+					<td>&nbsp;</td>
+					<td valign="top">
+						<table>
+							<tr><td valign="top"><span class="normal">Cemeteries:</span></td><td><input type="text" value="tng_cemeteries" name="cemeteries_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">States:</span></td><td><input type="text" value="tng_states" name="states_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Countries:</span></td><td><input type="text" value="tng_countries" name="countries_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Users:</span></td><td><input type="text" value="tng_users" name="users_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Sources:</span></td><td><input type="text" value="tng_sources" name="sources_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Citations:</span></td><td><input type="text" value="tng_citations" name="citations_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Image Tags:</span></td><td><input type="text" value="tng_image_tags" name="image_tags_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Repositories:</span></td><td><input type="text" value="tng_repositories" name="repositories_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Events:</span></td><td><input type="text" value="tng_events" name="events_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Event Types:</span></td><td><input type="text" value="tng_eventtypes" name="eventtypes_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Reports:</span></td><td><input type="text" value="tng_reports" name="reports_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Trees:</span></td><td><input type="text" value="tng_trees" name="trees_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Notes:</span></td><td><input type="text" value="tng_xnotes" name="xnotes_table" size="20"></td></tr>
+						</table>
+					</td>
+					<td>&nbsp;</td>
+					<td valign="top">
+						<table>
+							<tr><td valign="top"><span class="normal">Note Links:</span></td><td><input type="text" value="tng_notelinks" name="notelinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Save Import:</span></td><td><input type="text" value="tng_saveimport" name="saveimport_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Branches:</span></td><td><input type="text" value="tng_branches" name="branches_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Branch Links:</span></td><td><input type="text" value="tng_branchlinks" name="branchlinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Timeline Events:</span></td><td><input type="text" value="tng_timelineevents" name="tlevents_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Temp Events:</span></td><td><input type="text" value="tng_temp_events" name="temp_events_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Associations:</span></td><td><input type="text" value="tng_associations" name="assoc_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Most Wanted:</span></td><td><input type="text" value="tng_mostwanted" name="mostwanted_table" size="20"></td></tr>
+							<!--<tr><td valign="top"><span class="normal">Partner Requests:</span></td><td><input type="text" value="tng_mhrequests" name="mhrequests_table" size="20"></td></tr>-->
+							<tr><td valign="top"><span class="normal">DNA Tests:</span></td><td><input type="text" value="tng_dna_tests" name="dna_tests_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">DNA Groups:</span></td><td><input type="text" value="tng_dna_groups" name="dna_groups_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">DNA Links:</span></td><td><input type="text" value="tng_dna_links" name="dna_links_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Template Settings:</span></td><td><input type="text" value="tng_templates" name="templates_table" size="20"></td></tr>
+						</table>
+					</td>
+				</tr>
+				<tr><td colspan="3">Database Collation: <input type="text" name="collation" id="collation2" value=""/></td> (leave blank to accept the default)</tr>
+				<tr>
+					<td valign="top"><input name="dbparams" type="submit" value="Save and Create"></td>
+				    <td valign="top" id="tableMsg" colspan="2"></td>
+				</tr>
+			</table>
+			</form>
+
+			<p>Assuming you connected to your database earlier, what might cause this operation to fail?<br />
+			<b>Here are some troubleshooting tips:</b></p>
+			1. Make sure you are running this script from your web site and not from your home computer.<br />
+			2. Check to make sure your database user has ALL rights. The user may be set up correctly, but if it doesn't have rights to create or delete tables, you won't make it past this step.<br />
+			3. You may have just forgotten to assign the user to your database.<br />
+			</p>
+
+			<a href="javascript: prevStep(11);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(11);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s12">
+			<h3>Other Settings</h3>
+
+			<p><strong>Step 1: General Settings</strong></p>
+
+			<p>There are other general settings you can change if desired. To see these settings,
+			go to the <b>Admin area</b> at https://www.yoursite.com/genealogy/admin.php (if you're reading this
+			from your web site, click here: <a href="admin.php" target="_blank">admin.php</a>.
+			From there go to <b>Setup</b> and click on <b>General Settings</b>. Please see the Help link on that
+			page for detailed information on each option</p>
+
+			<p>Make changes to the General Settings as needed. You shouldn't need to change any of the table names.
+			Click the Help link at the top of the page for an explanation of each field. You can come back and make
+			changes here at any time.</p>
+
+			<p>You might also look at the TNG Wiki article on <a href="https://tng.lythgoes.net/wiki/index.php?title=General_Settings" target="_blank">General Settings</a>,
+			which provides links to detailed illustrated instructions on setting up the Site Design and Definition, Media, Languages, Privacy, and Cemeteries sections,
+			as well as instructions on moving your configuration files if you use the Config Path.</p>
+
+			<p><b>NOTE on the Root Path setting:</b> You can leave this blank unless you want to point to a specific location other than the actual root. </p>
+
+			<p><b>NOTE on the Config Path setting:</b> This allows you to indicate a path above or outside the root for your
+			writable configuration files. Entering a value here is completely optional. You
+			should enter a path ONLY if you are able to move the files named on the screen to the proper location.</p>
+
+			<p>When you're finished, be sure to click the Save button to save your new settings.</p>
+
+			<a href="javascript: prevStep(12);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(12);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s13">
+			<h3>Other Settings</h3>
+
+			<p><strong>Step 2: Chart, Import, Log and Map settings</strong></p>
+
+			<p>To set options in other areas, go back to the <b>Setup</b> page, then:</p>
+
+			<p>Select <b>Chart Settings</b> to set up all pedigree chart variables. Edit the settings to reflect your web site's overall style and to accommodate your data. An extensive help file is accessible from this page to explain all options found there. You only need to do this if you don't like the current way pedigree charts are displayed, and you don't have to do it now if you're not sure what the effects will be.</p>
+
+			<p>Select <b>Log Settings</b> to set up all log-related variables. Remember to read the Help screen for information on each setting.</p>
+
+			<p>Select <b>Import Settings</b> to set up all import-related variables. Again, be sure to read the corresponding Help screen for information about anything
+			on this page. Pay special attention to the fields labeled <b>Local Photo/History/Document/Headstone/Other Media Path(s)</b>. If you are planning to import a
+			GEDCOM file that contains links to photos, histories or other media, and if you want to maintain a directory structure for your media on the site (instead of
+			putting all the media in the same folder), you'll want to fill these values before you import your file. For more information, please see the TNG Wiki article
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=Media_-_Import" target="_blank">Setup - Import Settings</a>.</p>
+
+			<p>Select <strong>Map Settings</strong> to set up all map related variables.</p>
+
+			<p>For more information, see the TNG Wiki article on <a href="https://tng.lythgoes.net/wiki/index.php?title=Google_Maps_-_Getting_Started" target="_blank">Google Maps - Getting Started</a>. </p>
+
+			<p>Select <strong>Template Settings</strong> to easily change the template you're using, and to change the images and text in your template home page and custom header.
+				
+			<p>For more information, see the TNG Wiki article on <a href="https://tng.lythgoes.net/wiki/index.php?title=Templates_-_Getting_Started" taret="_blank">Template Settings</a>.</p>
+			
+			<a href="javascript: prevStep(13);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(13);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s14">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 1: Setting up Users</strong></p>
+
+			<p>Next you must set up at least one user. A "User" can represent one or more people with the same access rights. Until you have at least one user,
+			your Administration	area will be wide open to all visitors, and all visitors to the public part of your site will be able
+			to see all data for all individuals. You can set up your first user here or from the Admin menu. To create a user here, please fill in <u>all</u> of the following
+			fields and click the Submit button. This user will have full administrator rights. You can enter more information about this user later from the Admin menu.</p>
+
+			<form action="#" onsubmit="return createUser(this,'userMsg2');">
+			<table class="normal">
+				<tr><td>Username:</td><td><input type="text" name="newusername" value=""/></td></tr>
+				<tr><td>Password:</td><td><input type="password" name="newpassword" value=""/></td></tr>
+				<tr><td>Password again:</td><td><input type="password" name="newpassword2" value=""/></td></tr>
+				<tr><td>Your real name:</td><td><input type="text" name="newrealname" value=""/></td></tr>
+				<tr><td>Your Email:</td><td><input type="text" name="newemail" value=""/></td></tr>
+				<tr><td valign="top"><input name="usercreate" type="submit" value="Create User"></td></tr>
+				<tr><td valign="top" id="userMsg2" colspan="2"></td></tr>
+			</table>
+			</form>
+
+			<p>To create a user from the <b>Admin main menu</b>, go to the <b>Users</b> area and click on the <strong>Add New</strong> tab.</p>
+
+			<p>You may add as many users as you like, but the first user you add MUST be an <b>administrator</b> (that's you). An administrator must have <b>Add,
+			Edit and Delete rights</b> and must not be assigned to a tree. On the first user you won't even have the option to assign a tree.
+			Since you haven't set up any trees yet, you won't be able to assign users to trees just yet anyway.</p>
+
+			<p>If you do not create an administrator first, or if you delete your administrator user, you may have trouble getting back here!</p>
+
+			<p>Only an administrator will be able to access system-wide functions like the Setup or Users.
+			Only users with some combination of Add, Edit and Delete rights will be allowed into the Admin area. Assigning a user to a tree or
+			branch limits that user's rights to their assigned tree or branch.</p>
+
+			<p>See the Help on the Admin/Users pages for more information.</p>
+
+			<a href="javascript: prevStep(14);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(14);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s15">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 2: Setting up Trees</strong></p>
+
+			<p>Next you must create at least one tree. A "Tree" is defined as an independent data set, or a group of individuals, families and sources that is
+			independent from any other such group. You can create your first tree here or from the Admin menu. To create a tree here, please fill in <u>both</u> fields
+			below and click the Submit button. You will not be able to edit the Tree ID after you save this page. It should be a short, alpha-numeric identifier with no spaces.
+			It will not be displayed on any public pages. You can enter more information about this tree later from the Admin menu.</p>
+
+			<form action="#" onsubmit="return createTree(this,'treeMsg2');">
+			<table class="normal">
+				<tr><td>Tree ID:</td><td><input type="text" name="newtreeid" value="tree1"/>  (alphanumeric only, no spaces)</td></tr>
+				<tr><td>Tree Name:</td><td><input type="text" name="newtreename" value="My Genealogy"/></td></tr>
+				<tr><td valign="top"><input name="treecreate" type="submit" value="Create Tree"></td></tr>
+				<tr><td valign="top" id="treeMsg2" colspan="2"></td></tr>
+			</table>
+			</form>
+
+			<p>To create a tree from the <b>Admin main menu</b>, go to the <b>Trees</b> area and click on the <strong>Add New</strong> tab.</p>
+
+			<p>Do you need multiple trees? Data from one tree cannot be linked to data in another tree, so the
+			rule of thumb here is that if any links exist among your potential trees, the data really should be
+			merged into one tree. Most people will only need one tree unless they are planning to maintain separate
+			and independent GEDCOMs.</p>
+
+			<p>The first two fields (Tree ID and Tree Name) are required, but everything else here is optional.
+			You will not be able to edit the Tree ID after you save this page. It should be a short identifier
+			with no spaces. It will not be displayed on any public pages.</p>
+
+			<p>Do not set up branches at this time. Come back to do that after importing or entering your data.</p>
+
+			<p>For more information, see the TNG Wiki article <a href="https://tng.lythgoes.net/wiki/index.php?title=Setup_-_Tree" target="_blank">Setup - Tree</a>,
+			which also covers how to disable the gedcom download.</p>
+
+			<a href="javascript: prevStep(15);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(15);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s16">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 3:  Importing a GEDCOM</strong></p>
+
+			<p>If you are not planning on importing any data from a GEDCOM file, you can skip this step. Otherwise,
+			go back to the Admin main menu and click on <strong>Import/Export</strong> to prepare to import your GEDCOM file. Your file
+			must be in standard 5.5 or 4.0 format, and you can import it directly from your local computer or from
+			the "gedcom" folder on your remote site. Please read the Help file linked to from this page for detailed
+			information about all import options. </p>
+
+			<p>If you are using multibyte characters in any part of your file (for example, characters you can't find on
+			a standard Western keyboard), you should also be careful to use the ANSI (sometimes called "Windows") or UTF-8 character set when creating
+			your file. Some genealogy programs will call this the "Windows" character set. For more information, see the 
+			TNG Wiki article on <a href="https://tng.lythgoes.net/wiki/index.php?title=Category:Charset" target="_blank">Character Sets</a>.</p>
+
+			<p>If your GEDCOM file is large, the import may not finish. You will know the import has finished
+			when you see a "Finished" message with the number of people, families and sources that were imported.
+			If your import does not finish, your host may have a limit on the size of uploaded files. If you cannot
+			resolve this with your site administrator, copy the GEDCOM file to the "gedcom" folder. Then proceed to
+			import the file, leaving the first field on the Import screen blank (see the Help on that page for
+			more details).</p>
+
+			<p>If the import begins but halts before you see the "Finished" message, your web server may be killing
+			the import to save resources for other processes. If this happens, make sure your GEDCOM file is in
+			the "gedcom" folder on the remote site, then return to the Import Settings and check the box labeled
+			"Save Import State". Finally, try your import again. This time you will see a link at the top of the
+			page that says, "If Import fails, click here to resume." Click on that link and the import will begin
+			again at the point it stopped. You might have to click this link multiple times, depending on how large
+			your file is or how concerned your host is about resources.</p>
+
+			<p>If your GEDCOM included media links, you will need to upload the actual files manually
+			to the appropriate TNG folders (e.g., "photos") that you created earlier.
+			Be sure to preserve any existing file structure from your Local Photo and Local History paths (See Import Settings) if
+			that's important to you. For more information, see the TNG Wiki articles on
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=Import_Data" target="_blank">Importing Data</a> and
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=Setup_-_Import_Settings#Local_Paths" target="_blank">Importing Media</a>.</p>
+
+			<a href="javascript: prevStep(16);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(16);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s17">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 4: Custom Event Types</strong></p>
+
+			<p>TNG maintains the most commonly used GEDCOM tags (ie, Birth, Death, Marriage) as "standard", meaning
+			they are always imported every time. All others, including proprietary tags specific to certain software
+			packages, are deemed "Custom Event Types". Events of these types are not imported or displayed until
+			you tell TNG to "Accept" them.</p>
+
+			<p>The easiest way to set up all your needed Custom Event Types is to import your GEDCOM file using the 
+			"Only import Custom Event Types" option before importing the rest of your data.
+			After that, go to the Custom Event Types area on the Admin main menu. All Custom Event Types used in your GEDCOM
+			will be displayed there, but all will be set to "Ignore". Edit each ones you want to import and switch the
+			flag from "Ignore" to "Accept". Also change the "Display" field to something more readable (for example, change
+			"OCCU" to "Occupation". You may enter a different Display message for each language you are supporting.
+			Do not change the "Type/Description" field.</p>
+
+			<p>Once you've made your desired changes, import your GEDCOM file again (this time without checking the
+			"Only import Custom Event Types" box) to see the custom events imported and
+			displayed, along with your other data.</p>
+
+			<p>You can also elect to import and "Accept" all Custom Event Types automatically.
+
+			<p>If you're not importing a GEDCOM file, or if you'd rather set up Custom Event Types by hand, you
+			may do so by going to Admin/Custom Event Types.
+			See the Help file on that page for more information.</p>
+
+			<a href="javascript: prevStep(17);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(17);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s18">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 5: Manual Data Entry</strong></p>
+
+			<p>If you are planning to enter your data manually, choose People, Families, Sources or Repositories from the Admin
+			main menu to get started. Everything should be fairly self-explanatory, but all pages have associated
+			help files you can use if you need them. There are no rules as to whether you should enter people or
+			families first. It's up to your personal style and preference.</p>
+
+			<a href="javascript: prevStep(18);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(18);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s19">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 6: Secondary Processes</strong></p>
+
+			<p>After importing or entering your data, go back to the Import/Export area and click on the
+			<b>Secondary Processes</b> tab to perform various additional functions.
+			See the Help file on this screen for detailed information on each process. For example, click "Track Lines"
+			to trace the lines of descent within your genealogy. This places a small mark next to children in a family
+			group who have offspring of their own, allowing users to more easily follow your lines of descent.</p>
+
+			<p>If your desktop software did not sort children or spouses according to birth or marriage date,
+			you can use the "Sort Children" or "Sort Spouses" utilities to do that now.</p>
+
+			<p>From this area you can also create a GENDEX file to enable your site to be indexed at <!--<a href="https://www.gendexnetwork.org">GenDex Network</a> or --><a href="https://www.familytreeseeker.com">FamilyTreeSeeker.com</a>.</p>
+
+			<p>Another option here is "Relabel Branches". (You can create "Branches" in a tree in order to confine
+			user rights to only a part of that tree. To create branches in a tree, go back to Trees, then click the
+			Branches icon for that tree.)  If you re-import your data with the "Replace All Data" option after
+			setting up your branches, your branches will be removed during the import. Use the "Relabel Branches"
+			feature to put them back.</p>
+
+			<a href="javascript: prevStep(19);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(19);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s20">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 7: Media (Photos, Histories, Documents, Headstones, etc.)</strong></p>
+
+			<p>Media links may be imported as part of your GEDCOM file, or you may set them up manually
+			using the Admin menu. If you import these items with your GEDCOM, you will still need to copy the actual
+			files to the corresponding TNG folders (e.g., "photos", "histories" or "documents").</p>
+
+			<p>"Cemeteries" are not supported as separate entities by the GEDCOM standard, so these will
+			not be imported in a GEDCOM file as such. You will need to use the Admin menu to set them up. If you had links to
+			photos of headstones in your GEDCOM, they will be imported as "photos". You can then use TNG to convert
+			them to "headstones". See the Help under Admin/Media for more information.</p>
+
+			<p>All media must have a unique physical path and file name. Because of that,
+			you will see an error message if you try to add a second record for the same file name.</p>
+
+			<p>Media may be linked to individuals, families, sources, repositories, events and places. All media links
+			may be imported from a GEDCOM file, with the exception of media linked to places.</p>
+
+			<p>Links to media are held in separate tables, so re-importing your
+			GEDCOM will not break these links unless the ID numbers in your GEDCOM have changed since your last import.
+			You should verify they are the same before re-importing. NOTE: if you imported these items with your
+			GEDCOM and have changed your Root Path since then, importing these items again will create duplicates.
+			To avoid this, click the option on the Import screen to ignore media present in the GEDCOM.</p>
+
+			<p>For more information, please see the TNG Wiki article <a href="https://tng.lythgoes.net/wiki/index.php?title=Media_-_Import" target="_blank">Media - Import</a>.</p>
+
+			<a href="javascript: prevStep(20);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(20);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s21">
+			<h3>Your Data</h3>
+
+			<p><strong>Step 8: Utilities: Backup/Optimize/Restore</strong></p>
+
+			<p>It is recommended that you back up your table data regularly using the <b>Backup</b> utility. This will
+			create a series of .bak files in the "backups" folder. If possible, it is also recommended that you
+			set permissions on the "backups" folder to 771 (rwxrwx-x) for maximum security (must be done *after*
+			backups have been created). To avoid data loss
+			in the event of a server crash, copy or move these .bak files down to your local computer.</p>
+
+			<p>If your data becomes corrupted or lost, you can use the <b>Restore</b> utility to bring it back.</p>
+
+			<p>The <b>Optimize</b> utility can be used to speed up your data access by removing slots for deleted records.</p>
+			
+			<p>For more information, please see the TNG Wiki articles <a href="https://tng.lythgoes.net/wiki/index.php?title=Category:Data_Protection" target="_blank">Data Protection</a>.</p>
+
+			<a href="javascript: prevStep(21);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(21);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s22">
+			<h3>Customizing Your TNG Pages</h3>
+
+			<p><strong>Step 1: Templates</strong></p>
+
+			<p>An easy way to quickly give your site a professional look and feel is to install one of TNG's
+			pre-built templates. The templates files are in the "templates" folder. To select a template, go to Admin/Setup/Template Settings and choose the
+			number of the one you want. Also make sure that "Enable Template Selection" is set to Yes, then click "Save" at the bottom. You can change templates as
+			many times as you'd like. If you do not want to use a template and would rather customize the default home page, header and footer, then set "Enable
+			Template Selection" to No.</p>
+
+			<p>You can easily change most of the images and text used in the template home page (index.php) and custom header (topmenu.php)
+			using the new Admin/Setup/Template Settings capability. You may also make changes directly to the template files. See the
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=Template_Settings">Template Settings</a>
+			article on the TNG Wiki for more information.</p>
+
+ 			<p>More information on templates can be found on <a href="https://tng.lythgoes.net/wiki/index.php?title=Category:Templates" target="_blank">this page</a> on the TNG Wiki.</p>
+
+			<a href="javascript: prevStep(22);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(22);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s23">
+			<h3>Customizing Your TNG Pages</h3>
+
+			<p><strong>Step 2: Style Sheets</strong></p>
+
+			<p>Even if you use one of the pre-built templates, you may want to make changes to fonts, colors, text
+			sizes and other style elements. All of these aspects are controlled by "style sheets". Style sheet files
+			end with the .css extension. The core style sheet used by TNG is called <b>genstyle.css</b> (general rules) and can be found in the "css" folder.
+			The "css" folder also contains default versions of the template style sheet (templatestyle.css), <strong>mytngstyle.css</strong> (for you to make your
+			own style changes) and a few others, including tngtabs1.css/tngtabs2.css
+			(two different tab styles).</p>
+
+			<p>Each template also includes its own copy of <strong>templatestyle.css</strong>, <strong>mytngstyle.css</strong> and the tab style sheets
+			that override the default style rules.</p>
+
+			<p>If you want to change the existing style rules from any of CSS file or add your own style rules, you should
+			make those changes in the file called <strong>mytngstyle.css</strong>, as that file will not be overwritten in future updates.
+			IMPORTANT: Make your changes in the copy of mytngstyle.css within the folder for the template you're using. For example, if you're
+			using Template #3, make your custom style changes in templates/template3/css/mytngstyle.css. If you are planning on switching
+			among multiple templates, you might need to make changes in the other copies of mytngstyle.css as well. If you will not be using a template,
+			make your changes in the main css/mytngstyle.css file.</p>
+
+			<p>To make changes to mytngstyle.css, simply open it in a text editor, make your
+			changes, then save the file back to your web site. If you want to redefine a style block from genstyle.css, just copy it from that
+			file into mytngstyle.css and add your own changes. Anything you redefine in that file will take precendence, so only copy the lines
+			you want to change. Some comments are included in genstyle.css to help you know which
+			lines control what elements. If you're not sure what you can do in a style sheet, we recommend you try
+			<a href="https://www.htmlhelp.com/reference/css" target="_blank">https://www.htmlhelp.com/reference/css</a>,
+			or simply search the Internet for "style sheets help").</p>
+
+			<p><b>Tabs:</b> Some TNG pages have a series of tabs across the top. You can choose from two different tab styles
+			(see the General Setting page for more information). If you choose the square style, you can change
+			the colors of these tabs in the "tngtabs2.css" file. You will want to make your "active" tab match the
+			"fieldnameback" definition from genstyle.css, and you will want to make your "inactive" tab match
+			the "databack" definition from genstyle.css.</p>
+			<p>If you choose the slanted tab style, you can change the attributes in "tngtabs1.css", but the colors
+			are made from image files. To create new tab images in a different color, make sure your "photos" folder
+			has been made writeable, then go to the page <b>switchcolor.php</b> in your browser (https://www.yoursite.com/genealogy/switchcolor.php).
+			If you're reading this page from your web site, click here: <a href="switchcolor.php" target="_blank">switchcolor.php</a>.
+			You will see a utility that will help you create new tab images. Again, you will want to make your "active" tab match the
+			"fieldnameback" definition from genstyle.css, and you will want to make your "inactive" tab match
+			the "databack" definition from genstyle.css.If the utility does not work for you,
+			you may not have the GD image library installed on your web site. Try creating the tabs here instead:
+			<a href="https://lythgoes.net/genealogy/switchcolor.php" target="_blank">https://lythgoes.net/genealogy/switchcolor.php</a>.</p>
+
+			<a href="javascript: prevStep(23);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(23);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s24">
+			<h3>Customizing Your TNG Pages</h3>
+
+			<p><strong>Step 3: Header, Footer and "Meta" Files</strong></p>
+
+			<p>If you have other style sheets you want to add, or if you have scripting code or meta tags you want to
+			place on all your TNG pages, add them to the TNG files called <b>meta.php</b> (public pages) and
+			adminmeta.php (admin pages).</p>
+
+			<p>To change the appearance of the header that appears on all TNG pages (except the home page), edit
+			<b>topmenu.php</b> (the default "Custom Header" file) in a text or HTML editor and customize as needed. The contents of this file will
+			include the opening BODY tag.If you decide to use a different file for your Custom Header, you will need to indicate
+			that in the General Settings in the Custom Header field.</p>
+
+			<p>To change the appearance of the footer that appears on all TNG pages (except the home page), edit
+			<b>footer.php</b> (the default "Custom Footer" file) in a text or HTML editor and customize it in the same manner. The contents of this file
+			will appear on each page just before the closing BODY tag. If you decide to use a different file for your
+			Custom Footer, you will need to indicate that in the General Settings in the Custom Footer field.</p>
+
+			<p>Things to note about these pages:<br />
+			1.	They are actually only page fragments, meaning that they are pieces of HTML and not complete HTML pages.
+			If you open them in a "smart" editor like FrontPage, it may try to "fix" these fragments by adding back
+			the "missing" pieces. It is therefore recommended that you first open them in a text editor or save
+			a backup copy just so you can compare before and after and delete any elements that are added back.
+			For instance, the topmenu.php file contains a &lt;BODY&gt; tag but no ending &lt;/BODY&gt; tag. If the &lt;/BODY&gt; tag is added back, your pages may not display properly.<br />
+			2.	You may rename these files if you want. If you do, be sure to put the new names in the appropriate
+			fields on the General Settings page. Maintaining ".php" as the file extension is essential if you plan to
+			include any PHP code.</p>
+
+			<a href="javascript: prevStep(24);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(24);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s25">
+			<h3>Customizing Your TNG Pages</h3>
+
+			<p><strong>Step 4: Home Page</strong></p>
+
+			<p>Your home page for TNG is called <b>index.php</b>. If you had a prior home page called "index.htm" or
+			"index.html", you may have to remove it in order for your new home page to be displayed when your
+			domain name alone is entered into a browser.</p>
+
+			<p>To customize your home page, open index.php in your text or HTML editor and make changes as needed.
+			You may rename it, but if you do you will also need to indicate the new name in the General Settings.
+			If you are planning to use TNG as a Nuke module, you will want to use and customize the version of this
+			file that comes with the TNG Nuke Add-on instead.</p>
+
+			<p>For more information, please see the TNG Wiki articles on
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=Home_Pages_-_Getting_Started" target="_blank">Home Pages - Getting Started</a> and
+			<a href="https://tng.lythgoes.net/wiki/index.php?title=User_Pages_-_Getting_Started" target="_blank">User Pages - Getting Started</a>.</p>
+
+			<a href="javascript: prevStep(25);"><strong><< Prev</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(25);"><strong>Next >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s26">
+			<h3>Final Notes</h3>
+
+			<p><strong>Searching:</strong><br />
+			When doing a simple search from the default "home page" (index.php), TNG looks to see if the search 
+			terms are "contained" in the corresponding fields of the target records. In other words, a search for 
+			"Ed" will find "Edward", "Fred" and "Cedrick". This is intentional so that as many results as 
+			possible will be returned. If you wish to limit responses to those that start with the search term(s), 
+			simply edit the index.html file and include the following hidden fields in the form: lnqualify (for 
+			surnames; value="starts with") and fnqualify (for given names; same value). This will coerce the search 
+			to find results where the beginning of the data starts with the search term(s). This also has the 
+			additional benefit of significantly improving performance during the simple search. If you have a 
+			large database, this might be something to consider.</p>
+
+			<p><strong>RSS:</strong><br />
+			To use the RSS newsfeed feature, open your favorite RSS reader and subscribe with this URL: https://yourdomain.com/yourgenealogyfolder/tngrss.php.
+			You can make the feed appear in a different language by appending "&lang=yourlanguage", where "yourlanguage" is the name of the language in TNG.</p>
+
+			<p><strong>Timelines:</strong><br />
+			Depending on your margins or sidebar width, you may find that the bars on the timeline do not line up correctly with the year markers. If this is
+			the case, please edit the file timeline2.php and adjust the values $lineoffset, $chartwidth, $checkboxcellwidth and $division as needed.</p>
+
+			<p><strong>Files to Delete:</strong><br />
+			When you're done with the installation, there are some files you might want to remove from your site in order to provide greater security.
+			Those files are: readme.html (this file), ajx_tnginstall.php and appendix.html.</p>
+
+			<p><strong>More Information:</strong><br/>
+			You might also want to read the <a href="https://tng.lythgoes.net/wiki/index.php?title=Category:Getting_Started" target="_blank">Getting Started</a>
+			articles on the TNG Wiki.</p>
+
+			<p>Go to your <a href="index.php">home page</a></p>
+			<p>Go to the <a href="admin.php">Admin menu</a></p>
+
+			<a href="javascript: prevStep(26);"><strong><< Prev</strong></a><br /><br /><br /><br />
+			</li>
+			</ul>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

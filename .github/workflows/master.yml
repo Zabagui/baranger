@@ -1,0 +1,34 @@
+on: 
+  push:
+    branches:
+      - master
+name: Publish Baranger Master
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        lfs: true
+        token: ${{ secrets.ACCESS_TOKEN }}
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: ftpcloud.cluster024.hosting.ovh.net
+        server-dir: ./baranger/
+        username: secusth_ovh-41767
+        password: ${{ secrets.FTP2_PASSWORD }}
+        exclude: config
+          - config/*
+          - assets/*
+          - compte-mots
+          - compte-mots/*
+          - README.md
+          - .git*
+          - **.git*
+          - .git*/**
+          -  **/.git*/**
+          - node_modules/**
+          - node_modules/**/*
+          - .vs/*

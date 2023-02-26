@@ -1,0 +1,77 @@
+.tlevent {
+    top: 0px;
+}
+
+.vertlines {
+    position: absolute;
+    font-size: 0px;
+    top: 33px;
+    width: 1px;
+    z-index: 0;
+}
+
+.dgray {
+    background-color:#dddddd; 
+}
+
+#tngtimeline {
+    border: 1px solid #aaa;
+}
+
+#tngchart {
+    position:relative;
+    text-align:left;
+}
+
+.yeardiv {
+    position:absolute;
+    top:15px;
+    height:17px;
+    width:40px;
+    z-index:0;
+}
+
+.footnote {
+    position:absolute;
+    height:17px;
+    width:12px;
+    z-index:0;
+    font-size:7pt;
+}
+
+.cb {
+    height:25px; 
+    left:0px;
+}
+
+.tlbar {
+    visibility:visible; 
+    position:absolute;
+    z-index:3;
+}
+
+.popup {
+    position:absolute; 
+    visibility:hidden; 
+    z-index:8;
+}
+
+.popuptable {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: #ccc;
+}
+
+.timeline-band-0 .timeline-ether-bg {
+    background-color: #D1CECA;
+}
+.timeline-band-1 .timeline-ether-bg {
+    background-color: #E7DFD6;
+}
+.timeline-band-2 .timeline-ether-bg {
+    background-color: #E8E8F4;
+}
+.timeline-band-3 .timeline-ether-bg {
+    background-color: #D1CECA;
+}

@@ -1,0 +1,413 @@
+/* templatestyle.css for template 17 overrides to TNG genstyle.css   */
+
+/* @import url('https://fonts.googleapis.com/css?family=Lusitana:400,700|Montserrat:400,500'); */
+@font-face {
+  font-family: 'Lusitana';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/lusitana-v13-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/lusitana-v13-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/lusitana-v13-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/lusitana-v13-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/lusitana-v13-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/lusitana-v13-latin-regular.svg#Lusitana') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/montserrat-v25-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/montserrat-v25-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/montserrat-v25-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/montserrat-v25-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/montserrat-v25-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/montserrat-v25-latin-regular.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/montserrat-v25-latin-500.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/montserrat-v25-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/montserrat-v25-latin-500.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/montserrat-v25-latin-500.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/montserrat-v25-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/montserrat-v25-latin-500.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+
+#tmenu {
+	display: inline-block;
+	margin-top: 30px;
+	vertical-align: top;
+}
+
+#tmenu ul{
+	display: inline-block;
+	list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#tmenu ul li {
+    float: left;
+    line-height: .5em;
+    font-size: 12pt;
+}
+
+#tmenu ul li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+}
+
+#big-block-1, #big-block-3 {
+	margin: 0px;
+	background-color: #e2c2a9;
+}
+
+.homebody, .theader {
+	margin: 0px;
+	background-color: #272727;
+}
+
+#tngcontent {
+	background-color: #f9f0e8;
+	padding: 0 20px 0;
+}
+
+.theader, .tblock, .tblock-dark, #tfooter {
+	padding: 15px 50px 20px 50px;
+}
+
+.tfooter {
+	padding: 35px;
+}
+
+.tsubtitle, #tfooter, .tblock-dark a, .tblock-dark a:link, .tblcok-dark a:visited, #tfooter a, #tfooter a:link, #tfooter a:visited, .entry-title {
+	color: #f9f0e8;
+}
+
+.entry-header a {
+	text-decoration: none;
+}
+
+.entry-content, .mainsection {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.mainsection {
+	font-size: 12pt;
+}
+
+.entry-content {
+	font-size: 11pt;
+	color: #aaa;
+}
+
+.tsubtitle {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
+	font-size: 13pt;
+}
+
+#tfooter a:hover, #tfooter a:active {
+	color: #FFF;
+}
+
+#thomemast {
+	display: inline-block;
+	padding-right:30px;
+}
+
+#thomemast h1 {
+	font-family: 'Lusitana', serif;
+	font-size: 30pt;
+}
+
+.quote {
+	max-width: 25%;
+	background-color: #f9f0e8;
+	opacity: .75;
+	padding: 10px;
+	border-radius: 12px;
+	font-size: 9pt;
+}
+
+.theader h1, #subfooter p, #subfooter a {
+	color: #D99860;
+}
+
+.theader h1, .tblock h2, .tfooter h2, .linkcol h2 {
+	margin: 5px 0px;
+}
+
+.tblock {
+	margin:0px;
+}
+
+#big-block-2, #tfooter {
+	background-color: #3a3a3a;
+}
+
+#tfooter {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
+
+.linkcol {
+	display:block;
+	float:left;
+	width:30%;
+	margin-right:30px;
+	font-size: 11pt;
+}
+
+.linkcol2 {
+	display:inline-block;
+	width:80%;
+}
+
+#linkarea ul {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+.fancy_list {
+	list-style: none;
+	padding-left: 0px;
+	margin-left: 0px;
+}
+
+.fancy_list li {
+  line-height: 125%;
+  padding: 0 0 5px 20px;
+  background-image: url('../img/bullet.png');
+  background-repeat: no-repeat;
+  letter-spacing: .6px;
+  font-size: 11pt;
+}
+
+.newspaper2 {
+	-webkit-column-count:4; /* Safari and Chrome */
+	column-count:4;
+	padding-top: 15px;
+}
+
+.mainsection p:first-of-type {
+	margin-top: 0;
+}
+
+.two-cols {
+	column-count:2;
+}
+
+.two-cols img {
+	float:left;
+	padding:0 20px 15px 0;
+}
+
+.other-features {
+	display: inline-block;
+	vertical-align: top;
+	padding-right: 60px;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;;
+}
+
+/* header: heading text */
+.header, .plainheader {
+	color: #5f5649;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #3a3a3a;
+}
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback, .bar, .page, .LB_closeAjaxWindow,
+.tablesaw-cell-label {
+	background-color: #3a3a3a;
+}
+
+/* databack: background color for data areas */
+.databack, .reportcol li:hover {
+	background-color: #e2c2a9;
+}
+
+a.admincell:hover, a.leftlink:hover {
+	background-color: #D99860;
+}
+
+/* sideback: background color for side and top frames */
+.admincell, .sideback {
+	background-color : #3a3a3a;
+	background-image: none;
+}
+
+.adminbody {
+	background-color: #ccbaa9;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#e2c2a9
+;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#3a3a3a;
+	color:#fff;
+}
+
+.LB_window {
+	background: #e2c2a9;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #999;
+}
+
+.titlebox {
+	background-color: #f6f6f6;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #999;
+}
+
+ul.tngdd {
+    background-color:#f9f0e8
+}
+
+ul.tngdd a {
+	color: #000;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#ddd;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #e2c2a9 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#999;
+	border-right-color:#999;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #444;
+	border-right:1px solid #444;
+	color: #ffffff;
+	background: #000 url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #e2c2a9;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #F2F0EE;  
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+ul.home-menus, ul.fancy_list {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	line-height: 1.5;
+}
+
+.emailimg {
+	width: 40px;
+	height: 26px;
+	margin: 0px 8px 0px 0px;
+	float: left;
+	border: 0px;
+}
+
+.fambackground {
+	background-color: #e2c2a9;
+}
+
+@media (max-width: 1100px) {
+	.linkcol {
+		width:40%;
+	}
+	#tmenu ul{
+		margin-left:-15px;
+	}
+}
+@media (max-width: 750px) {
+	.linkcol {
+		float:none;
+		width:100%;
+	}
+	.theader, .tblock, .tblock-dark, #tfooter {
+		padding: 5px 10px 5px 10px;
+	}
+	#thomemast h1 {
+		font-size: 18pt;
+	}
+	#tmenu ul li {
+	    font-size: 9pt;
+	}
+	#tmenu {
+		margin-top:5px;
+	}
+	.tsubtitle {
+		font-size:9pt;
+	}
+	.newspaper2 {
+		-webkit-column-count:2; /* Safari and Chrome */
+		column-count:2;
+	}
+	#big-block-1 {
+		height:150px;
+	}
+}
+@media (max-width: 500px) {
+	#tmenu ul li a {
+		padding: 14px 10px;
+	}
+	#tmenu ul{
+		margin-left:-10px;
+	}
+	.two-cols {
+		column-count:1;
+	}
+	.newspaper2 {
+		-webkit-column-count:1; /* Safari and Chrome */
+		column-count:1;
+	}
+}

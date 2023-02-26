@@ -1,0 +1,28 @@
+.mmaintitle {
+	font-family: 'Lusitana', serif;
+	font-size: 18pt;
+	text-shadow: 0.6px 0.6px #000;
+	color: #9b5520;
+}
+
+body {
+	background-color: #f7ede5;
+}
+
+#mast {
+  background-color: #D99860;
+  background-image: -webkit-linear-gradient(to bottom, #D99860 0%, #9b5520 100%);
+  background-image: linear-gradient(to bottom, #D99860 0%, #9b5520 100%);
+  border-top: 1px solid #000000;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #e2c2a9;
+  border-bottom: 1px solid #aaaaaa;
+  border-top: 1px solid #dddddd;
+  color: #333333;
+}

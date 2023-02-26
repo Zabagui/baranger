@@ -1,0 +1,833 @@
+/* templatestyle.css for template 13 overrides to TNG genstyle.css   */
+
+/* @import url(https://fonts.googleapis.com/css?family=Marcellus+SC); */
+
+@font-face {
+  font-family: 'Marcellus SC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/marcellus-sc-v13-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/marcellus-sc-v13-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/marcellus-sc-v13-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/marcellus-sc-v13-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/marcellus-sc-v13-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/marcellus-sc-v13-latin-regular.svg#MarcellusSC') format('svg'); /* Legacy iOS */
+}
+
+#art-main
+{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.art-postcontent p
+{
+    margin: 0;
+}
+
+.art-postcontent, .home-menus a
+{
+  text-decoration: none;
+}
+
+.home-menus a:hover
+{
+  text-decoration: underline;
+}
+
+.art-postcontent a:link
+{
+  text-decoration: none;
+}
+
+.art-blockcontent h1
+{
+  margin: 20px 0;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+html
+{
+    height:100%;
+}
+
+#art-main
+{
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  left: 0;
+  top: 0;
+  cursor:default;
+  overflow:visible;
+}
+
+body
+{
+  color: #000000;
+  background-color: #ECE4EB;
+  background-image: url('../img/Bottom_texture.jpg');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-position: top left;
+}
+
+.cleared
+{
+  display:block;
+  clear: both;
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 0;
+  height:0;
+  overflow:hidden;
+}
+
+.reset-box
+{
+  overflow:hidden;
+  display:table;
+}
+
+form
+{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+table.position
+{
+  position: relative;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* end Page */
+
+/* begin Menu */
+/* menu structure */
+
+.art-hmenu a, .art-hmenu a:link, .art-hmenu a:visited, .art-hmenu a:hover
+{
+    outline: none;
+}
+
+.art-hmenu, .art-hmenu ul
+{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style-type: none;
+  display: block;
+}
+
+.art-hmenu li
+{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: block;
+  float: left;
+  position: relative;
+  z-index: 5;
+  background: none;
+}
+
+.art-hmenu li:hover
+{
+  z-index: 10000;
+  white-space: normal;
+}
+
+.art-hmenu li li
+{
+  float: none;
+}
+
+.art-hmenu ul
+{
+  visibility: hidden;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  background: none;
+  min-height: 0;
+  background-image: url('../img/spacer.gif');
+  padding: 10px 30px 30px 30px;
+  margin: -10px 0 0 -30px;
+}
+
+.art-hmenu li:hover>ul
+{
+  visibility: visible;
+  top: 100%;
+}
+
+.art-hmenu li li:hover>ul
+{
+  top: 0;
+  left: 100%;
+}
+
+.art-hmenu:after, .art-hmenu ul:after
+{
+  content: ".";
+  height: 0;
+  display: block;
+  visibility: hidden;
+  overflow: hidden;
+  clear: both;
+}
+.art-hmenu{
+  min-height: 0;
+  position:relative;
+  padding: 0 0 0 0;
+}
+
+.art-hmenu ul ul
+{
+  padding: 30px 30px 30px 10px;
+  margin: -30px 0 0 -10px;
+}
+
+/* menu structure */
+
+.art-nav
+{
+	min-width: 700px;
+	position: relative;
+	width:92%;
+	margin:0 auto;
+	min-height: 31px;
+	z-index: 2;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+.art-nav-outer
+{
+    width:100%;
+}
+
+.art-nav-wrapper
+{
+        position: relative;
+    width:100%;
+    margin:0 auto;
+}
+.art-nav-inner
+{
+    margin: 0 0;
+  background-image: url('../img/nav.png');
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 2px 1px #666;
+  box-shadow:         1px 1px 2px 1px #666;
+}
+
+/* end Menu */
+
+/* begin MenuItem */
+.art-hmenu a
+{
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 31px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.art-hmenu ul li
+{
+    margin:0;
+    clear: both;
+}
+
+.art-hmenu a .r, .art-hmenu a .l
+{
+  position: absolute;
+  display: block;
+  top: 0;
+  z-index: -1;
+  height: 103px;
+}
+
+.art-hmenu a .l
+{
+  left: 0;
+  right: 0;
+}
+
+.art-hmenu a .r
+{
+  width: 400px;
+  right: 0;
+  clip: rect(auto, auto, auto, 400px);
+}
+
+.art-hmenu a .t, .art-hmenu ul a, .art-hmenu a:link, .art-hmenu a:visited, .art-hmenu a:hover
+{
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.art-hmenu a .t
+{
+  color: #435E95;
+  padding: 0 22px;
+  margin: 0 0;
+  line-height: 31px;
+  text-align: center;
+}
+
+.art-hmenu a:hover .l, .art-hmenu a:hover .r
+{
+  top: -36px;
+}
+
+.art-hmenu li:hover>a .l, .art-hmenu li:hover>a .r
+{
+  top: -36px;
+}
+
+.art-hmenu li:hover a .l, .art-hmenu li:hover a .r
+{
+  top: -36px;
+}
+.art-hmenu a:hover .t
+{
+  color: #FFFFFF;
+}
+
+.art-hmenu li:hover a .t
+{
+  color: #FFFFFF;
+}
+
+.art-hmenu li:hover>a .t
+{
+  color: #FFFFFF;
+}
+
+/* end MenuItem */
+
+/* begin MenuSeparator */
+.art-hmenu .art-hmenu-li-separator
+{
+  display: block;
+  width: 0;
+  height:31px;
+}
+/* end MenuSeparator */
+
+/* begin Box, Sheet */
+.art-sheet
+{
+  position: relative;
+  margin: 0 auto;
+  min-height: 1px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  cursor:auto;
+  width: 92%;
+  min-width: 700px;
+}
+
+.art-sheet-body
+{
+	position: relative;
+	padding: 0;
+	margin-bottom:30px;
+}
+
+.art-sheet-cc
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFFFFF;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 2px 1px #666;
+  box-shadow:         1px 1px 2px 1px #666;
+}
+
+#art-page-background-top-texture, #art-page-background-middle-texture, #art-page-background-glare
+{
+  min-width: 90%;
+}
+
+/* end Box, Sheet */
+
+/* begin Layout */
+.art-content-layout
+{
+  display: table;
+  position:relative;
+  margin: 0 auto;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background-color: Transparent;
+  border: none !important;
+  padding:0 !important;
+  width:100%;
+  margin-top:0;
+  margin-bottom:0;
+}
+.art-layout-cell, .art-content-layout-row
+{
+  background-color: Transparent;
+  vertical-align: top;
+  text-align: left;
+  border: none;
+  margin:0;
+  padding:0;
+}
+
+.art-content-layout .art-content-layout{margin:0;}
+.art-content-layout .art-layout-cell, .art-content-layout .art-layout-cell .art-content-layout .art-layout-cell{display: table-cell;}
+.art-layout-cell .art-layout-cell{display: block;}
+.art-content-layout-row {display: table-row;}
+.art-layout-glare{position:relative;}/* end Layout */
+
+/* begin Box, Block */
+.art-block
+{
+  position: relative;
+  min-width: 1px;
+  min-height: 1px;
+  margin: 20px 10px;
+}
+
+.art-block-body
+{
+  position: relative;
+  padding: 0;
+}
+
+div.art-block img
+{
+/* WARNING do NOT collapse this to 'border' - inheritance! */
+    border-width: 1px;
+  border-style: solid;
+  margin: 5px;
+}
+
+/* end Box, Block */
+
+/* begin BlockHeader */
+.art-blockheader
+{
+  margin-bottom: 0;
+  position: relative;
+  height: 35px;
+}
+
+.art-blockheader h3.t
+{
+  position: relative;
+  height: 42px;
+  font-family: 'Marcellus SC', Georgia, "Times New Roman", Times, Serif;
+  font-size: 22px;
+  margin:0;
+  padding: 0 10px 0 5px;
+  white-space: nowrap;
+  line-height: 42px;
+}
+
+.art-blockheader h3.t a,
+.art-blockheader h3.t a:link,
+.art-blockheader h3.t a:visited,
+.art-blockheader h3.t a:hover
+{
+  font-family: 'Marcellus SC', Georgia, "Times New Roman", Times, Serif;
+  font-size: 22px;
+}
+
+/* end BlockHeader */
+
+/* begin Box, BlockContent */
+.art-blockcontent
+{
+  position: relative;
+  margin: 0 auto;
+  min-width: 1px;
+  min-height: 1px;
+}
+
+.art-blockcontent-body
+{
+  position: relative;
+  padding: 3px;
+}
+
+.art-blockcontent-body p
+{
+  margin: 6px 0;
+}
+
+.art-blockcontent-body ul li, .fancy_list li
+{
+  line-height: 125%;
+  padding: 0 0 5px 20px;
+  background-image: url('../img/bullet.jpg');
+  background-repeat: no-repeat;
+  letter-spacing: .6px;
+  font-weight: bold;
+}/* end Box, BlockContent */
+
+/* begin Box, Post */
+.art-post
+{
+  position: relative;
+  min-width: 1px;
+  min-height: 1px;
+  margin: 0;
+}
+
+.art-post-body
+{
+  position: relative;
+  padding: 20px;
+}
+/* end Box, Post */
+
+
+/* begin Footer */
+.art-footer
+{
+  position: relative;
+  margin-top:-20px;
+  width: 100%;
+}
+
+.art-footer-body
+{
+    position:relative;
+    padding: 20px;
+}
+
+.art-footer-text p
+{
+  padding:0;
+  margin:0;
+  text-align: center;
+}
+
+.art-footer-text a,
+.art-footer-text a:link
+{
+  text-decoration: none;
+}
+
+/* begin LayoutCell, content */
+
+.art-content-layout .art-sidebar1
+{
+  width: 240px;
+  padding-left:10px;
+}
+
+/* end LayoutCell, content */
+
+/* header: heading text */
+.header, .plainheader, .subhead {
+	color: #435E95;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #435E95;
+}
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback, .bar, .page, .LB_closeAjaxWindow,
+.tablesaw-cell-label {
+	background-color: #435E95;
+}
+
+a.admincell:hover, a.leftlink:hover {
+	background-color: #8dacda;
+}
+
+/* sideback: background color for side and top frames */
+.admincell, .sideback {
+	background-color : #435E95;
+	background-image: none;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#eeeef3;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#435E95;
+	color:#fff;
+}
+
+.LB_window {
+	background: #eeeef3;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #999;
+}
+
+ul.tngdd {
+    background-color:#fff;
+}
+
+ul.tngdd a {
+	color: #435E95;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color: #e3e3f6;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #eeeef3 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+	background-image: url(../img/ArrowDown.gif), -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeef3), to(#ceced3));
+	background-image: url(../img/ArrowDown.gif), -webkit-linear-gradient(top, #eeeef3, #ceced3);
+	background-image:         url(../img/ArrowDown.gif), linear-gradient(top, #eeeef3, #ceced3);
+	background-position: 2px 8px, 0px 0px;
+	background-repeat: no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#999;
+	border-right-color:#999;
+	border-top-color:#eeeef3; /*same as "databack" background color */
+	border-left-color:#eeeef3; /*same as "databack" background color */
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #444;
+	border-right:1px solid #444;
+	color: #ffffff;
+	background: #435E95 url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #eeeef3;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeef3), to(#ceced3));
+	background-image: -webkit-linear-gradient(top, #eeeef3, #ceced3);
+	background-image:         linear-gradient(top, #eeeef3, #ceced3);
+}
+
+.databack, .reportcol li:hover {
+	background-color: #eeeef3;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #CFCFDE;  
+}
+
+.adminback {
+	background-image: url('../img/Bottom_texture.jpg');
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+ul.home-menus, ul.fancy_list {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+.emailimg {
+	width: 40px;
+	height: 26px;
+	margin: 0px 8px 0px 0px;
+	float: left;
+	border: 0px;
+}
+
+td.calDay, td.calToday, table.calendar {
+	border-color: #435E95;
+}
+
+h2.site-head, h2.site-head a {
+	color: #435E95;
+	font-size: 24pt;
+	padding: 0 0 0 3px;
+	margin: 0 0 15px;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.mmaintitle {
+	color: #435E95;
+	opacity: 0.7;
+}
+
+.greentree {
+	float: left;
+	padding-right: 10px;
+	padding-top: 5px;
+	border:0px;
+}
+
+.big-header {
+	color: #435E95;
+	font-size: 55px;
+}
+
+h2.site-head, h2.site-head a, .mmaintitle, .big-header, .admin-banner h1, .top-rounded-headline h1 {
+  font-family: 'Marcellus SC', Georgia, "Times New Roman", Times, Serif;
+}
+
+.dotted-line {
+	width:100%;
+	border-top:1px dashed #435E95;
+	margin:0 0 0 -10px;
+}
+
+.linkcol {
+	display:block;
+	float:left;
+	width:25%;
+}
+
+#linkarea {
+	width:100%;
+	text-align:left;
+	padding-left: 20px;
+  column-count: 4;
+}
+
+.emphasis a:link, .emphasis a:visited {
+	text-decoration: underline;
+}
+
+.left-indent {
+	padding-left: 20px;
+}
+
+#search-submit {
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.newspaper2 {
+	-webkit-column-count:2; /* Safari and Chrome */
+	column-count:2;
+	padding-top: 15px;
+}
+
+.newspaper2 p {
+	margin: 0 0 10px;
+	padding: 0px;
+}
+
+#globe {
+	margin:8px 30px 0px 0px;
+	float:left;
+}
+
+.photo-container {
+	margin-left:20px;
+}
+
+.fambackground {
+  background-color: #eeeef3;
+}
+
+@media (max-width: 950px) {
+	#mainphoto {
+		width: 100%;
+	}
+	.photo-container {
+		margin-left:0px;
+	}
+}
+
+@media (max-width: 740px) {
+	.art-nav, .art-sheet {
+		min-width: 0;
+		margin: 0px;
+		width: 100%
+	}
+	.art-content-layout .art-layout-cell, .art-content-layout .art-layout-cell .art-content-layout .art-layout-cell{display: block;}
+	#tsearchbox {
+		box-shadow: none;
+		-webkit-box-shadow: none;
+		width: 90%;
+	}
+	.art-sheet-cc {
+		border: none;
+		box-shadow: none;
+	  -webkit-box-shadow: none;
+	}
+	#globe {
+		display:none;
+	}
+
+}
+
+@media (max-width: 500px) {
+	#linkarea, .dotted-line {
+		display:none;
+	}
+	.art-block {
+		float: none;
+		margin-left: 0;
+	}
+	.big-header {
+		font-size:24pt;
+	}
+	h2.site-head {
+		padding-left: 0px;
+		font-size: 18pt;
+	}
+	.left-indent {
+		padding-left: 0px;
+	}
+	.art-post-body {
+		padding: 10px 0px;
+	}
+	.newspaper2 {
+		-webkit-column-count:1; /* Safari and Chrome */
+		column-count: 1;
+		padding-top: 0px;
+	}
+	#tsearchbox input[type="text"] {
+		margin:5px;
+	}
+	.art-sheet-body {
+		margin-bottom: 0px;
+	}
+}

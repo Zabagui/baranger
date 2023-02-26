@@ -1,0 +1,26 @@
+body {
+  background: url("../img/bg.gif") repeat scroll 0 0 #FFFFFF;
+}
+
+#mast {
+  background-color: #211A16;
+  background-image: -webkit-linear-gradient(to bottom, #6B584A 0%, #413226 100%);
+  background-image: linear-gradient(to bottom, #6B584A 0%, #413226 100%);
+  border-top: 1px solid #998475;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #E0D1BE;
+  border-bottom: 1px solid #967954;
+  border-top: 1px solid #FCF9F7;
+  text-shadow: white 1px 1px 1px;
+  color: #000000;
+}
+
+.headerrow {
+	width:inherit;
+}

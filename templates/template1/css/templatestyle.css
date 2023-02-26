@@ -1,0 +1,201 @@
+/* templatestyle.css for template 1 overrides to TNG genstyle.css   */
+
+/* added in TNG 12.1 as overrides to TNG genstyle.css for DNA Compare reports for template 1  */
+.overflowauto {
+	width: 98vw;
+}
+/*  reduce overflowauto for laptops and tablets */
+@media only screen and (max-width:1280px) {
+	.overflowauto {
+		width: 98vw;
+	}
+}
+@media only screen and (max-width:1024px) {
+	.overflowauto {
+		width: 96vw;
+	}
+}
+@media only screen and (max-width:768px) {
+	.overflowauto {
+		width: 95vw;
+	}
+}
+/* end overrides of for DNA Compare reports */
+
+/* header: heading text */
+.header, .plainheader {
+	color: #000099;
+}
+
+div.icons {
+	position: absolute;
+}
+
+/* body: describes page background color and all non-table text not governed by any other style */
+body {
+	background-color : #DDDDFF;
+	margin: 10px 20px 10px 20px;
+}
+
+.t1-sidebar {
+	background-color: #ddd;
+	border-radius: 10px;
+	border: 1px solid #999;
+	padding: 10px;
+	box-shadow: 3px 3px 5px 0px #999;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #000099;
+}
+
+/* visited: previously visited links */
+a:visited {
+	color: #336666;
+}
+
+/* page: is defined to replace the bgcolor=#676037; */
+/* fieldnameback: background color for column and row title sections */
+/* sideback: background color for side and top frames */
+.LB_closeAjaxWindow, .sideback, .fieldnameback,
+.tablesaw-cell-label {
+	background-color : #000099;
+}
+
+/* added for 6.2 */
+.indexpage {
+	text-align:left;
+}
+
+.snlink {
+	background-color:#bbbbbb;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#000099;
+}
+
+.LB_window {
+	background: #bbbbbb;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+.titlebox {
+	background-color: #f6f6f6;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #999;
+}
+
+ul.tngdd {
+    background-color:#ddddff;
+}
+
+ul.tngdd a {
+	color:#333399;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#eeeeee;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #bbbbbb url(../img/ArrowDown.gif) 2px 8px no-repeat;
+	background-image: url(../img/ArrowDown.gif), -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c2c2c2), to(#a2a2a2));
+	background-image: url(../img/ArrowDown.gif), -webkit-linear-gradient(top, #c2c2c2, #a2a2a2);
+	background-image:         url(../img/ArrowDown.gif), linear-gradient(top, #c2c2c2, #a2a2a2);
+	background-position: 2px 8px, 0px 0px;
+	background-repeat: no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#999;
+	border-right-color:#999;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #444;
+	border-right:1px solid #444;
+	color: #ffffff;
+	background: #333366 url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #bbbbbb;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c2c2c2), to(#a2a2a2));
+	background-image: -webkit-linear-gradient(top, #c2c2c2, #a2a2a2);
+	background-image:         linear-gradient(top, #c2c2c2, #a2a2a2);
+}
+
+.databack, .reportcol li:hover {
+    background-color: #bbbbbb;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #D9D9D9;
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+#search-submit {
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.maintitle {
+	font-size:72px;
+	color:#000099;
+	line-height:72px;
+}
+
+#mainphoto {
+	margin-right: 20px;
+}
+
+a.toptitle {
+	text-decoration:none;
+	font-size:60px;
+	color:#000099;
+}
+
+.mmaintitle {
+	font-style: italic;
+	color: #000099;
+}
+
+.maintitle, .mmaintitle, a.toptitle, .admin-banner h1 {
+  	font-family:Georgia,Arial,sans-serif;
+}
+
+@media (max-width: 400px) {
+	.std-only {
+		display: none;
+	}
+	.maintitle {
+		font-size: 24pt;
+		line-height: 24pt;
+	}
+	#mainphoto {
+		width: 100%;
+		clear: both;
+		margin-bottom: 10px;
+	}
+	body {
+		margin: 8px;
+	}
+}

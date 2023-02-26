@@ -1,0 +1,471 @@
+/* templatestyle.css for template 7 overrides to TNG genstyle.css   */
+
+/* override to TNG genstyle.css for DNA Compare reports for template 7   */
+.overflowauto {
+	width: 87vw;
+}
+/*  reduce overflowauto for laptops and tablets */
+@media only screen and (min-width:1200px) and (max-width:1550px) {
+	.overflowauto {
+		width: 84vw;
+	}
+}
+@media only screen and (max-width:1280px) {
+	.overflowauto {
+		width: 80vw;
+	}
+}
+@media only screen and (max-width:1024px) {
+	.overflowauto {
+		width: 78vw;
+	}
+}
+@media only screen and (max-width:768px) {
+	.overflowauto {
+		width: 67vw;
+	}
+}
+
+/* normal: most regular body text */
+.normal {
+  color: #666;
+  font-size: 12px;
+  font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+  font-weight: bold;
+}
+
+
+/* fieldname: regular text within column or row title sections */
+.fieldname {
+  font-size: 12px;
+  color: #f2f2e9;
+  font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+  font-weight: bold;
+}
+
+/* header: heading text */
+.header {
+  font-size: 24px;
+  color: #b9b186;
+  font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+  font-weight: bold;
+}
+
+/* body: describes page background color and all non-table text not governed by any other style */
+body {
+	background-color : #fff;
+	color : #666;
+	font-size: 12px;
+	font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+	margin: 0px;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #ff8212;
+	font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+}
+
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback {
+	border-right: 1px solid #f2f2e9;
+	border-bottom: 1px solid #f2f2e9;
+}
+
+/* databack: background color for data areas */
+.databack, .reportcol li:hover {
+	border: 1px solid #ccc;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #EEEEDD;
+	border-right: 1px solid #f2f2e9;
+	border-bottom: 1px solid #f2f2e9;
+}
+
+/*************************************************************************
+ TNG Mod Manager 10.1 positioning For Template 7
+*************************************************************************/
+/****** BARS ATTACHED TO BOTTOM OF HEAD SECTION ******/
+.fbar-fixed, .tbar-fixed, .ibar-fixed {
+	top:131px;
+}
+
+/****************** CONTENT ******************/
+/* main page mod listing positioning */
+table.mmlist-fixed {
+	margin-top:168px; /*from top of screen*/
+}
+/* m2tables - for secondary MH pages Options and Analyzer */
+table.m2table-fixed {
+	margin-top:131px; /*from top of screen*/
+}
+table.m3table-fixed {
+	margin-top:171px;
+}
+table.mmlog-fixed {
+	margin-top:162px;
+}
+
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #EEEEDD;
+	border-right: 1px solid #f2f2e9;
+	border-bottom: 1px solid #f2f2e9;
+}
+
+table.mmlist-fixed {
+   margin-top:162px; /*from top of screen*/
+}
+
+table.m2table-fixed {
+   margin-top:134px; /*from top of screen*/
+}
+
+.mmlog-fixed {
+   margin-top:163px;
+}
+
+
+
+
+/* Added in 4.0.0 */
+/* For links on dark background */
+a.lightlink:link, a.lightlink:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+	font-size: 14px;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-decoration: none;
+	vertical-align: middle;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+a.lightlink:hover, a.lightlink:active {
+	color: #666;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #fc3;
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+/* fieldnameback: background color for column and row title sections */
+/* sideback: background color for side and top frames */
+.LB_closeAjaxWindow, .bar, .sideback, .fieldnameback,
+.tablesaw-cell-label {
+	background-color : #b9b186;
+}
+
+/* background color for admin menu items while active*/
+a.admincell:hover, a.leftlink:hover {
+	background-color: #666666;
+}
+
+.adminbody {
+	background-color:  #edead9;
+}
+
+.whitesubhead {
+	font-weight: bold;
+}
+
+/*added in 5.0.0*/
+/*for active secondary tab link*/
+a.lightlink3:link, a.lightlink3:visited, a.lightlink3:hover, a.lightlink3:active {
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+
+
+#mnav a {
+	font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+}
+
+#mnav li { /* all list items */
+	font-family: "Trebuchet MS", Geneva, Arial, Helvetica, SunSans-Regular, sans-serif;
+	background: #f2f2e9; /* d7cfa2; - same as "databack" background color */
+	border-color: #cccc99 #777 #777 #cccc99;
+	border-style: solid;
+	border-width: 1px;
+}
+
+
+#mnav li ul li {
+	background: #eeeecc; /*inactive dropdown menu color*/
+}
+
+
+/* New style definitions added in TNG 7.0.0 to replace bgcolor in topmenu.php */
+
+
+/* line: is defined to replace the bgcolor="#999966" used with a line gif image (khaki.gif in template 7)*/
+.line {
+  	color: #999966;
+	margin-top: 0px;
+	background-image: url(../img/khaki.gif);
+	height: 1px;
+}
+
+/* page:  */
+.page {
+	background-color : #FFFFFF;
+	padding-right: 10px;
+}
+
+/* tableborder to replace hard-coded style in topmenu.php */
+/* bgcolor="#FAF4E6" border="2" bordercolor="#000000" style="border-collapse: collapse" */
+.tableborder {
+	background-color: #FAF4E6;
+	border-collapse: collapse;
+	border-color: black;
+}
+
+/* searchbox added to replace hard-coded style in topmenu */
+/* style="width: 140px; height: 20px; font-size: 11px;" */
+.searchbox {
+	border-style: solid;
+	border-width: 1px;
+}
+
+/* tableheader added to replace background="border.jpg" */
+.tableheader {
+  	background-color: #FFFFFF;
+    background-image: url(../img/border.jpg);
+    vertical-align: top;
+    width: 73px;
+}
+
+#headertable, .bodytable {
+	width: 100%;
+	border: none;
+}
+
+#headertable {
+	background-color: #ffffff;
+}
+
+/* footer:Link added to replace <font color="#39692A"> */
+a.footer:hover {
+	color: #ff8212;
+}
+
+/* headertitle added to replace height in header title */
+
+.headertitle {
+  height:108px;
+}
+/* row is defined to replace the height="81" in <tr> */
+.row {
+	height: 81px;
+}
+
+/* strip replaces  align="right" valign="middle" height="20"  */
+.strip {
+  	color: #999966;
+	margin-top: 0px;
+	background-image: url(../img/khaki.gif);
+	height: 27px;
+	text-align: right;
+}
+
+/*  additional classes added for strict validation  */
+
+/* logo defined to replace align="left" valign="middle" width="30%" */
+.logo {
+  	text-align: left;
+	vertical-align: middle;
+	width: 30%;
+}
+
+/* news defined to replace valign="top" align="left" width="70%" */
+.news {
+	vertical-align: top;
+	text-align: left;
+	background-color : #FFFFFF;
+	width: 70%;
+	padding: 5px;
+}
+
+/* section replaces  width="210" valign="top" class="page" */
+
+.section {
+	vertical-align: top;
+	width: 210px;
+}
+
+/* menuback: background color for left nav menu same as fieldname background-color: #f2f2e9 but no border width="120" */
+.menuback {
+	background-color: #f2f2e9;
+	border-right: 0px;
+	border-bottom: 0px;
+	width: 120px;
+}
+
+#tngnav a, #tabs a {
+	color:#444;
+}
+
+/* spacercol added to replace td width="10" */
+.spacercol {
+	width: 10px;
+}
+
+/* main added to replace <td width="683" */
+.main {
+	width: 683px;
+}
+/* maincontent added to replace td valign="top" width="300" */
+.maincontent {
+	vertical-align: top;
+}
+
+/* rightcontent added to replace td width="280" valign="top" */
+.rightcontent {
+	vertical-align: top;
+	width: 280px;
+}
+
+/* bigphoto defined to replace width="300" height="172" border="0" in index.php */
+.bigphoto {
+	width: 300px;
+  	height: 172px;
+	border: 0px;
+}
+
+/* middlecol added to replace td width="103" */
+.middlecol {
+	width: 103px;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#f2f2e9;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#b9b186;
+	color:#fff;
+}
+
+.LB_window {
+	background: #f2f2e9;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+.plainheader {
+	color:#666633;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #bbb;
+}
+
+ul.tngdd {
+    background-color:#ffffff;
+}
+
+ul.tngdd a {
+	color:#FF8212;
+	font-weight:bold;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#f2f2e9;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #f2f2e9 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#bbb;
+	border-right-color:#bbb;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #999;
+	border-right:1px solid #999;
+	color: #ffffff;
+	background: #b9b186 url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu, .databack {
+    background-color: #f2f2e9;
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+.whitetext {
+	text-shadow: none;
+	filter: none;
+}
+
+#maintitle {
+	font-family:Verdana,Arial,sans-serif;
+	font-size:30px;
+	line-height:30px;
+}
+
+.mmaintitle {
+	font-family:Verdana,Arial,sans-serif;
+	color: #666666;
+	font-style: italic;
+}
+
+.adminsubmsg {
+	color: #FFFFFF;
+}
+
+.fambackground {
+	background-color: #b9b186;
+}
+
+@media (max-width: 700px) {
+	.section {
+		display: none;
+	}
+}
+
+@media (max-width: 520px) {
+	.rightcontent, .middlecol {
+		display:none;
+	}
+	#maintitle {
+		font-size:20px;
+		line-height:20px;
+	}
+	.strip {
+		text-align: left;
+	}
+	.news, .maincontent, .rightcontent {
+		display:inline-block;
+	}
+	.logo {
+		display:inline-block;
+		width:100%
+	}
+}

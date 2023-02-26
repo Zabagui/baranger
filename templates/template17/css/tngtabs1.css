@@ -1,0 +1,82 @@
+#a0 { left: 10px;}
+#a1 { left: -15px;}
+#a2 { left: -40px;}
+#a3 { left: -65px;}
+#a4 { left: -90px;}
+#a5 { left: -115px;}
+#a6 { left: -140px;}
+#a7 { left: -165px;}
+#a8 { left: -180px;}
+
+/*main method*/
+ul#tngnav {
+	margin:0 0px 0px;
+} 
+
+#tngnav li {
+	margin: 0;
+}
+#tngnav a#a0 { left: 10px;}
+#tngnav a#a1 { left: -15px;}
+#tngnav a#a2 { left: -40px;}
+#tngnav a#a3 { left: -65px;}
+#tngnav a#a4 { left: -90px;}
+#tngnav a#a5 { left: -115px;}
+#tngnav a#a6 { left: -140px;}
+#tngnav a#a7 { left: -165px;}
+#tngnav a#a8 { left: -180px;}
+
+/*inactive tab*/
+#tngnav a {
+	color:#444;
+	background: url(../img/tngtab.png) no-repeat;
+	padding: 0.45em 1.9em 0.3em 26px;
+	border-right: 1px solid #aaa;
+	position: relative;
+}
+
+/*active tab*/	
+#tngnav a:hover {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFFFFF;
+}
+
+/*active tab*/
+#tngnav a.here {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFCC00;
+	border-right: 1px solid #777;
+	padding: 0.45em 1em 0.4em 26px;
+	margin: 0 4px 0 0;
+	position: relative;
+}
+
+/*everything below this point is to keep older browsers happy*/
+#tabs div {
+	height: 21px;
+}
+
+#tabs .divhere {
+	margin: 0 4px 0 0;
+}
+
+/*inactive tab*/
+#tabs a {
+	background: url(../img/tngtab.png) no-repeat;
+	color:#444;
+	padding: 0.3em 1.9em .6em 26px;
+	border-right: 1px solid #aaa;
+}
+
+/*active tab*/
+#tabs a:hover {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFFFFF;
+}
+
+/*active tab*/
+#tabs a.here {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFCC00;
+	padding: 0.3em 1.0em .6em 26px;
+}

@@ -1,0 +1,625 @@
+﻿/* Designed by Genealogy Web Templates
+   https://genealogywebtemplates.com 
+   
+#931813-dark color
+#ac2016-medium color
+#c00000-light color
+#f43034-lighter color
+#f9d1d2-lightest color
+#724d34-accent color
+*/
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+/* @import url(https://fonts.googleapis.com/css?family=Raleway|Open+Sans|Philosopher|Jura); */
+@font-face {
+  font-family: 'Philosopher';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/philosopher-v19-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/philosopher-v19-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/philosopher-v19-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/philosopher-v19-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/philosopher-v19-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/philosopher-v19-latin-regular.svg#Philosopher') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Jura';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/jura-v24-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/jura-v24-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/jura-v24-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/jura-v24-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/jura-v24-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/jura-v24-latin-regular.svg#Jura') format('svg'); /* Legacy iOS */
+}
+/* open-sans-regular - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/open-sans-v34-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/open-sans-v34-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/open-sans-v34-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/open-sans-v34-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/open-sans-v34-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/open-sans-v34-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+}
+
+html {height: 100%;}
+header, figure, figcaption, footer, nav, article, section, aside, summary {display: block;}
+body {background: #fff;font-family: 'Open Sans', Verdana, Helvetica, sans-serif;color: #202020;text-align: left;margin: 0 auto;padding: 0;	font-size: 100%;}
+/* ======================================================GENERAL STYLES====================================================== */
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {color: #931813;}
+
+/* visited: previously visited links */
+a:visited {color: #777777;}
+a {color: #931813; font-weight: normal; text-decoration: none; outline: none;}
+a:hover {color: #f43034; text-decoration: none; font-weight: normal; outline: none;}
+
+/* Horizontal Rules and Clear Floats */
+hr {background-color: #931813; border: none; color: #931813; height: 1px; clear: both;}
+hr.fancy {background: transparent url('../img/hr.png') center center no-repeat; color: #eee;  border: none; height: 80px;}
+hr.noshow {background-color: transparent; border: none; color: #fff; height: 0; clear: both; visibility: hidden;}
+.clearfix:before, .clearfix:after, .breadcrumbs:before, .breadcrumbs:after, .group:before, .group:after,
+.container:before, .container:after {display: table; content: "";}
+.clearfix:after, .container:after {clear: both;}.white * {color: #ffffff;}
+.clear {clear: both;}
+
+/*  Lists = */
+ul {margin: 10px 0 20px 0;	padding: 0 0 0 15px;}
+ul li a {color: #ac2016; font-weight: normal; padding: 0;}
+ul li a:hover {color: #404040; font-weight: normal; text-decoration: none;}
+
+ul.list1 li {list-style-type: none; position: relative; margin-left: -10px; padding-left: 20px;}
+ul.list1 li:before {position: absolute; font-family: 'FontAwesome'; font-size: 14px; top: 1px; left: 0; content: "\f0a9"; color: #ac2016;}
+
+ul.list4 {margin: 10px 0 20px 0; padding: 0 0 0 0;}
+ul.list4 li {list-style-type: none; line-height: 30px; width:300px; padding-left: 5px;background: #dddddd; background-image: linear-gradient(#dddddd, #fff, #dddddd); color: #931813;font-weight: normal; font-size:16px;
+	text-decoration: none; margin: 5px auto; border-radius: 5px;  transition: background-color 0.8s;box-sizing: border-box; display:block;}
+ul.list4 a::before { content: ""; transition: transform 0.3s ease;}
+ul.list4 li a {color: #931813; font-weight: normal; text-decoration: none; display:block;}
+ul.list4 li:hover {color: #fff!important; background: #931813; background-image: linear-gradient(135deg, #931813, #f43034, #931813); font-weight: normal;
+	text-decoration: none;box-sizing: border-box; display:block;}
+ul.list4 li a:hover {color: #fff!important; font-weight: normal; text-decoration: none; display:block;} 
+
+.list-inline {list-style: outside none none; margin-left: -5px; padding-left: 0;}
+.list-inline > li {display: inline-block; padding-left: 5px; padding-right: 5px;}
+
+/* ====================================================== TYPOGRAPHY ============================================================ */
+p a {word-wrap: break-word;}
+h1 {font: 2.9em 'Philosopher', Verdana, Helvetica, sans-serif; color: #ac2016; margin: .3em 0 .3em 0; letter-spacing: 1px;}
+h2 {font: 2.1em 'Philosopher', Arial, Verdana, Helvetica, sans-serif; color: #ac2016; margin: .3em 0; letter-spacing: 1px; text-align: center; border-bottom: 1px solid #ac2016;}
+h3 {font: 1.9em  'Philosopher',  Verdana, Helvetica, sans-serif; color: #ac2016; font-weight:normal; margin: 0 0 25px 0; padding: 5px 0;}
+h4 {font: normal 1.7em 'Jura', Verdana, Helvetica, sans-serif; color: #931813; margin: .3em 0;}
+h5 {font: normal 1.35em 'Philosopher', Verdana, Helvetica, sans-serif; color: #f43034; margin: .3em 0;}
+h6 {font: normal 1.2em 'Philosopher',Verdana, Helvetica, sans-serif; color: #457345; margin: .3em 0;}
+
+/* ======== v14 change for new relationship chart ======== */
+.plainheader, .adminsubhead {font-family: 'Philosopher', Verdana, Helvetica, sans-serif;}
+#pathlist .slashes {bottom: 2px;}
+#pathlist .upline {bottom: 2px;	font-size: 0.9em;}
+#pathlist .downline {top: -14px;font-size: 0.9em;}
+
+/* ======================================================HEADER AREA ======================================================*/
+/* ========== Header and Site Name ============== */
+header {background: #dddddd; background-image: linear-gradient(#dddddd, #fff, #dddddd); color: #000; padding-bottom: 12px;}
+.logo {float: left; width: 75%; text-align: left; padding: 10px 2% 0 10px;}
+.brand, .brand a, .brand a:hover {font: 48px 'Philosopher', Verdana, Helvetica, sans-serif; color: #931d0f; letter-spacing: -1px; text-decoration: none; margin: 0;}
+.slogan {font-size: 22px; font-family: 'Philosopher', cursive, Verdana, Helvetica, sans-serif; color: #931d0f; padding-left: 10px; margin: 0;}	
+.address {float: right; width: 20%; font-size: 90%; color: #777;}
+
+.title-area {width:100%; padding: 20px 0 0 0;}
+.title-area, .title-area a, .title-area a:hover  {font: 38px 'Philosopher', Verdana, Helvetica, sans-serif;	color: #ffffff!important; letter-spacing: -1px; text-decoration: none; margin: 0; }
+.logintext {float:right; color: #fff; font-size:10px; text-transform: none;}
+
+/* ========== Top Nav Coding ========== */
+.nav-primary { background-color:transparent; float: left; position: relative; margin: 16px 0 4px 0;}
+.nav-primary .nav-menu  a { color:#ffffff; }
+.nav-primary .nav-menu  a:hover { color:#c00000;}
+.nav-primary .nav-menu  a:active { color:#c00000;}
+.nav-primary .nav-menu .current-menu-item a {color:#fff;}
+.nav-primary .nav-menu .current-menu-item a:hover {color:#c00000;}
+
+.nav-menu {clear:both; width:100%; margin: -5px 0 20px 0!important; font-size:16px; font-weight:normal; display:inline-block; float: left!important;margin: 0; padding: 0; list-style: none;  text-transform: uppercase; background: #931813; background-image: linear-gradient(#931813, #f43034, #931813);
+   	color: #ffffff; box-sizing: border-box; height: 42px; border-top: 1px solid #ffffff; border-bottom: 1px solid #fff; box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.4);}
+.nav-menu .menu-item {display:inline-block;	text-align:left;}
+.nav-menu a {border:none; color:#222; padding:5px 20px 10px 20px; position:relative;}
+.nav-menu .menu-item:hover {position:static;}
+.nav-menu>.first>a {padding-left:0;}
+.nav-menu>.last>a {padding-right:0;}
+.nav-menu>.right {color:#fff; display:inline-block; float:right; list-style-type:none; padding:25px 0; text-transform:uppercase;}
+.nav-menu>.right>a {display:inline;	padding:0;}
+.nav-menu>.rss>a {margin-left:48px;}
+.nav-menu>.search {padding:7px 0 0;}
+.nav-menu .search-menu-item {display:inline-block !important; text-align:right; float:right; color: #cef8f7; padding: 12px 20px 8px 20px;}
+
+.topsearchnav li {display: inline-block;}
+
+/* ========== Main Nav Coding ========== */
+.menucontainer {display: inline-block;}
+
+div.icons {padding: 0;}
+div.icons a {color: #fff; font-weight: normal;}
+div.icons a:hover {color: #fff; background-color:#c00000; border-radius: 5px; font-weight: normal;}
+/*styles and positions the login text  */
+.tngsmallicon {background: transparent; padding:.1em 0px 0px 18px; height:16px; line-height:1.5; font-size: 16px; font-weight: normal; color: #fff;}
+
+/* link styling for Find Media Info*/
+ul.tngdd {background-color:transparent; margin: 0 0 20px 0;}
+ul.tngdd a {display:block; text-decoration:none; border-radius: 5px; color:#fff;}
+ul.tngdd .menulink {font-size: 16px; font-weight: normal; color: #fff!important; background: url('../img/ArrowDown.png') no-repeat 2px 11px; width:80px; border:none!important; padding-left: 30px; padding-right: 2px;  padding-top: 5px; padding-bottom: 8px;}
+ul.tngdd .menuhover, ul.tngdd .menulink:hover {background-color: #c00000!important; background:url('../img/ArrowDown.png') no-repeat 2px 11px; padding-top: 5px; padding-bottom: 8px;color:#fff; text-decoration:none; margin: 0 0 10px 0; border:none!important;}
+
+/*dropdown menu styles*/
+ul.tngdd ul li {width:175px; box-shadow: 3px 1px 3px 0px #666;}
+ul.tngdd ul li a {color: #000; font-size:13px; display:block; background-color:#eeeeee; color: #ac2016!important; border-top:1px solid #ffffff; border-radius: 0px; text-transform:none; width:170px;}
+ul.tngdd ul li a .menu-icon {margin: 1px 5px 0px 0px;}
+ul.tngdd ul li a:hover {background-color:#c00000; color: #fff!important; text-decoration:none;}
+ul.tngdd .sub {background: #c00000 url('../img/arrow.png') no-repeat 146px 7px; color: #000;}
+ul.tngdd .topline {border-top:1px solid #777;}
+ul.tngdd .stubmenu  {background: transparent; border-radius: 0; border: none;}
+
+ul.tngdd .stubmenu  {background-color: transparent; border-radius: 0; border: none;}
+.slidedown { background-color:#fff; color: #000;}
+
+ul.tngdd .langmenu {background-color: transparent; border-radius: 0; border-color:transparent; margin-top: 5px;}
+#newlanguage1 {font-size: 8pt!important; color: #fff; background-color: transparent; border:  1px solid transparent; text-transform: uppercase; margin:2px 0 0 5px;}
+#newlanguage1:hover {font-size: 8pt; color: #fff;  background-color: #c00000; border: 1px solid transparent; text-transform: uppercase;}
+
+div.icons-rt {font-size: 8pt; font-weight: normal; margin: 8px 0 0 0;}
+div.icons-rt a {font-size: 8pt!important; background: transparent; border: none; font-weight: normal; color: #fff;}
+div.icons-rt a:hover {text-decoration: underline;}
+
+/*styles and positions the login text  */
+.tngsmallicon3 {color:#c00000!important; font-size: 8pt; margin-top:-20px!important;margin-left:-190px; padding:2px!important;} 
+#profile-smicon:hover {color:#444!important; background:transparent!important;text-decoration: underline;}
+
+/* ====================================== ADMIN PAGE CODING =============================================== */
+.adminbody {background-color: #e9e9e9;}
+.databack, .reportcol li:hover { background-color:#e9e9e9;}
+
+.lightlink:hover, .lightlink:active {color: #f9d1d2; text-decoration: none;}
+/*for active secondary tab link*/
+a.lightlink3:link, a.lightlink3:visited, a.lightlink3:hover, a.lightlink3:active {color: #f9d1d2;}
+
+.admincell, .sideback {background-color:#931813; background-image:none;}
+a.admincell:hover, a.leftlink:hover {background-color:#777777;} /* This is the Admin Cell for People, Families, etc */
+
+.tngmsgarea .adminsubhead {color: #ac2016;} 
+.adminsubmsg {font-size: 12px;font-weight:bold;}
+.leftmenu {font-size:14px;}
+
+.adminnav .snlink {background-color: #777777;}
+.adminnav .snlinkact {background-color:#931813; color:#fff!important;}/*same as "fieldnameback" background color */
+
+.snlink {background-color:#931813; border-bottom:1px solid #aaa; border-right:1px solid #aaa; color:#fff !important; font-weight: bold;}
+p a.snlink {line-height: 2.5em; background-color:#777777; color:#fff!important; font-weight: bold;}
+
+a.snlink:hover {background-color:#777777 !important; color:#fff!important; font-weight: bold;}
+p a.snlink:hover {background-color:#931813!important; color:#fff!important; font-weight: bold;}
+
+.snlinkact {line-height: 2.5em; background-color:#931813; color:#fff!important; font-weight: bold;}
+
+.subhead {color:#ac2016;}
+.subheader { color:#ac2016;}
+
+/*Tabs Coding - also in tngtabs2.css*/
+ul#tngnav {margin:0 0px 0px 10px;}
+#tngnav li {margin: 0 0 0 1px;}
+#tngnav a {color:#ffffff; background:#777777; border-right:1px solid #444; padding: 0.45em 1em 0.35em 8px;border-radius: 4px 4px 0px 0px;}
+#tngnav a:hover {background:#931813; color:#fff;}/*active tab*/
+#tngnav a.here {background:#931813; color:#fff; border-right:1px solid #777; margin: 0;}/*active tab*/
+
+#tabs div {margin:0 1px 0 0; padding: 0em 0em .3em 0px;}/*to keep older browsers happy*/
+#tabs a {background: #ffffff; color:#444; padding: 0.4em 0.8em 0.4em 0.8em; border-right: 1px solid #aaa;} /*inactive tab*/
+#tabs a:hover {background: #931813; color:#ffffff;} /*active tab*/
+#tabs .here {background: #931813; color:#931813;} /*active tab*/
+
+.pedbox, .connectbox {background-color: #fef4f5 !important;}
+.pboxname {font-size: 10pt!important;}
+.fambox, .mfambox {background-color: #f9d1d2!important;}
+.fambackground {background-color: #f9d1d2;}
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback, .bar, .page, .LB_closeAjaxWindow, .tablesaw-cell-label {background-color:#931813; font-weight: bold;}
+.fieldnameback a:hover, .bar a:hover, .page a:hover, .LB_closeAjaxWindow a:hover, .tablesaw-cell-label a:hover {color: #f9d1d2;} /*I added the a:hover*/
+
+.titlebox, td.highlightedchild {background-color:#fbfbf9; box-shadow:4px 4px 6px 0 #777;}
+
+.hiddenbox {background-color: #f9d1d2!important;}
+.floverlr {background-color:#fef4f5!important;}
+
+.timeline-band-2 .timeline-ether-bg {background-color: #fef4f5!important;}
+
+/*Random Photo Coding*/
+.indexphototable {width: 80%; margin: 0 auto;}
+
+/* ========== Popup windows ========== */
+.LB_window {background:#f9d1d2; border:2px solid #000; color:#000;}
+.LB_content {background:#f9d1d2;}
+/* ========== Calendar ========== */
+table.calendar {background-color: #eeeeee!important; border: 1px solid #931813!important;}
+td.calDay {border-top: 1px solid #931813!important;border-left: 1px solid #931813!important;border-bottom: 2px solid #931813!important;border-right: 2px solid #931813!important;}
+#calLegend { background-color: #eeeeee!important; border: 1px solid #931813!important; font-size: 9pt; font-weight: bold; margin-top: 8px; padding: 4px; text-align: center;}
+a.hidden {background-color: #f9d1d2!important;}
+td.calToday {background-color: #fef4f5!important; border-top: 1px solid #931813!important; border-left: 1px solid #931813!important; border-bottom: 2px solid #931813!important; border-right: 2px solid #931813!important;}
+
+/* ========== Surname Cloud ==========  */
+.surnames-cloud, .surnames-cloud a {font-family: Verdana, Tahoma, Arial; padding: 2px 2px 2px 2px; letter-spacing:  0.0em; word-spacing: 0.0em; text-decoration: none; font-weight: normal; text-align: center; font-size: 14px;}
+
+a.size1  {color: #000099; font-size: 200%;} a.size1:link {color: #000099;} a.size1:visited {color: #000099;}
+a.size2  {color: #3333CC; font-size: 190%;} a.size2:link {color: #3333CC;} a.size2:visited {color: #3333CC;}
+a.size3  {color: #006633; font-size: 180%;} a.size3:link {color: #006633;} a.size3:visited {color: #006633;}
+a.size4  {color: #993300; font-size: 170%;} a.size4:link {color: #993300;} a.size4:visited {color: #993300;}
+a.size5  {color: #CC0033; font-size: 160%;} a.size5:link {color: #CC0033;} a.size5:visited {color: #CC0033;}
+a.size6  {color: #666666; font-size: 150%;} a.size6:link {color: #666666;} a.size6:visited {color: #666666;}
+a.size7  {color: #CC9900; font-size: 140%;} a.size7:link {color: #CC9900;} a.size7:visited {color: #CC9900;}
+a.size8  {color: #999933; font-size: 130%;} a.size8:link {color: #999933;} a.size8:visited {color: #999933;}
+a.size9  {color: #000000; font-size: 120%;} a.size9:link {color: #000000;} a.size9:visited {color: #000000;}
+a.size0  {color: #000000; font-size: 100%;} a.size0:link {color: #000000;} a.size0:visited {color: #000000;}
+
+/* ===================================================TEXT AREA CODING - WIDGETS ================================================= */
+	/*the header icons located at the top of the content area (sources, search, surname list, etc) */
+.headericon {font-size: 28px;color: #ac2016;margin: 5px 10px 0 0;}
+	/*the h1 header text located at the top of the content area (sources, search, surname list, etc) */
+.header {margin-right: 5px;font-size: 28px;font-weight: bold;color: #931813;line-height: 32px;}
+
+/*  ===================================================== PARAGRAPHS ============================================================== */
+.left {text-align: left;}
+.center {text-align: center;}
+.right {text-align: right;}
+.tiny {font-size: 65%;}
+.small {font-size: 85%;}
+.medium {font-size: 90%;}
+.large {font-size: 120%;}
+.xlarge {font-size: 180%;}
+.xxlarge {font-size: 52px; font-weight: bold;}
+.authorDate {color: #333; font-size: 1.5em; text-transform: uppercase;	border-bottom: 1px #333 solid; font-weight: lighter; letter-spacing: 2px;margin: 0 0 15px 0; padding: 0;}/* Drop Caps ========== */
+.lead2 {font-size: 22px; line-height: 22px; font-variant: small-caps;}
+.dropcap {overflow: hidden;}
+.dropcap:first-letter {background-position: 0% 0%; color: #fff; display: block; float: left; font: 60px/50px Georgia, Garamond, serif; padding: 14px; border-radius: 50%; margin: 5px 6px 0 0;
+	text-align: center; background-image: linear-gradient(135deg, #931813, #f43034, #931813); background-color: #931813; background-repeat: repeat; background-attachment: scroll;}
+
+/* ================================================== IMAGE STYLES ============================================================== */
+img {border: none; box-sizing: border-box;}
+.img-border {margin: 5px 10px 0 0; border: 1px #777 solid;}
+.img-border-left {float: left; background: #ffffff; border: 1px #aaa solid; padding: 3px; margin: 4px 20px 4px 0;}
+.img-border-right {float: right; background: #ffffff; border: 1px #aaa solid; padding: 3px; margin: 4px 20px 4px 0;}
+.img-right-border {margin: 5px 0 0 10px; float: right; border: 1px #777 solid;}
+.img-right {margin: 5px 0 10px 18px; float: right; }
+.img-left {margin: 5px 18px 10px 0; float: left; }
+
+.img-frame {background: #ffffff; border: 1px #aaa solid; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); padding: 3px; margin: 12px; }
+.img-frame-right {background: #ffffff; border: 1px #aaa solid; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); padding: 3px; margin: 5px 0 10px 18px; float: right; }
+.img-frame-left {background: #ffffff; border: 1px #aaa solid; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); padding: 3px; margin: 5px 18px 10px 0; float: left; }
+
+.img-curved {border-radius: 10px; margin: 4px 10px; border: 1px #444 solid;	box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.5);}
+.img-curved-right {border-radius: 10px; margin: 5px 0 10px 18px; float: right; border: 1px #444 solid; box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.5);}
+.img-curved-left  {border-radius: 10px; margin: 5px 18px 10px 0; float: left; border: 1px #444 solid; box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.5);}
+
+.img-shadow {margin: 5px 10px; border:1px solid #777; box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3)}
+.img-shadow-right {margin: 5px 0 0 10px; border:1px solid #777; float: right; box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.5); }
+.img-shadow-left {margin: 5px 10px 0 0; border:1px solid #777; float: left; box-shadow: 0 10px 10px -9px rgba(0, 0, 0, 0.5); }
+
+.img-round {border-radius: 50%; border: 2px #fff solid; box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.7);}
+.img-round-left {border-radius: 50%; float: left; border: 1px #444 solid; box-shadow: 0 10px 10px -9px rgba(0, 0, 0, 0.5); margin-right: 10px;}
+.img-round-right {border-radius: 50%; float: right; border: 1px #444 solid; box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.5); margin-left: 10px;}
+.img-round2 {border-radius: 50%; border: 1px #c00000 solid; padding:2px;}
+
+.img-rotate-right {margin: 20px; transform: rotate(4deg);}
+.img-rotate-left {margin: 20px; transform: rotate(-4deg);}
+
+.img-small {max-width: 150px; height: auto;}
+.img-gallery {border: 1px #d0d0d0 solid; padding: 1%; margin: 1% 2%;}
+.img-catalog {border: 1px #d0d0d0 solid; padding: 3px; margin: 1% 2%;	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);}
+
+.img-logo {max-width: 114px;}
+
+/*Random Photo Coding*/
+.indexphototable {width: 80%; margin: 0 auto 10px auto; padding: 3px; border: 1px #aaa solid; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);}
+.indexphoto {background: #ffffff; border: 1px #aaa solid; padding: 3px; margin:5%; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); width:90%;}
+
+/* ========================================== LAYOUT RULES and BLOCK ELEMENTS ================================================== */
+.featured-content {font-size: 14px; clear:both; overflow:hidden;}
+div.innercontainer {background-color: transparent; border-radius: 0; border: none;}
+
+.container {width: 1212px; margin: 0 auto; text-align: left;}
+.inside {padding: 10px;}
+
+/* ======== SECTION BLOCKS ======== */
+.contentBox2a {float: left; width: 48%; padding: 0; margin: 0 2% 0 0;}
+.contentBox2b {float: right; width: 48%; padding: 0; margin: 0 0 0 2%;}
+
+.contentBox3a {float: left; width: 31.33333%; padding: 0; margin: 0 2% 5px 0;}
+.contentBox3b {float: left; width: 31.33333%; padding: 0; margin: 0 1% 5px 1%;}
+.contentBox3c {float: left; width: 31.33333%; padding: 0; margin: 0 0 5px 2%;}
+
+.contentBox4a {float: left; width: 22.5%; padding: 0; margin: 0 1% 0 0;}
+.contentBox4b, .contentBox4c {float: left; width: 22.5%; padding: 0; margin: 0 1% 0 1%;}
+.contentBox4d {float: left; width: 22.5%; padding: 0; margin: 0 0 0 1%;}
+
+.sidebarLeft {float: left; width: 23%; padding: 0; margin: 0 1% 0 0;}
+.contentRight {float: right; width: 75%; padding: 0; margin: 0 0 0 0;}
+
+.sidebarRight {float: right; width: 31.3333%; padding: 20px 0 0 0; margin: 0 0 0 1%;}
+.contentLeft {float: left; width: 65.666%; padding: 0; margin: 0 0 0 1%;}
+
+/* ======== FOOTER ======== */
+footer {clear: both; width: 100%; padding: 20px 0; color: #fff; text-align:left; background: #931813; background-image: linear-gradient(135deg, #931813, #f43034, #931813); box-shadow: inset 0 5px 20px rgba(0, 0, 0, 0.4), 0 15px 20px -15px rgba(0, 0, 0, 0.4);	
+	margin-top: 20px;}
+footer p {padding: 0; margin: 0;}
+footer a {color: #fef4f5!important; text-decoration: none; font-weight: normal; outline: none;}
+footer a:hover {color: #fff; text-decoration: none; font-weight: normal; outline: none;}
+.copyright {letter-spacing: 3px; text-align: center; font-size: 90%; color: #fff; margin: 0; padding:0;}
+
+/* ========================== SPECIAL BLOCKS =================================== */
+/* -----  Top Section with Nivo Slider ----- */
+#topsection {padding: 20px 0 20px 0; width: 100%; margin: 0 auto;}
+#topsection h2 {font: 38px 'Philosopher', Verdana, Helvetica, sans-serif; color: #931813; margin: .3em 0 .3em 0; letter-spacing: 1px; text-shadow: 1px 1px 1px rgba(0,0,0,0.8); text-align: center; border-bottom: none;}
+#topsection p {font: 1.2em 'Philosopher', Verdana, Helvetica, sans-serif; color: #202020;}
+
+/*-----Postcards-----*/
+.postcard {margin: 0 0 30px 0; overflow: hidden; background: #fff; border: 1px #aaa solid; padding: 3px; color: #fff;}
+.postcard .thumbnail {position: relative; margin: 0; border-radius: 0; box-shadow: none; border: none; padding: 0; background: none; text-align: left;}
+.postcard .caption {padding: 11px 15px 33px 12px; overflow: hidden; position: relative; background: #ac2016 linear-gradient(#f43034, #ac2016);
+ 	transition: all 0.25s; margin-top:-4px;}
+.postcard:hover .thumbnail .caption {transition: all 0.25s; background: #ac2016;}
+.title2 {font:16px 'Muli', Helvetica, Arial, sans-serif; color: #fff; text-transform: uppercase; margin: 0 0 3px 0;}
+.postcard .thumbnail .caption a {font-size: 22px; color: #ffffff; float: right; position: absolute; bottom: 8px; right: 13px; transition: all 0.25s;}
+.postcard .thumbnail .caption a:hover {color: #f43034;}
+.postcard figure {margin: 0; position: relative;}
+.postcard figure .box { position: absolute; padding: 0 0 12px 15px; bottom: 0; left: 0;}
+.postcard figure .box .title {font: 16px 'Philosopher', Helvetica, Arial, sans-serif; color: #fff; margin: 0;}
+.postcard figure .box .description {font: 900 12px/16px 'Muli', Helvetica, Arial, sans-serif; color: #ffffff; text-transform: uppercase; 	margin: 0;}
+.postcard figure img {width: 100%;}
+
+/*  ========== Color Box and Call Boxes ========== */
+.callbox2 {text-align: left; width: 50%; padding: 20px 10px; margin: 0 auto; color: #ffffff; font-size: 18px; background: rgba(0, 0, 0, 0.8); border-radius: 10px;
+	box-shadow: 0 0 0 5px #931813 inset, 0 0 0 6px rgba(255, 255, 255, 0.6) inset, 0 0 40px #000000 inset, 0 10px 15px -10px rgba(0,0,0,0.6); min-height: 250px;}
+.callbox2 h5 {color: #ffffff; text-align: center;}
+
+.alignleft {float: left; padding: 0; margin: 0;}
+.alignright {float: right; padding: 0; margin: 0;}
+
+/* ======================================================BUTTONS & MISCELLANEOUS ================================================= */
+input[type=button], input[type=submit], input[type=reset], button {background-color: #931813; color: #ffffff!important; font-weight:normal;}
+.btn:hover, .btn:focus, .btn.focus {color: #931813!important; background-color: #adadad!important; text-decoration: none;}
+
+.btn-detail {position: relative; background: #931813; background-image: linear-gradient(135deg, #931813, #f43034, #931813); background-position: center; transition: background-color 0.8s;
+	border: 1px solid #931813; color: #fff!important; cursor: pointer; font-weight: normal; font-size: 80%; text-decoration: none; padding: 5px 35px 5px 5px; border-radius: 5px; text-transform:uppercase;}
+.btn-detail:after {position: absolute; font-family: 'FontAwesome'; content: "\f0a9"; top: 7px; right: 10px;}
+.btn-detail:hover {background-color: #f43034; background-image: radial-gradient(circle, transparent 1%, #f43034 1%); background-position: center; background-size: 15000%; border: 1px solid #931813;
+	color: #fff; font-weight: normal; text-decoration: none;}
+.btn-detail a {color: #ffffff; text-decoration: none !important; font-weight: normal; outline: none;}													
+.btn-detail:active {transition: background-color 0s; background-color: #931813; background-size: 100%;}
+
+.btn-small {position: relative; background: #931813; background-image: linear-gradient(135deg, #931813, #f43034, #931813);	background-position: center; transition: background-color 0.8s;
+	border: 1px solid #931813; color: #fff!important; cursor: pointer; font-weight: normal; font-size: 12px; text-decoration: none; padding: 5px 5px 5px 5px; border-radius: 5px;	text-transform:uppercase;}
+.btn-small:hover {background-color: #f43034; background-image: radial-gradient(circle, transparent 1%, #f43034 1%); background-position: center; background-size: 15000%; border: 1px solid #931813; 
+	color: #fff; font-weight: normal; text-decoration: none;}
+.btn-small a {color: #ffffff; text-decoration: none !important; font-weight: normal; outline: none;}
+.btn-small:active {transition: background-color 0s; background-color: #931813; background-size: 100%;}
+
+/* Scroll to Top ========== */
+.scroll-to-top {display: none; position: fixed; bottom: 20px; right: 10px; z-index: 5; width: 30px; height: 30px; padding: 8px; text-align:center; color: #ffffff;
+	text-decoration: none; background-color: #931813; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); border-radius: 50%;}
+.scroll-to-top:hover {text-decoration: none; background-color: #f43034;	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);}
+.scroll-to-top a, .scroll-to-top a:hover {text-decoration: none;}
+
+/* Ticker============= */
+#ticker {list-style: none outside none; margin: 0; min-height: 150px;}
+#ticker li {margin: 0; background: none; padding: 0;}
+#ticker p {color: #ffffff;	font-size: 18px; padding-left: 20px; margin-top: 0; padding-top: 0;}
+#ticker .tcontent {color: #ffffff; padding: 20px;}
+#ticker .author {color: #fbfbfb; text-align: right; font-size: 0.90em; font-style: italic; letter-spacing: 2px; padding: 0 10px 20px 0;}
+.testimonial {position: relative; color: #ffffff;}
+.testimonial::before {position: absolute; color: #fff; font-family: 'FontAwesome';	font-size: 24px; content: "\f0e5"; top: 15px; left: -5px; text-shadow: 1px 2px 3px rgba(0,0,0,0.3);}
+
+/* =================================================== SLIMMENU - MENU2 - OPTIONAL ================================================= */
+/* ========== NON-MOBILE TOP LEVEL ============= */
+ul.slimmenu {width: 100%; text-align:center;}
+ul.slimmenu li {text-align: center;}
+ul.slimmenu > li {margin-right: -4px; border-left: 1px solid rgba(0, 0, 0, 0.05);}
+ul.slimmenu li a {display: block; font-size: 14px; font-weight: normal; color: #fff; padding: 12px 15px 12px 15px; display: block; font-family: 'Open Sans', sans-serif; transition: background-color 0.2s ease-out; }
+ul.slimmenu li a:hover {color: #fff; background: #931813;}
+ul.slimmenu li .sub-collapser > i {color: #fff; /* arrow color */  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);}
+
+/* ======== NON-MOBILE SUB LEVELS ============== */
+ul.slimmenu li ul li .sub-collapser > i {color: #fff; /* arrow color */}
+ul.slimmenu li ul li {width: 160px; background-color: #931813; text-align: center;}
+ul.slimmenu li ul li a {color: #fff;}
+ul.slimmenu li ul li a:hover {color: #fff; background-color: #f43034;}
+ul.slimmenu li ul li ul li{background-color: #c00000; text-align: center;}
+/* === edit with caution === */
+ul.slimmenu {list-style-type: none; margin: 0; padding: 0; font-size: 0.90em;}
+ul.slimmenu li {position: relative; display: inline-block;}
+ul.slimmenu > li:first-child {border-left: 0;}
+ul.slimmenu > li:last-child {margin-right: 0;}
+ul.slimmenu li ul li:last-of-type {border-bottom: none;}
+ul.slimmenu li ul {margin: 0; list-style-type: none; text-transform: none;}
+ul.slimmenu li .sub-collapser {position: absolute; right: 0; top: 0; width: 30px; height: 100%; text-align: left; z-index: 999; cursor: pointer;}
+ul.slimmenu li .sub-collapser:before {content: ''; display: inline-block; height: 100%; vertical-align: middle; margin-right: 0;}
+ul.slimmenu li .sub-collapser > i,
+ul.slimmenu li ul li .sub-collapser > i {font-size: 14px; display: inline-block; vertical-align: middle;}
+ul.slimmenu li > ul {display: none; position: absolute; left: 0; top: 100%; z-index: 999; padding-left: 0; box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);}
+ul.slimmenu li > ul > li ul {display: none; position: absolute; left: 100%; top: 0; z-index: 999; width: 100%; white-space: normal; padding-left: 0;}
+ul.slimmenu li a:hover,
+ul.slimmenu li ul li a:hover {text-decoration: none;}
+
+
+/* WOW ========== */
+.wow {opacity: inherit;}
+/* ======== ANIMATION EFFECTS ======== 
+Animate.css - http://daneden.me/animate
+Licensed under the MIT license - http://opensource.org/licenses/MIT
+Copyright (c) 2014 Daniel Eden
+====================================== */
+.animated {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+@-webkit-keyframes zoomIn {
+  0% {opacity: 0; -webkit-transform: scale3d(.3, .3, .3); transform: scale3d(.3, .3, .3);  }
+  50% {opacity: 1;} }
+@keyframes zoomIn {
+  0% {opacity: 0; -webkit-transform: scale3d(.3, .3, .3); transform: scale3d(.3, .3, .3);}
+  50% {opacity: 1;} }
+.zoomIn {-webkit-animation-name: zoomIn; animation-name: zoomIn;}
+
+
+/* ================================================================================================================================== */
+/* ================================================================= MEDIA QUERIES ================================================== */
+/* ================================================================================================================================== */
+                                               /* ================= SMALL DEVICE 01 ==================== */
+/* ================================================================================================================================== */
+@media screen and (max-width: 320px) {
+	.container  {width: 95%; margin: 0 auto;}
+	.nav-menu {height: auto;}
+	.nav-menu .search-menu-item {display:block !important;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+/* === content box coding ==== */
+   	.contentBox2a {width: 98%; padding: 0;  margin: 0 auto 20px auto; } 
+   	.contentBox2b {width: 98%; padding: 0;  margin: 0 auto 20px auto; }
+   	.contentBox3a, .contentBox3b, .contentBox3c, 
+   	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d,
+   	.contentBox5a, .contentBox5b, .contentBox5c, .contentBox5d, .contentBox5e {width: 98%; margin: 0 1% 20px 1%; padding: 0; float: none;}
+   	.sidebarLeft, .sidebarRight {width: 98%; margin: 1%; padding: 0; float: none;}
+   	.contentRight, .contentLeft {width: 98%; margin: 1%; padding: 0; float: none;}
+   	.contentBox25Left, .contentBox25Right {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+   	.contentBox75Left {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+   	.contentBox75Right {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.postcard {max-width: 275px;margin: 0 auto; padding: 0 5px; border: none;}
+	/* === miscellaneous coding ==== */
+	h1 {font-size: 36px;}
+	h2 {font-size: 32px}
+	.brand, .brand a, .brand a:hover {font-size: 28px;}
+	.slogan {clear: both;text-align: center;}
+}
+/* ================================================================================================================================== */
+                                   /* ================= SMALL DEVICE 02 ======================= */
+/* ================================================================================================================================== */
+@media screen and (min-width: 321px) and (max-width: 480px) {
+	.container {width: 95%; margin: 0 auto;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+	.nav-menu {width: 98%;height: auto;}
+/* === content box coding ==== */
+   	.contentBox2a, .contentBox2b, 
+   	.contentBox3a, .contentBox3b, .contentBox3c, 
+   	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d  {width: 450px;padding: 0; margin: 20px auto; float: none;}
+   	.sidebarLeft, .sidebarRight {width: 98%; padding: 0; margin: 20px auto; float: none; max-width: 450px;}
+   	.contentRight, .contentLeft {width: 98%; margin: 1%; padding: 0; clear:both;}
+	.contentBox25Left, .contentBox25Right {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Left {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Right {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.postcard {max-width: 275px; margin: 0 auto;}
+	/* === miscellaneous coding ==== */
+	.text-align-right {text-align:center; padding-right: 0;}
+	.text-align-right {text-align:center; padding-right: 0;}
+	.brand, .brand a, .brand a:hover {font-size: 28px;}
+	.slogan {clear: both;text-align: center;}
+}
+/* ================================================================================================================================== */
+                                   /* =================== SMALL DEVICE 03 ===================== */
+/* ================================================================================================================================== */
+@media screen and (min-width: 481px) and (max-width: 623px) {
+	.container {width: 96%; margin: 0 auto;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+	.nav-menu {width: 98%;height: auto;}
+	/* === content box coding ==== */
+   	.contentBox2a, .contentBox2b, 
+   	.contentBox3a, .contentBox3b, .contentBox3c, 
+   	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d,
+   	.contentBox5a, .contentBox5b, .contentBox5c, .contentBox5d, .contentBox5e {width: 98%; padding: 0; margin: 20px auto; float: none; max-width: 450px;}
+   	.sidebarLeft, .sidebarRight {width: 98%; padding: 0; margin: 20px auto; float: none; max-width: 450px;}
+   	.contentRight, .contentLeft {width: 98%; margin: 1%; padding: 0; clear:both;}
+	.contentBox25Left, .contentBox25Right {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px; text-align: center;}
+	.contentBox75Left {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Right {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.postcard {max-width: 275px; margin: 20px auto; }
+}
+/* ================================================================================================================================== */
+                                    /* ====================== MID DEVICE 01 ====================== */
+/* ================================================================================================================================== */
+@media screen and (min-width: 624px) and (max-width: 669px) {
+	.container {width: 97%; margin: 0 auto;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+	.nav-menu {height: auto;}
+	/* === content box coding ==== */
+   	.contentBox2a, .contentBox2b, 
+   	.contentBox3a, .contentBox3b, .contentBox3c {width: 98%; padding: 0; margin: 0 auto 20px auto; float: none; max-width: 450px;}
+   	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d,
+   	.contentBox5a, .contentBox5b, .contentBox5c, .contentBox5d, .contentBox5e {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+   	.sidebarLeft, .sidebarRight {width: 98%; padding: 0; margin: 20px auto; float: none; max-width: 450px;}
+   	.contentRight, .contentLeft {width: 98%; margin: 1%; padding: 0; clear:both;}
+	.contentBox25Left, .contentBox25Right {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px; text-align: center;}
+	.contentBox75Left {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Right {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.postcard {max-width: 275px; margin: 20px auto; }
+}
+/* ================================================================================================================================== */
+                                                  /* ================== MID DEVICE 02 ================ */
+/* ================================================================================================================================== */
+@media screen and (min-width: 670px) and (max-width: 768px) {
+	.container {width: 97%; margin: 0 auto;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+	.nav-menu {height: auto;}
+	/* === content box coding ==== */
+   	.contentBox2a,  .contentBox2b,
+   	.contentBox3a, .contentBox3b, .contentBox3c {width: 98%; padding: 0;  margin: 0 auto 20px auto; float: none; max-width: 450px;}
+   	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d,
+   	.contentBox5a, .contentBox5b, .contentBox5c, .contentBox5d, .contentBox5e {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+   	.sidebarLeft, .sidebarRight {width: 98%; padding: 0; margin: 20px auto; float: none; max-width: 450px;}
+   	.contentRight, .contentLeft {width: 98%; margin: 1%; padding: 0; clear:both;}
+	.contentBox25Left, .contentBox25Right {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px; text-align: center;}
+	.contentBox75Left {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Right {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.postcard {max-width: 275px; margin: 20px auto; }
+}
+/* ================================================================================================================================== */
+                                               /* ================== MID DEVICE 03 ================= */
+/* ================================================================================================================================== */
+@media screen and (min-width: 769px) and (max-width: 850px) {
+	.container {width: 97%; margin: 0 auto;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+	/* === content box coding ==== */
+   	.contentBox2a, .contentBox2b,
+   	.contentBox3a, .contentBox3b, .contentBox3c {width: 98%; padding: 0;  margin: 0 auto 20px auto; float: none; max-width: 450px;}
+   	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d,
+   	.contentBox5a, .contentBox5b, .contentBox5c, .contentBox5d, .contentBox5e {width: 48%; margin: 1%; padding: 0;}
+   	.sidebarLeft, .sidebarRight {width: 98%; padding: 0; margin: 20px auto; float: none; max-width: 450px;}
+   	.contentRight, .contentLeft {width: 98%; margin: 1%; padding: 0; clear:both;}
+	.contentBox25Left, .contentBox25Right {width: 98%; padding: 0; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Left {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.contentBox75Right {float: none; width: 98%; margin: 0 auto 0 auto; float: none; max-width: 450px;}
+	.postcard {max-width: 275px; margin: 0 auto; }
+}
+/* ================================================================================================================================== */
+                                         /* ================== LG DEVICE 01 ================= */
+/* ================================================================================================================================== */
+@media screen and (min-width: 851px) and (max-width: 1024px) {
+  	.container {width: 98%;	margin: 0 auto;}
+	div.icons-rt {font-size: 10px;	font-weight: normal;margin: 0; float: left;}
+	ul.tngdd {float:left!important;}
+	.contentBox4a, .contentBox4b, .contentBox4c, .contentBox4d {width: 48%; margin: 1%; padding: 0;}
+	.postcard {max-width: 275px; margin: 0 auto; }
+}
+/* ================================================================================================================================== */
+                                         /* ================== LG DEVICE 02 ================= */
+/* ================================================================================================================================== */
+@media screen and (min-width: 1025px) and (max-width: 1279px) {
+	.container {width: 98%; margin: 0 auto;}
+}
+

@@ -1,0 +1,499 @@
+/* templatestyle.css for template 8 overrides to TNG genstyle.css   */
+
+/* body: describes page background color and all non-table text not governed by any other style */
+.templatebody {
+	background: #211a16;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding: 0px;
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+
+/* header: heading text */
+.header {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+	font-size: 25px;
+	color: #211A16;
+}
+a.headerlink:link {
+	color: #CCCCCC;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+/* font overrides */
+.normal, .smfieldname, .whiteheader, .subhead, .pboxname, .pboxdates, .pboxpopup, .whitesubhead, .smaller, #loadingdiv, #sscontrols, .smallest, .subheadbold, .largeheader {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+/* link definitions */
+/* link: normal links, active: links in use */
+a:link, .plainheader, div.icons a {
+	color: #504034;
+}
+
+a:visited {
+	color: #504034;
+}
+
+a:hover {
+	color: #211a16;
+}
+
+a.lightlink:link, a.lightlink:visited {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+a.lightlink:hover, a.lightlink:active {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+	color: #F2E6CC;
+}
+
+a.lightlink2:link, a.lightlink2:visited {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+/* fieldname: regular text within column or row title sections */
+.fieldname {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+	color: #F2E6CC;
+}
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback,
+.tablesaw-cell-label {
+	background-color: #504034;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #211a16;
+	border-bottom-color: #211a16;
+}
+
+/* databack: background color for data areas */
+.databack, .reportcol li:hover {
+	background-color: #f9f5f0;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #E1DECB;  
+}
+
+/* sideback: background color for side and top frames */
+.sideback {
+	background-image: url(../img/admin_bg.gif);
+}
+
+/* fieldnameback: background color for column and row title sections */
+/* sideback: background color for side and top frames */
+.LB_closeAjaxWindow, .bar, .sideback {
+	background-color : #211a16;
+}
+
+/* background color for admin menu items while active*/
+a.admincell:hover, a.leftlink:hover {
+	background-color: #C3B165;
+}
+
+.adminbody {
+	background-image: url(../img/bg.gif);
+}
+
+#navcontainer {
+	width: 100px;
+}
+#navcontainer ul {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+	margin-left: 3px;
+	padding-left: 0px;
+	list-style-type: none;
+	font-size: 10px;
+}
+#navcontainer a {
+	background-color: #FFFFFF;
+	display: block;
+	width: 100px;
+	padding: 3px;
+}
+.navtext {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #3E331D;
+	padding-left: 7px;
+}
+
+#navcontainer a:link {
+	color: #3E331D;
+	text-decoration: none;
+}
+#navlist a:visited {
+	color: #3E331D;
+	text-decoration: none;
+}
+#navcontainer a:hover {
+	background-color: #F2E6CC;
+}
+
+.home_section {
+	width: 30%;
+	padding-left: 8px;
+	padding-right: 10px;
+	padding-top: 10px;
+	background: #fff url(../img/bg.gif);
+	vertical-align: top;
+}
+
+#hs1 {
+	-webkit-border-radius: 10px 0px 0px 10px;
+	border-radius: 10px 0px 0px 10px;
+}
+
+.latest_news {
+	width: 95%;
+	padding-left: 8px;
+	border: 1px solid #211a16;
+	padding-top: 10px;
+	background-color: #fff;
+	vertical-align: top;
+}
+
+.home_table {
+	margin: 0px;
+	padding: 0px;
+	border-collapse: collapse;
+}
+
+.indexphoto {
+    border: 0;
+}
+
+.indexphototable {
+    float: left;
+    text-align: center;
+    padding-right: 6px;
+}
+
+.homenav_col {
+	text-align: left;
+	vertical-align: top;
+	width: 100px;
+	padding: 15px 10px 0px 10px;
+	background-color: #211a16;
+	font-size: 13px;
+}
+
+.homenav, .homenav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.homenav li {
+    background-color: #211a16;
+    color: #e9cfa2;
+	-webkit-border-radius: 3px 4px 4px 3px;
+	border-radius: 3px 4px 4px 3px;
+	padding: 2px 1px 2px 5px;
+}
+
+.homenav li:hover {
+	background-color: #e9cfa2;
+	color: #211a16;
+}
+
+.homenav li:hover a {
+	color: #211a16;
+}
+
+.homenav a {
+	text-decoration: none;
+	color:#e9cfa2;
+	display:block;
+}
+
+.homenav a:hover {
+	color: #211a16;
+}
+
+.homenav a:visited {
+	color:#e9cfa2;
+}
+
+.page {
+	background-color : #211a16;
+	padding: 0;
+	margin: 0;
+	border-collapse: collapse;
+	table-layout: fixed;
+	width: 100%;
+}
+
+/* header-title is defined to replace the hard-coded style in topmenu.php */
+.headerrow {
+	background-color: #211a16;
+	font-family: Century Gothic, Calibri, Arial, Helvetica, sans-serif;
+	padding-left: 15px;
+	vertical-align: top;
+	height: 72px;
+	width: 100%;
+}
+
+.menurow {
+	width: 100%;
+	height: 46px;
+	background: #211a16 url(../img/header_bg_short.gif) repeat-x;
+}
+
+.menucol {
+	text-align: left;
+	vertical-align: top;
+	padding-left: 15px;
+}
+
+/* left and right borders */
+.mainborder {
+    background: url(../img/border.gif) repeat-y;
+}
+
+/* text in the header */
+.text_white {
+	color: #fff;
+}
+
+.text_tan {
+	color: #e9cfa2;
+}
+
+.text_grey {
+	color: #999;
+}
+
+.text_brown {
+	color: #b99852;
+}
+
+.headertable {
+    border-collapse: collapse;
+	width: 100%;
+}
+
+.headertextrow {
+	vertical-align: top;
+}
+
+.headertext {
+	font-size: 35px;
+}
+
+.mmaintitle {
+	font-family: Century Gothic, Calibri, Arial, Helvetica, sans-serif;
+}
+
+.mainbg {
+	background: #fff url(../img/bg.gif);
+	padding: 10px;
+	margin: 0;
+}
+
+.homebg {
+	background-color: #fff;
+	padding: 0;
+	margin: 0;
+}
+
+.searchtext {
+	font-size: 11px;
+	color: #b99852;
+	text-align: right;
+	vertical-align: top;
+	padding-right: 5px;
+}
+
+.subsearch {
+	background-color: #211a16;
+	color: #b99852;
+}
+
+a.subsearch:link, a.subsearch:visited {
+	background-color: #211a16;
+	color: #b99852;
+	font-size: 10px;
+}
+a.subsearch:hover {
+	background-color: #211a16;
+	color: #e9cfa2;
+	font-size: 10px;
+}
+
+a.footer:link, a.footer:visited {
+	color: #b99852;
+}
+a.footer:hover {
+	color: #e9cfa2;
+}
+
+.logintext {
+	font-size: 12px;
+	color: #b99852;
+	vertical-align: top;
+	text-align: right;
+}
+
+a.logintext:link, a.logintext:visited {
+	color: #b99852;
+}
+a.logintext:hover {
+	color: #e9cfa2;
+}
+
+/* footer added to replace <font size="1" color="#cccc99"> in footer */
+.footer {
+	font-size: 11px;
+	color: #cccc99;
+	text-align: center;
+}
+
+/* footer:link added to replace <font color="#E1B964"> in footer */
+a.footer:link {color: #B99852;}
+a.footer:visited  {color: #B99852;}
+
+a.footer:hover {
+	color: #FFCC33;
+}
+
+.footerbold {
+	color: #FFCC33;
+	font-weight: bold;
+}
+
+/* additional classes added for strict validation  */
+
+.snlink {
+	background-color:#fff;
+	border-left:1px solid #fff;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #211a16;
+	border-right:1px solid #211a16;
+}
+
+a.snlink {
+	color: #211a16;
+	background-color:#fff;
+	border-left:1px solid #e9cfa2;
+	border-top:1px solid #e9cfa2;
+	border-bottom:1px solid #211a16;
+	border-right:1px solid #211a16;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#504034;
+	color: #fff;
+	border-left:1px solid #e9cfa2;
+	border-top:1px solid #e9cfa2;
+	border-bottom:1px solid #211a16;
+	border-right:1px solid #211a16;
+}
+
+.LB_window {
+	background: #f9f5f0;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.menucontainer {
+    margin-top:10px;
+    margin-bottom:14px;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #211a16;
+}
+
+ul.tngdd {
+    background-color:#211a16;
+}
+
+ul.tngdd a {
+	color:#e9cfa2;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#f9f5f0;
+}
+
+ul.tngdd ul li a {
+	color: #211a16;
+	border-top:1px solid #504034;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#695445;
+	color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #211a16 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border:1px solid #211a16;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border:1px solid #211a16;
+	color: #ffffff;
+	background: #211a16 url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #211a16;
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+div.icons-rt {
+	padding-bottom:3px;
+}
+
+div.icons a, div.icons-rt a {
+	color:#EBDEC5;
+}
+
+.fambackground {
+	background-color: #f9f5f0;
+}
+
+@media (max-width: 700px) {
+	.homenav_col {
+		display:none;
+	}
+	.home_section {
+		display:inline;
+		padding:0;
+	}
+	.headerrow {
+		width:inherit;
+	}
+}
+
+@media (max-width: 500px) {
+	.headerrow {
+		height:50px;
+	}
+	.headertext {
+		font-size:24px;
+	}
+
+}

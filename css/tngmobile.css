@@ -1,0 +1,287 @@
+body {
+	margin: 8px;
+	background-image: none;
+	font-size: 14px;
+}
+
+#mast {
+	background: linear-gradient(to bottom, #333399 0%, #222288 100%);
+	border-top: 1px solid #4444ff;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+	height: 50px;
+	min-width: 300px;
+	position: relative;
+}
+
+#tngheader {
+	height: 50px;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 100;
+}
+
+.mhead {
+	display: block;
+	margin: 0;
+	min-height: 40px;
+	position: relative;
+}
+
+.mhead span {
+	display: inline-block;
+	padding: 12px;
+	font-size: 16pt;
+	color: white;
+	width: 60%;
+	height: 16px;
+	line-height:26px;
+	overflow: hidden;
+}
+
+.labelcol {
+	width: 90px;
+}
+
+.fieldnameback {
+	font-size: 9pt;
+}
+
+@media (max-width: 500px) {
+	.mhead span {
+		font-size: 12pt;
+		padding: 6px 12px;
+		width: 40%;
+		height: 33px;
+		line-height: 20px;
+	}
+}
+
+#mmenus {
+	position: absolute;
+	top: 4px;
+	right: 2px;
+}
+
+#mcontent {
+	margin-top: 50px;
+	padding-top: 10px;
+}
+
+#mcore {
+	border-right: solid 1px #aaaaaa;
+	display: block;
+	height: 22px;
+	overflow: hidden;
+	padding: 14px;
+	position: relative;
+	text-indent: 100%;
+	white-space: nowrap;
+	width: 26px;
+	background: url(../img/tng_mobile_sprite.png) no-repeat 12px 12px;
+	float: left;
+}
+
+.mmenu {
+	height: 48px;
+	width: 48px;
+	white-space: nowrap;
+	position: relative;
+	overflow: hidden;
+	display: block;
+	float: left;
+}
+
+#mmenu-find {
+	background: url(../img/tng_mobile_sprite.png) no-repeat -1px -43px;
+}
+
+#mmenu-media {
+	background: url(../img/tng_mobile_sprite.png) no-repeat -48px -43px;
+}
+
+#mmenu-info {
+	background: url(../img/tng_mobile_sprite.png) no-repeat -95px -43px;
+}
+
+#mmenu-lang {
+	background: url(../img/tng_mobile_sprite.png) no-repeat -142px -43px;
+}
+
+#mmenu-cust {
+	background: url(../img/tng_mobile_sprite.png) no-repeat -189px -43px;
+}
+
+.mhead ul {
+	border-top: 30px solid #2d2214;
+	-moz-box-shadow: 0px 0px 5px rgba(0,0,0,.4);
+	-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.4);
+	-ms-box-shadow: 0px 0px 5px rgba(0,0,0,.4);
+	box-shadow: 0px 0px 5px rgba(0,0,0,.4);
+	-moz-border-radius: 0 0 8px 8px;
+	-webkit-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
+ 	margin-top: -30px;
+	padding: 0;
+	position: absolute;
+	top: 50px;
+	z-index: -1;
+	list-style: none outside none;
+	margin-left: 0px;
+    -webkit-transition: all 400ms cubic-bezier(0.250, 0.250, 0.530, 1); /* older webkit */
+    -webkit-transition: all 400ms cubic-bezier(0.250, 0.250, 0.530, 1.265);
+       -moz-transition: all 400ms cubic-bezier(0.250, 0.250, 0.530, 1.265);
+        -ms-transition: all 400ms cubic-bezier(0.250, 0.250, 0.530, 1.265);
+         -o-transition: all 400ms cubic-bezier(0.250, 0.250, 0.530, 1.265);
+            transition: all 400ms cubic-bezier(0.250, 0.250, 0.530, 1.265); /* custom */
+
+    /* two-sided bounce */
+    -webkit-transition: all 400ms cubic-bezier(0.340, 0, 0.630, 1); /* older webkit */
+    -webkit-transition: all 400ms cubic-bezier(0.340, -0.385, 0.630, 1.380);
+       -moz-transition: all 400ms cubic-bezier(0.340, -0.385, 0.630, 1.380);
+        -ms-transition: all 400ms cubic-bezier(0.340, -0.385, 0.630, 1.380);
+         -o-transition: all 400ms cubic-bezier(0.340, -0.385, 0.630, 1.380);
+            transition: all 400ms cubic-bezier(0.340, -0.385, 0.630, 1.380); /* custom */
+}
+
+#mcoremenu {
+	left: 0;
+}
+
+.mhead ul.mright {
+	right: 1px;
+}
+
+.mright {
+	column-gap: 0px;
+}
+
+.mhead ul li {
+	color: #FFFFFF;
+	display: block;
+	margin: 0;
+}
+
+.mhead li {
+	display: inline-block;
+	margin: 0 4px 8px 0;
+	padding: 0;
+}
+
+.mhead li:last-child a {
+	-moz-border-radius: 0 0 8px 8px;
+	-webkit-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
+}
+
+.mhead li a {
+	background-color: #666699;
+	border-bottom: 1px solid #333355;
+	border-top: 1px solid #777799;
+	display: block;
+	padding: 6px 8px 6px 8px;
+	text-align: left;
+	font-size: 14pt;
+	height: 20px;
+ 	color: #ffffff;
+	min-width: 150px;
+}
+
+.mhead a {
+	color: white;
+	line-height: 100%;
+	text-decoration: none;
+}
+
+.mmulticol li:last-child a {
+	-moz-border-radius: 0 0 8px 0;
+	-webkit-border-radius: 0 0 8px 0;
+	border-radius: 0 0 8px 0;
+}
+
+.mmulticollastleft {
+	-moz-border-radius: 0 0 0 8px;
+	-webkit-border-radius: 0 0 0 8px;
+	border-radius: 0 0 0 8px;
+}
+
+.mobileicon {
+	height: 15px;
+	padding:.1em 0px 0px 18px;
+	text-decoration:none;
+	display:block;
+	line-height:1.2;
+	margin-right: 0px;
+}
+
+ul#mcoremenu.on, ul#mfindmenu.on, ul#mmediamenu.on, ul#minfomenu.on, ul#mlangmenu.on, ul#mcustmenu.on {
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+.sncol {
+	width: 50%;
+}
+
+a.admincell {
+	height: auto;
+	padding: 5px 12px;
+}
+
+a div.whitesubhead {
+	font-size: 18pt;
+}
+
+.notearea {
+	max-height: none;
+}
+
+/*  Defined for Mod Manager mobile */
+/*new style mods for mobile*/
+
+.mmmenuwrap {
+   padding-left:0;
+}
+
+.mmhead-scroll
+{
+   margin-left:0;
+   width:100%;
+	padding-top:0;
+}
+.fbar-scroll
+{
+   margin-left:0;
+   width:100%;
+   padding-left:0;
+}
+table.mmlist-scroll
+{
+   margin-left:0;
+   padding-left:0;
+   width:100%;
+}
+
+.ibar-scroll {
+      margin-left:0;
+      padding-left:0;
+      width:100%;
+}
+
+.mmlog-scroll {
+      margin-left:0;
+      padding-left:0;
+      width:100%;
+}
+
+/* Analyser and Edit Parameter  */
+.mmleftcol {
+	width: 45%;
+	vertical-align:top;
+}
+.mmrightcol {
+	width:55%;
+	vertical-align:top;
+}

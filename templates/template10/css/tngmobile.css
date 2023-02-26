@@ -1,0 +1,22 @@
+body {
+  background: #B3B3B3;
+}
+
+#mast {
+  background-color: #073D3C;
+  background-image: -webkit-linear-gradient(to bottom, #135C5A 0%, #04302F 100%);
+  background-image: linear-gradient(to bottom, #135C5A 0%, #04302F 100%);
+  border-top: 1px solid #217574;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #9FC1C7;
+  border-bottom: 1px solid #4A6D74;
+  border-top: 1px solid #CFDFE2;
+  text-shadow: white 1px 1px 1px;
+  color: #000000;
+}

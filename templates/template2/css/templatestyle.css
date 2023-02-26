@@ -1,0 +1,398 @@
+/* templatestyle.css for template 2 overrides to TNG genstyle.css   */
+
+/* override to TNG genstyle.css for DNA Compare reports for template 2   */
+.overflowauto {
+	width: 98vw;
+}
+/*  reduce overflowauto for laptops and tablets */
+@media only screen and (min-width:1200px) and (max-width:1550px) {
+	.overflowauto {
+		width: 97.5vw;
+	}
+}
+@media only screen and (max-width:1280px) {
+	.overflowauto {
+		width: 97vw;
+	}
+}
+@media only screen and (max-width:1024px) {
+	.overflowauto {
+		width: 96vw;
+	}
+}
+@media only screen and (max-width:768px) {
+	.overflowauto {
+		width: 95vw;
+	}
+}
+
+/* header: heading text */
+.header, .plainheader {
+	color: #676037;
+}
+
+/* body: describes page background color and all non-table text not governed by any other style */
+.bodytopmenu {
+    /* next 5 lines added in 7.0.0 to replace bgcolor="#676037" leftmargin=0 topmargin=0 rightmargin=0 bottommargin=0 marginwidth=0 in topmenu.php of template2 */
+	background-color: #676037;
+	margin: 0 0 0 0;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #676037;
+}
+
+/* visited: previously visited links */
+a:visited {
+	color: #8B8776;
+}
+
+/* background color for admin menu items while active*/
+a.admincell:hover, a.leftlink:hover {
+	background-color: #C3B165;
+}
+
+.adminbody {
+	background-color: #e0e0bd;
+}
+
+/* New style definitions added in 7.0.0  */
+/* to replace hard-coded styles in topmenu.php or footer.php */
+
+/* page: is defined to replace the bgcolor=#676037; */
+/* fieldnameback: background color for column and row title sections */
+/* sideback: background color for side and top frames */
+.page, .LB_closeAjaxWindow, .bar, .sideback, .fieldnameback,
+.tablesaw-cell-label {
+	background-color : #676037;
+}
+
+/* style definitions in topmenu.php moved here in 7.0.0 */
+
+.topmenu {
+	font-family: Verdana,Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration : none;
+}
+
+a.topmenu:link  {text-decoration : none; color: #FFFFFF;}
+a.topmenu:visited  {text-decoration : none; color: #FFFFFF;}
+a.topmenu:hover  {
+	color: #FFCC33;
+	text-decoration : none;
+}
+a.topmenu:Active  {text-decoration : none;}
+
+
+/* tabletopedge is defined to replace the bgcolor=#FFFFFF; and background=edge.gif in topmenu */
+.tabletopedge {
+	margin: 0px;
+	padding: 0px;
+	background-color : #FFFFFF;
+    background-image: url(../img/edge.gif);
+    border: 0px;
+    border-bottom-color: white;
+    width: 100%;
+    height: 15px;
+}
+
+/* tablebottomedge is defined to replace the bgcolor=#FFFFFF; and background=edge.gif in topmenu */
+.tablebottomedge {
+	margin: 0px;
+	padding: 0px;
+	background-color: #FFFFFF;
+    background-image: url(../img/edge-bottom.gif);
+    border: 0px;
+    width: 100%;
+    height: 15px;
+}
+
+.tablebkground {
+	background-color: #FFFFFF;
+}
+
+.noimgborder {
+	border:0px;
+}
+
+
+/* style definitions in index.php moved here in 7.0.0 */
+
+.sidelink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration : none;
+	color: #676037;
+}
+.sidelink:Hover  {
+	text-decoration : underline;
+	color: #669900;
+}
+.sidesmall {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: white;
+}
+.small {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.sidesmalllink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+}
+
+/* body-index: describes index page body style definitions replaces hard-coded style information background="burlap.jpg" leftmargin="1" topmargin="10" rightmargin="1" marginwidth="1" in index.php of template2 */
+.bodyindex {
+    background-image: url(../img/burlap.jpg);
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0px;
+	width:100%;       /* width of image used so it will center */
+	height:100%;
+}
+
+/* footer added to replace footer fonts and links */
+.footer {
+	color: #FFFFFF;
+	font-size: 11px;
+	text-align: center;
+}
+
+a.footer:link  {text-decoration : underline; color: #FFFFFF;}
+a.footer:visited  {text-decoration : underline; color: #FFFFFF;}
+a.footer:hover  {
+	text-decoration : underline;
+	color: #FFCC33;
+}
+
+/* additional classes added for strict validation */
+
+/* indexsubmit added to replace hspace="0" vspace="0" width="74" height="76" border="0" in index.php for button.jpg */
+.indexsubmit {
+	margin-top: 0px;
+	margin-left: 0px;
+	width: 74px;
+	height: 76px;
+}
+
+/* menusubmit added to replace align="right" "hspace="0" vspace="0" width="55" height="54" border="0" in topmenu */
+.menusubmit {
+	float: right;
+	margin-top: 0px;
+	margin-left: 0px;
+	width: 55px;
+	height: 54px;
+}
+
+/* searchimg added to replace width="100" height="38" vspace="5" border="0" for search.gif in index.php */
+.indexsearch {
+	width: 100px;
+  	height: 38px;
+	border: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+/* menusearch added to replace width="67" height="24" vspace="5" border="0" for search.gif in topmenu */
+.menusearch {
+	width: 67px;
+  	height: 24px;
+	border: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+/* headerimg added to replace width="70" height="99" hspace="0" vspace="3" border="0" in topmenu for headerphoto.jpg */
+.headerimg {
+	margin-top: 5px;		/* replaces vspace="3" */
+	margin-bottom: 5px;		/* replaces vspace="3" */
+	margin-left: 0px;
+	margin-right: 0px;
+	border: 0px;
+}
+
+/* page: is defined to replace the bgcolor=#676037; */
+.indexpage {
+	background-color : #FFFFFF;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#FFE9A9;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#676037;
+	color:#fff;
+}
+
+.LB_window {
+	background: #FFE9A9;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #bbb;
+}
+
+ul.tngdd {
+    background-color:#ffffff;
+}
+
+ul.tngdd a {
+	color:#444;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#eeeecc;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #FFE9A9 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#bbb;
+	border-right-color:#bbb;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #999;
+	border-right:1px solid #999;
+	color: #ffffff;
+	background: #676037 url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu, .databack, .reportcol li:hover {
+    background-color: #FFE9A9;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #FFF6DB;
+}
+
+div.icons {
+	position: absolute;
+}
+
+tr.modline:hover td.mmcell:nth-child(-n+5)
+{
+   background-color:yellow;  /* to override the #EEEB8D; which is too close to the template databack */
+}
+
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+.maintitle {
+	font-size:48px;
+	color:#403911;
+}
+
+.mmaintitle {
+	font-style: italic;
+}
+
+.smalltitle {
+	font-size:28px;
+	color: #403911;
+	font-style:italic;
+}
+
+.headertitle {
+	font-size:24px;
+	color:#FFE9A9;
+	font-style:italic;
+}
+
+.maintitle, .mmaintitle, .smalltitle, .headertitle, .admin-banner h1 {
+  	font-family:Georgia,Arial,sans-serif;
+}
+
+a.smalltitle, a.smalltitle:link {
+	color: #403911;
+}
+
+a.smalltitle:hover {
+	color:green;
+}
+
+a.toptitle {
+	text-decoration:none;
+}
+
+em.toptitle {
+	font-size:30px;
+	font-family:Georgia,Arial,sans-serif;
+	color:#FFE9A9;
+}
+
+.mainlink {
+	padding-left: 20px;
+	text-decoration: none;
+}
+
+#titlecontainer {
+	padding: 10px 10px 20px 10px;
+}
+
+#searchblock {
+	padding:0 0 10px 10px;
+}
+
+#searchtitleblock {
+	float:left;
+	text-align:center;
+	padding-right:10px;
+	padding-top:8px;
+}
+
+#searchformblock {
+	padding:10px 10px 0 0;
+	float:left;
+}
+
+#searcharrowblock {
+	padding-top:15px;
+}
+
+.fambackground {
+	background-color: #FFE9A9;
+}
+
+@media (max-width: 400px) {
+	#linktable {
+		display: none;
+	}
+	.maintitle {
+		font-size:30px;
+	}
+	#mainphoto {
+		width:100%;
+	}
+
+}

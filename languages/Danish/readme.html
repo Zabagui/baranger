@@ -1,0 +1,1368 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="css/genstyle.css" rel="stylesheet">
+	<title>Installationsvejledning</title>
+<style>
+body, table {
+	font-size: 12pt;
+}
+.red {
+	color: red;
+}
+.blue {
+	color: blue;
+}
+.green {
+	color: green;
+}
+li {
+	font-size: 12pt;
+}
+
+
+</style>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/net.js"></script>
+<script type="text/javascript">
+var allvisible = 0;
+
+plus = new Image(9,9);
+plus.src = "img/tng_plus.gif";
+minus = new Image(9,9);
+minus.src = "img/tng_minus.gif";
+
+function doBackend(strParams,oTarget) {
+	var url = 'ajx_tnginstall.php';
+	var loader1 = new net.ContentLoader(url,PutMessage,null,"POST",strParams);
+	var msgDiv = document.getElementById(oTarget);
+	var msgTxt = document.createTextNode('Vent venligst, forsøger at indlæse siden...');
+	//msgDiv.appendChild(msgTxt);
+	msgDiv.innerHTML = "";
+	msgDiv.className = "blue";
+	msgDiv.appendChild(msgTxt);
+}
+
+function doFolder(foldertype,form,oTarget){
+	var strParams = "subroutine=folder&foldertype=" + foldertype + "&foldername=" + form.foldername.value + "&oldname=" + form.oldname.value + "&targetdiv=" + oTarget;
+	form.oldname.value = form.foldername.value;
+	doBackend(strParams,oTarget);
+}
+
+function doPerms(oTarget){
+	var strParams = "subroutine=perms&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+}
+
+function doDBParams(form,oTarget){
+	var strParams = "subroutine=settings" + "&database_host=" + form.database_host.value +
+		"&database_name=" + encodeURIComponent(form.database_name.value) + "&database_username=" + encodeURIComponent(form.database_username.value) +
+		"&database_password=" + encodeURIComponent(form.database_password.value) + "&database_port=" + encodeURIComponent(form.database_port.value) + 
+		"&database_socket=" + encodeURIComponent(form.database_socket.value) + "&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+	return false;
+}
+
+function doTables(form,oTarget){
+	var strParams = "subroutine=tables&targetdiv=" + oTarget;
+	for( i = 0; i < form.elements.length; i++ ) {
+		strParams = strParams + "&" + form.elements[i].name + "=" + form.elements[i].value
+	}
+	doBackend(strParams,oTarget);
+
+	return false;
+}
+
+function createUser(form,oTarget) {
+	//validate input, all fields required
+	var msgfield = document.getElementById(oTarget);
+	if(!form.newusername.value || !form.newpassword.value || !form.newrealname.value || !form.newemail.value) {
+		msgfield.innerHTML = "Alle felter er krævede. Der skal stå noget i hvert felt.";
+		msgfield.className = "red";
+	}
+	else if( !checkEmail(form.newemail.value)) {
+		msgfield.innerHTML = "Skriv venligst en gyldig e-mailadresse";
+		msgfield.className = "red";
+	}
+	else if(form.newpassword.value != form.newpassword2.value) {
+		msgfield.innerHTML = "Indtast venligst din adgangskode ens begge gange";
+		msgfield.className = "red";
+	}
+	else {
+		var strParams = "subroutine=user&username=" + encodeURIComponent(form.newusername.value) + "&password=" + encodeURIComponent(form.newpassword.value) + "&realname=" + form.newrealname.value + "&email=" + encodeURIComponent(form.newemail.value) + "&targetdiv=" + oTarget;
+		doBackend(strParams,oTarget);
+	}
+	return false;
+}
+
+function createTree(form,oTarget) {
+	//validate input, all fields required
+	var msgfield = document.getElementById(oTarget);
+	form.newtreeid.value = form.newtreeid.value.replace(/[^a-zA-Z0-9]+/g,'');
+	if(!form.newtreeid.value || !form.newtreename.value) {
+		msgfield.innerHTML = "Alle felter er krævede felter. Dvs. der skal stå noget i alle felterne.";
+		msgfield.className = "red";
+	}
+	else {
+		var strParams = "subroutine=tree&newtreeid=" + form.newtreeid.value + "&newtreename=" + form.newtreename.value + "&targetdiv=" + oTarget;
+		doBackend(strParams,oTarget);
+	}
+	return false;
+}
+
+function setLang(form,oTarget) {
+	var msgfield = document.getElementById(oTarget);
+	var newlanguage = form.newlanguage.options[form.newlanguage.selectedIndex].value;
+	var strParams = "subroutine=charset&newcharset=" + form.newcharset.value + "&newlanguage=" + newlanguage + "&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+
+	return false;
+}
+
+function setTemplate(form,oTarget) {
+	var msgfield = document.getElementById(oTarget);
+	var newtemplate = form.newtemplate.options[form.newtemplate.selectedIndex].value;
+	var strParams = "subroutine=template&" + "&newtemplate=" + newtemplate + "&targetdiv=" + oTarget;
+	doBackend(strParams,oTarget);
+
+	return false;
+}
+
+function matchCharset(lang,csfield) {
+	var langname = lang.options[lang.selectedIndex].text;
+	if(langname.indexOf('UTF-8') >= 0)
+		document.getElementById(csfield).value = 'UTF-8';
+	else if(langname.indexOf('ISO-8859-1') >= 0)
+		document.getElementById(csfield).value = 'ISO-8859-1';
+	else if(langname.indexOf('ISO-8859-2') >= 0)
+		document.getElementById(csfield).value = 'ISO-8859-2';
+}
+
+var languages = new Object();
+languages["English-UTF8"] = "Engelsk (UTF-8)";
+languages["English"] = "Engelsk (ISO-8859-1)";
+languages["Afrikaans-UTF8"] = "Afrikaans (UTF-8)";
+languages["Afrikaans"] = "Afrikaans (ISO-8859-1)";
+languages["Arabic-UTF8"] = "Arabisk (UTF-8)";
+languages["PortugueseBR-UTF8"] = "Brasiliansk Portugisisk (UTF-8)";
+languages["PortugueseBR"] = "Brasiliansk Portugisisk (ISO-8859-1)";
+languages["Czech-UTF8"] = "Tjekkisk (UTF-8)";
+languages["Czech"] = "Tjekkisk (ISO-8859-2)";
+languages["Croatian-UTF8"] = "Kroatisk (UTF-8)";
+languages["Danish-UTF8"] = "Dansk (UTF-8)";
+languages["Danish"] = "Dansk (ISO-8859-1)";
+languages["Dutch-UTF8"] = "Hollandsk (UTF-8)";
+languages["Dutch"] = "Hollandsk (ISO-8859-1)";
+languages["Finnish-UTF8"] = "Finsk (UTF-8)";
+languages["Finnish"] = "Finsk (ISO-8859-1)";
+languages["French-UTF8"] = "Fransk (UTF-8)";
+languages["French"] = "Fransk (ISO-8859-1)";
+languages["German-UTF8"] = "Tysk (UTF-8)";
+languages["German"] = "Tysk (ISO-8859-1)";
+languages["Greek"] = "Græsk (UTF-8)";
+languages["Icelandic-UTF8"] = "Islandsk (UTF-8)";
+languages["Icelandic"] = "Islandsk (ISO-8859-1)";
+languages["Italian-UTF8"] = "Italiensk (UTF-8)";
+languages["Italian"] = "Italiensk (ISO-8859-1)";
+languages["Norwegian-UTF8"] = "Norsk (UTF-8)";
+languages["Norwegian"] = "Norsk (ISO-8859-1)";
+languages["Polish-UTF8"] = "Polsk (UTF-8)";
+languages["Polish"] = "Polsk (ISO-8859-2)";
+languages["Romanian-UTF8"] = "Rumænsk (UTF-8)";
+languages["Romanian"] = "Rumænsk (ISO-8859-1)";
+languages["Russian-UTF8"] = "Russisk (UTF-8)";
+languages["Serbian-UTF8"] = "Serbisk (UTF-8)";
+languages["Serbian"] = "Serbisk (ISO-8859-1)";
+languages["Spanish-UTF8"] = "Spansk (UTF-8)";
+languages["Spanish"] = "Spansk (ISO-8859-1)";
+languages["Swedish-UTF8"] = "Svensk (UTF-8)";
+languages["Swedish"] = "Svensk (ISO-8859-1)";
+
+function showLanguageOptions() {
+	//languages.each(function(item) {
+		//document.write('<option value="' + item + '">' + languages[item] + '</option>\n');
+	//});
+	for(var i in languages) {
+		document.write('<option value="' + i + '">' + languages[i] + '</option>\n');
+	}
+}
+
+function getTextNodes(node) {
+	var type1ctr = 0;
+	var textNodes = new Array();
+
+	for(var i = 0; i < node.childNodes.length; i++ ) {
+		if( node.childNodes[i].nodeType == "1" ) {
+			textNodes[type1ctr] = node.childNodes[i];
+			type1ctr++;
+		}
+	}
+
+	return textNodes;
+}
+
+function PutMessage(){
+	var xmlDoc = this.req.responseXML.documentElement;
+	var xStuff = xmlDoc.getElementsByTagName('installElement')[0];
+	var installNodes = getTextNodes(xStuff);
+
+	var divName = installNodes[0].firstChild.nodeValue;
+	var newclass = installNodes[1].firstChild.nodeValue;
+
+	var msgDiv = document.getElementById(divName);
+	var xMsg = xmlDoc.getElementsByTagName('message')[0];
+	var msgNodes = getTextNodes(xMsg);
+	var msgTxt = document.createTextNode(msgNodes[0].firstChild.nodeValue);
+
+	msgDiv.className = newclass;
+	msgDiv.innerHTML = "";
+	msgDiv.appendChild(msgTxt);
+}           
+
+function toggleItem( itemImage, itemContents ) {
+	if( itemContents.style.display == 'none' ) {
+		itemContents.style.display = '';
+		document.images[itemImage].src = minus.src;
+	}
+	else {
+		itemContents.style.display = 'none';
+		document.images[itemImage].src = plus.src;
+	}
+}
+
+function showAll() {
+	var item;
+	
+	for( var i = 0; i < 27; i++ ) {
+		item = "s" + i ;
+		document.getElementById(item).style.display = '';
+	}
+	allvisible = 1;
+}
+
+function hideAll() {
+	var item;
+	
+	for( var i = 0; i < 27; i++ ) {
+		item = "s" + i ;
+		document.getElementById(item).style.display = 'none';
+	}
+	allvisible = 0;
+}
+
+function startAt(step) {
+	hideAll();
+	document.getElementById(step).style.display='';
+}
+
+function nextStep(current) {
+	var curstep = "s" + current;
+	var nxtstep = "s" + (parseInt(current) + 1);
+	
+	if( allvisible )
+		hideAll();
+	else
+		document.getElementById(curstep).style.display='none';
+	document.getElementById(nxtstep).style.display='';
+}
+
+function prevStep(current) {
+	var curstep = "s" + current;
+	var prvstep = "s" + (parseInt(current) - 1);
+	
+	if( allvisible )
+		hideAll();
+	else
+		document.getElementById(curstep).style.display='none';
+	document.getElementById(prvstep).style.display='';
+}
+
+function toc(disp) {
+	document.getElementById("toc").style.display = disp;
+}
+</script>
+</head>
+
+<body>
+<h1>TNG Installationsvejledning</h1>
+
+<table style="height:100%">
+	<tr>
+		<td width="250" valign="top" style="background-color:#f9f9f9; border:1px solid silver; padding:5px">
+			<ul style="list-style: none; margin-left: 0px; padding-left: 0px;">
+			<li><p><a href="javascript: startAt('s0');"><strong>Velkommen / Start installationen</strong></a></p></li>
+			<li><a href="javascript: startAt('s1');"><strong>Yderligere information</strong></a></li>
+			<li><img src="img/tng_plus.gif" name="plus1" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus1',document.getElementById('list1'));"> <a href="javascript: startAt('s1');"><strong>Filer</strong></a>
+				<ol style="display:none;" id="list1">
+				<li><a href="javascript: startAt('s1');">Udpak filer</a></li>
+				<li><a href="javascript: startAt('s2');">Etabler forbindelse til din hjemmeside</a></li>
+				<li><a href="javascript: startAt('s3');">Opsætning af din hjemmeside</a></li>
+				<li><a href="javascript: startAt('s4');">Upload filer til din hjemmeside</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus2" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus2',document.getElementById('list2'));"> <a href="javascript: startAt('s5');"><strong>Rettigheder</strong></a>
+				<ol style="display:none;" id="list2">
+				<li><a href="javascript: startAt('s5');">Forklaring om rettigheder</a></li>
+				<li><a href="javascript: startAt('s6');">Definér rettigheder</a></li>
+				<li><a href="javascript: startAt('s7');">Avancerede opsætninger</a></li>
+				</ol>
+			</li>
+			<li><img src="img/spacer.gif" width="9" height="9" border="0" alt=""> <a href="javascript: startAt('s8');"><strong>Mapper</strong></a></li>
+			<li><img src="img/spacer.gif" width="9" height="9" border="0" alt=""> <a href="javascript: startAt('s9');"><strong>Sprog & tegnsæt</strong></a></li>
+			<li><img src="img/tng_plus.gif" name="plus5" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus5',document.getElementById('list5'));"> <a href="javascript: startAt('s10');"><strong>Tabeller i databasen</strong></a>
+				<ol style="display:none;" id="list5">
+				<li><a href="javascript: startAt('s10');">Skab forbindelse til databasen</a></li>
+				<li><a href="javascript: startAt('s11');">Opret tabellerne i databasen</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus6" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus6',document.getElementById('list6'));"> <a href="javascript: startAt('s12');"><strong>Andre indstillinger</strong></a>
+				<ol style="display:none;" id="list6">
+				<li><a href="javascript: startAt('s12');">Generelle indstillinger</a></li>
+				<li><a href="javascript: startAt('s13');">Indstillinger for tavler, import, logning og kort</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus7" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus7',document.getElementById('list7'));"> <a href="javascript: startAt('s14');"><strong>Dine data</strong></a>
+				<ol style="display:none;" id="list7">
+				<li><a href="javascript: startAt('s14');">Opsætning af brugere</a></li>
+				<li><a href="javascript: startAt('s15');">Opsætning af træer</a></li>
+				<li><a href="javascript: startAt('s16');">Importér en GEDCOM-fil</a></li>
+				<li><a href="javascript: startAt('s17');">Brugerdefinerede begivenhedstyper</a></li>
+				<li><a href="javascript: startAt('s18');">Manuel indtastning af data</a></li>
+				<li><a href="javascript: startAt('s19');">Sekundære processer</a></li>
+				<li><a href="javascript: startAt('s20');">Medier (billeder, fortællinger, gravsten etc.)</a></li>
+				<li><a href="javascript: startAt('s21');">Sikkerhedskopiering, optimering og gendannelse</a></li>
+				</ol>
+			</li>
+			<li><img src="img/tng_plus.gif" name="plus8" width="9" height="9" border="0" alt="expand" onclick="toggleItem('plus8',document.getElementById('list8'));"> <a href="javascript: startAt('s22');"><strong>Tilpas dine TNG-sider</strong></a>
+				<ol style="display:none;" id="list8">
+				<li><a href="javascript: startAt('s22');">Skabeloner</a></li>
+				<li><a href="javascript: startAt('s23');">Stilark</a></li>
+				<li><a href="javascript: startAt('s24');">Sidehoved og sidefod samt "meta"-filer</a></li>
+				<li><a href="javascript: startAt('s25');">Forside</a></li>
+				</ol>
+			</li>
+			<li><img src="img/spacer.gif" width="9" height="9" border="0" alt=""> <a href="javascript: startAt('s26');"><strong>Slutnoter</strong></a><br /></li>
+			</ul>
+
+			<p style="font-size:10pt"><a href="javascript: showAll();">Få vist alle instruktioner på én gang</a> | <a href="javascript: hideAll();startAt('s0');">Skjul alt (vis instruktioner på flere sider)</a></p>
+
+			<span style="font-size:10pt">Support til TNG: <a href="mailto:darrin@lythgoes.net">darrin@lythgoes.net</a><br />
+			TNG Forum: <a href="https://tng.community" target="_blank">https://tng.community</a><br />
+			TNG Wiki: <a href="https://tng.lythgoes.net/wiki" target="_blank">https://tng.lythgoes.net/wiki</a><br />
+			TNG info: <a href="https://tngsitebuilding.com" target="_blank">https://www.tngsitebuilding.com</a><br />
+			PHP info: <a href="https://php.net" target="_blank">https://www.php.net</a><br/>
+			MySQL info: <a href="https://mysql.com" target="_blank">https://www.mysql.com</a><br /><br />
+			Få besked om opdateringer: <br /><a href="mailto:tngusers-subscribe@lythgoes.net">tngusers-subscribe@lythgoes.net</a><br />
+			Dialog med andre brugere af TNG: <br /><a href="mailto:tngusers2-subscribe@lythgoes.net">tngusers2-subscribe@lythgoes.net</a><br /><br />
+			<a href="http://lythgoes.net/mailman/listinfo/tngusers2_lythgoes.net">Indstillinger for "diskussionsliste"</a><br />
+			<a href="http://lythgoes.net/pipermail/tngusers2_lythgoes.net/">Hent de gamle "diskussionslister"</a><br />
+			</span>
+		</td>
+		<td width="10">&nbsp;</td>
+		<td valign="top">
+			<ul style="list-style-type: none; margin-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; padding: 0;">
+			<li style="display:'';" id="s0">
+
+			<h2>Velkommen til installationsguiden til TNG!</h2>
+
+			<div id="google_translate_element"></div><script type="text/javascript">
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+			}
+			</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+			<p><strong>VIGTIGT:</strong> Dette er <strong>DEN FULDE INSTALLATIONSGUIDE</strong>. Hvis du vil opgradere en eksisterende version, skal du straks forlade denne side og i stedet følge den "readme-fil", der fulgte med opdateringen!</p>
+
+			<h2>Start her</h2>
+
+			<p>Udfør de følgende trin i DEN SAMME RÆKKEFØLGE. Hvis du holder pause undervejs, kan du fortsætte, hvor du slap. Hvis du begynder helt forfra, og der ikke kan sættes rettigheder på nogle af filerne/mapperne, er det helt i orden. Hvis du er i tvivl om noget, eller der er noget, der ikke virker, skal du se i de relevante afsnit under <a href="javascript: startAt('s1');">Yderligere information</a> ude til venstre.</p>
+			<ol>
+				<li><p><b>Upload eller kopier alle filer fra TNG-zipfilen (den pakkede fil)</b> til det sted på din hjemmeside, du vil køre TNG fra. Det kan være fra "roden" eller en undermappe. (Note: "Roden" er det sted, din hjemmeside "bor". Det kaldes ofte "public_html" eller "www").</p>
+				</li>
+
+				<li><p>Hvis du indtil nu har læst denne guide på din PC, skal du lukke siden nu og i stedet åbne den fra din hjemmeside (fx  "https://www.minside.dk/readme.html"). 
+					<b>Brug en browser (Firefox, Google, Brave, Edge eller andet) ikke dit FTP-program!</b> Har du behov for at se denne side på et andet sprog, får du mulighed for det, når du åbner filen på din hjemmeside.</p></li>
+
+				<li><p><b>Sæt rettigheder:</b><br/>
+					Nogle filer og mapper skal være skrivbare. Hvis du allerede har sat rettigheder en gang og nu får besked om, at rettighederne ikke kan ændres/sættes påny, er det okay.
+					<table>
+					  <tr>
+					    <td valign="top">
+							<form action="setperms" method="get" style="margin:0px">
+							<input name="perms" type="button" value="Sæt rettigheder" onclick="doPerms('permMsgEx')">
+							</form>
+						</td>
+					    <td valign="top" id="permMsgEx">&nbsp;</td>
+					  </tr>
+					</table></p>
+				</li>
+
+				<li><p><b>Omdøb to mapper:</b><br/>
+					Af hensyn til sikkerheden på din side anbefaler vi, at du omdøber mapperne "Backup" og "GEDCOM", ellers kan enhver med bare lidt kendskab til TNG hente dine filer. Hvis du allerede har gjort det en gang og får en fejlmeddelelse her, kan du se bort fra den. Du kan roligt gå videre.
+					<table>
+						<tr>
+							<td><span class="normal">Backup-mappen:</span></td>
+							<td>
+								<form action="" method="get" style="margin:0px" name="backupsfrmEx" id="backupsfrmEx" onsubmit="if( document.backupsfrmEx.foldername.value != '' ) {doFolder('backuppath',document.backupsfrmEx,'buFolderMsgEx');} return false;">
+								<input type="text" value="Angiv mappens nye navn" name="foldername" size="30"><input type="hidden" value="backups" name="oldname"/>
+								<input type="submit" value="Omdøb mappen"/>
+								</form>
+							</td>
+						    <td>
+								<div id="buFolderMsgEx"></div>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="normal">GEDCOM-mappen:</span></td>
+							<td>
+								<form action="" method="get" style="margin:0px" name="gedcomfrmEx" id="gedcomfrmEx" onsubmit="if( document.gedcomfrmEx.foldername.value != '' ) {doFolder('gedpath',document.gedcomfrmEx,'gedFolderMsgEx');} return false;">
+								<input type="text" value="Angiv mappens nye navn" name="foldername" size="30"><input type="hidden" value="gedcom" name="oldname"/>
+								<input type="submit" value="Omdøb mappen"/>
+								</form>
+							</td>
+						    <td>
+								<div id="gedFolderMsgEx"></div>
+							</td>
+						</tr>
+					</table>
+					</p>
+				</li>
+
+				<li><p><b>Sprog og tegnsæt:</b><br/>
+					Da det danske skriftsprog indeholder mange specialtegn (fx æ, ø og å), skal du vælge "Dansk (UTF-8)" Hvis det giver problemer, kan du prøve "Dansk (ISO-8859-1)" i stedet.
+					<form action="#" onsubmit="return setLang(this,'langMsg');">
+					<table class="normal">
+						<tr>
+							<td>Sprog:</td>
+							<td>
+								<select name="newlanguage" onchange="matchCharset(this,'newcharset1');">
+									<script type="text/javascript">showLanguageOptions();</script>
+								</select>
+								<input type="hidden" name="newcharset" id="newcharset1" value="UTF-8"/>
+							</td>
+						</tr>
+						<tr><td><input name="setlang" type="submit" value="Gem"></td></tr>
+						<tr><td id="langMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Skab forbindelse til din database:</b><br/>
+					Informationerne, der skal bruges her, har du fået fra din udbyder (også kaldet en webhost eller et webhotel). Det er tænkeligt, de beder dig om selv at danne databasen, men de kan fortælle dig, hvordan du gør, (de har sikkert hjælpesider, der viser hvordan). Værtsnavn er næsten altid "localhost". Det er de færreste, der skal skrive noget i "Database-port" og "Database-socket". Hvis du skal, så bed din udbyder fortælle dig, hvad du skal skrive.
+					<form action="setdbparams" method="get" style="margin:0px" name="dbparamsfrmEx" onsubmit="return doDBParams(document.dbparamsfrmEx,'dbMsgEx');">
+					<table>
+						<tr><td><span class="normal">Værtsnavn:</span></td><td><input type="text" value="localhost" name="database_host" size="20"></td></tr>
+						<tr><td><span class="normal">Databasenavn:</span></td><td><input type="text" value="" name="database_name" size="20"></td></tr>
+						<tr><td><span class="normal">Database-brugernavn:</span></td><td><input type="text" value="" name="database_username" size="20"></td></tr>
+						<tr><td><span class="normal">Database-password:</span></td><td><input type="text" value="" name="database_password" size="20"></td></tr>
+						<tr><td><span class="normal">Database-port:</span></td><td><input type="text" value="" name="database_port" size="20"> (lad feltet være tomt som standard)</td></tr>
+						<tr><td><span class="normal">Database-socket:</span></td><td><input type="text" value="" name="database_socket" size="20"> (lad feltet være tomt som standard)</td></tr>
+						<tr>
+							<td><input name="dbparams" type="submit" value="Gem og kontrollér"/></td>
+						    <td id="dbMsgEx"></td>
+						</tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Opret tabellerne i databasen:</b><br/>
+					I dette trin vil du få oprettet alle TNG's standardtabeller i databasen og de vil få "tng_" som præfiks (forstavelse). Hvis du vil bruge andre præfikser (forstavelser), skal du bruge afsnittet "Tabeller i databasen" i "Yderligere information" til venstre. Hvis du har valgt Dansk (UTF-8) som tegnsæt, skal du sætte collation (som nærmest betyder "sortering" på dansk) til utf8_general_ci (det er allerede foreslået), utf8_unicode_ci eller lignende. Hvis du ikke bruger UTF-8, er latin_swedish_ci et almindeligt valg. Hvis du er i tvivl,
+					<a href="https://www.google.com/search?q=what+mysql+database+collation+should+i+use" target="_blank">læs her</a>, eller
+					prøv at slette indholdet i feltet, da det vil medføre, at du anvender den standard, der bruges af din database.
+					<form action="createtables" method="get" style="margin:0px" name="tablesfrm">
+					<table class="normal">
+						<tr><td>Database-collation (sortering):</td><td><input type="text" name="collation" id="collation1" value="utf8_general_ci"/> (lad feltet være tomt for at bruge databasens standardsortering)</td></tr>
+						<tr>
+							<td><input name="dbparams" type="button" value="Gem og opret" onclick="doTables(document.tablesfrm,'tableMsgEx')"></td>
+						    <td id="tableMsgEx" colspan="2"></td>
+						</tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Opret en bruger til dig selv i selve TNG:</b><br/>
+				Der skal stå noget i alle felterne! Vælg et sikkert password fx noget der ligner ?98CJpNc$$7k3p3!. Senere kan du tilføje mere information om denne bruger, hvis du har lyst.
+					<form action="#" onsubmit="return createUser(this,'userMsg');">
+					<table class="normal">
+						<tr><td>Brugernavn:</td><td><input type="text" name="newusername" value=""/></td></tr>
+						<tr><td>Password:</td><td><input type="password" name="newpassword" value=""/></td></tr>
+						<tr><td>Password igen:</td><td><input type="password" name="newpassword2" value=""/></td></tr>
+						<tr><td>Dit rigtige navn:</td><td><input type="text" name="newrealname" value=""/></td></tr>
+						<tr><td>Din email-adresse:</td><td><input type="text" name="newemail" value=""/></td></tr>
+						<tr><td><input name="usercreate" type="submit" value="Opret bruger"></td></tr>
+						<tr><td id="userMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Opret et "træ" (en "beholder") til dine data:</b><br/>
+				Der skal stå noget i begge felter. Du kan tilføje mere information om træet senere. Et navn til træet kan fx være dine initialer. Det er kun dig, der ser disse oplysninger. Senere kan du oprette flere træer, hvis du har behov for det - men det er de færreste, der har det:
+					<form action="#" onsubmit="return createTree(this,'treeMsg');">
+					<table class="normal">
+						<tr><td>Træ-ID:</td><td><input type="text" name="newtreeid" value="trae1"/>  (kort, kun bogstaver og tal (ingen specialtegn) og ingen mellemrum)</td></tr>
+						<tr><td>Træets navn:</td><td><input type="text" name="newtreename" value="initialer"/></td></tr>
+						<tr><td><input name="treecreate" type="submit" value="Opret træet"></td></tr>
+						<tr><td id="treeMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+				<li><p><b>Vælg en skabelon</b>:<br/>
+				Dette er en mulighed, hvis du kan ikke kan lide standarden, eller du vil kreere dit eget tema fra bunden senere. Valgmulighederne vises her <a href="https://tngsitebuilding.com/templates.php" target="_blank">https://tngsitebuilding.com/templates.php</a>). En anden mulighed er at kigge på de mange skabeloner hos firmaet <a href="https://genealogywebtemplates.com/tngtemplates.asp" target="_blank"> Genealogy Web Templates</a>. Du kan nemt skifte skabelon senere herfra: Opsætning >> Konfigurering >> Skabelonindstillinger.
+					<form action="#" onsubmit="return setTemplate(this,'templateMsg');">
+					<table class="normal">
+						<tr>
+							<td>Skabelon nummer:</td>
+							<td>
+								<select name="newtemplate">
+									<option value=""></option>
+									<option value="21">21</option>
+									<option value="20">20</option>
+									<option value="19">19</option>
+									<option value="18">18</option>
+									<option value="17">17</option>
+									<option value="16">16</option>
+									<option value="15">15</option>
+									<option value="14">14</option>
+									<option value="13">13</option>
+		 							<option value="12">12</option>
+									<option value="11">11</option>
+									<option value="10">10</option>
+									<option value="9">9</option>
+									<option value="8">8</option>
+									<option value="7">7</option>
+									<option value="6">6</option>
+									<option value="5">5</option>
+									<option value="4">4</option>
+									<option value="3">3</option>
+									<option value="2">2</option>
+									<option value="1">1</option>
+								</select>
+							</td>
+						</tr>
+						<tr><td><input name="tempselect" type="submit" value="Vælg skabelon"></td></tr>
+						<tr><td id="templateMsg" colspan="2"></td></tr>
+					</table>
+					</form>
+					</p>
+				</li>
+
+			</ol>
+
+			<p>Nu har du installeret TNG og programmet er klar til brug! Inden du dykker ned i det, vil du måske have glæde af at besøge afsnittet
+				<a href="javascript: startAt('s1');">Yderligere information</a> i venstre side og læse om:</p>
+				<ul style="list-style:disc">
+					<li><a href="javascript: startAt('s12');"><strong>Andre indstillinger</strong></a></li>
+					<li><a href="javascript: startAt('s14');"><strong>Dine data</strong></a></li>
+					<li><a href="javascript: startAt('s22');"><strong>Tilpas dine TNG-sider</strong></a></li>
+					<li><a href="javascript: startAt('s26');"><strong>Slutnoter</strong></a></li>
+				</ul>
+			<p>Du vil måske også have glæde af <a href="http://tng.lythgoes.net/wiki/index.php?title=Category:Getting_Started" target="_blank">Getting Started</a>-artiklerne på TNG Wiki (på engelsk).</p>
+
+			<p>&gt; Gå til <a href="index.php">Forsiden</a></p>
+			<p>&gt; Gå til <a href="admin.php">Admin Hjem</a></p><br/><br/>
+
+			</li>
+
+			<li style="display:none;" id="s1">
+			<h2>Yderligere information</h2>
+
+			<p>Dette afsnit beskriver den basale installation lidt mere i dybden. 
+
+			<h3>Filer</h3>
+
+			<p><strong>Trin 1: Pak filerne ud</strong></p>
+
+			<p><em><b>Hvis du hentede TNG på nettet:</b></em><br />
+			Filen, du hentede, er en såkaldt <b>zip-fil</b>. Det betyder, at filen rummer en masse filer, der er pakket sammen i én. Find zip-filen og <b>pak de indeholdte filer ud</b> i en ny mappe (navnet er ligegyldigt) på din PC. Dit operativsystem klarer formentlig opgaven med at pakke ud, men hvis ikke den ikke gør, findes der flere forskellige programmer, der kan gøre det.
+			Du kan fx overveje <a href="http://www.winzip.com" target="_blank">WinZip</a> eller
+			<a href="http://www.pkzip.com" target="_blank">PKZip</a> til Windows eller
+			<a href="http://www.maczipit.com/" target="_blank">ZipIt</a> eller <a href="http://www.stuffit.com" target="_blank">StuffIt</a> til Mac.</p>
+
+			<p>Nogle filer bør blive pakket ud til undermapper (det gælder fx "css", "img", "js", "languages" og diverse mapper, der har med media at gøre). Hvis du ikke får nogen undermapper, skal du slette de filer, du netop pakkede ud og så prøve igen med andre indstillinger i pakkeprogrammet, da det er vigtigt, at filerne er placeret korrekt.</p>
+
+
+			<a href="javascript: nextStep(1);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s2">
+			<h3>Filer</h3>
+
+			<p><strong>Trin 2: Skab forbindelse til din side på nettet</strong></p>
+
+			<p>Du skal have skabt en forbindelse mellem din PC og din hjemmeside, hvor du vil installere TNG. Det kan fx ske vha. en fil-manager, din webhost tilbyder som del af dit webhotel eller ved at bruge et <b>FTP program</b> (FTP står for "File Transfer Protocol" (på dansk nærmest FilTransportProgram)). Vi anbefaler FileZilla, der er godt og gratis. Hvis du vil bruge et FTP-program, skal du kende følgende: hostname, port (som oftest 21) brugernavn og password. Du har fået eller kan få informationerne hos din udbyder.</p>
+
+			<p>Når du først er kommet ind på din side, skal du navigere dig frem til den mappe, hvor din hjemmeside skal "bo". Fra nu af kalder vi det <b>roden</b>, også selvom den næppe hedder sådan på dit webhotel. Den hedder måske i stedet "public_html" eller "www", og filen, du ser på hjemmesiden i browseren, hedder nok "index.html", "index.htm" eller "default.htm.</p>
+
+			<a href="javascript: prevStep(2);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(2);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s3">
+			<h3>Filer</h3>
+
+			<p><strong>Trin 3: Konfigurer "fjernmiljøet" (hjemmesiden)</strong></p>
+
+			<p>Nu, hvor du har fundet din <b>rod</b>-mappe, skal du tage stilling til, om din webadresse skal pege direkte på TNG-installationen, eller om du vil have den i en separat mappe. </p>
+
+			<p>Hvis du vil have, at din webadresse (fx https://www.dinside.dk) peger direkte på TNG,
+			skal du slette alt, der allerede ligger i roden. Så installerer du bare TNG i roden, og så kan du springe over resten af dette trin.
+			Og så er <b>roden</b> og din slægtsforskningsmappe <b>her kaldet "genealogy"</b> den samme. ("Genealogy" er det engelske ord for slægtsforskning.)</p>
+
+			<p>Hvis du har planer om at sætte en lidt større side op, hvor slægtsforskningen bare er en del, skal du oprette en særskilt mappe (det kaldes en undermappe) på din side, og det er så den, der skal rumme dine TNG-filer. Du kan kalde den næsten lige, hvad du har lyst til (bare ikke noget med æ, ø eller å og ingen mellemrum). Her kalder vi den <b>genealogy</b>.</p>
+
+			<a href="javascript: prevStep(3);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(3);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s4">
+			<h3>Filer</h3>
+
+			<p><strong>Trin 4: Send de udpakkede filer til din hjemmeside</strong></p>
+
+			<p>Brug enten et FTP-program (fx FileZilla der er lettest, godt og gratis) eller den fil-manager, der sikkert er inkluderet i dit webhotel, til at transportere alle de udpakkede filer fra din PC til din hjemmesides rod ("Genealogy"). Det er vigtigt, at alle filerne placeres i de rigtige mapper. Hvis filerne i mapperne ikke kan uploades direkte sammen med mapperne, bliver du nødt til at oprette mapperne først. Herefter skal du placere filerne i de respektive mapper. Filer, der ikke ligger i en undermappe, skal placeres i din <b>genealogy</b>-mappe. Husk at
+			"genealogy" bare er den mappe, du har valgt at placere dine TNG-filer i. Den behøver ikke at hedde "genealogy".</p>
+
+			<p>Note: Nogle webhoteller tillader, at man uploader hele zip-filen og dernæst pakker den ud. Hvis din fil-manager på webhotellet kun lader dig uploade nogle få filer ad gangen, kan du spare meget tid ved at uploade zip-filen og så dernæst pakke den ud.</p>
+
+			<p><strong>VIGTIGT:</strong> Hvis du ser denne "readme"-side på din PC, skal du afslutte dette trin og så i stedet vise siden med en browser fra din hjemmeside på nettet i stedet (fx "https://www.minside.dk/readme.html"). Det vil gøre resten af installationen meget lettere.</p>
+
+			<a href="javascript: prevStep(4);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(4);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s5">
+			<h3>Rettigheder</h3>
+
+			<p><strong>Trin 1: Forklaring på "rettigheder"</strong></p>
+
+			<p>Du skal nu sætte rettigheder (det samme som tilladelser) på nogle filer og nogle mapper. Hvis du allerede kender til rettigheder, kan du springe over dette trin og gå direkte til næste trin. Ellers bør du læse dette. Det er tænkeligt, du kan sætte rettighederne med et enkelt klik i næste trin, men du vil alligevel have glæde af denne forklaring.</p>
+
+			<p>Og hvad er rettigheder så? Rettigheder angiver, hvem der kan gøre hvad med hvilke filer. Med andre ord: du kan beslutte, hvem der har lov til at skrive til eller at læse en specifik fil. TNG forudsætter, at alle kan skrive til nogle filer og mapper, så rettighederne skal sættes rigtigt.</p>
+
+			<p>Nogle foretrækker at tale om rettighederne som et trecifret tal, andre foretrækker tre bogstaver, som for eksempel "rwx",
+			mens andre igen taler om "læse, skrive og udføre". Når du angiver rettigheder, kan du støde på enhver af disse tre metoder.</p>
+
+			<p>For hver rettighed du sætter, tildeler du rettigheder til følgende: "ejeren" (det er dig selv), "gruppen", og "offentlige tilladelser" (det er besøgende på din side, også når du selv besøger siden). Det er grunden til, at man altid taler om rettigheder i grupper på tre.</p>
+
+			<p>Hvis du bruger metoden med tallene, repræsenterer hvert tal en rettighed til at læse, skrive og udføre for en personkreds. Læs = 4, Skriv = 2 og Udfør = 1. Det vil sige, at hvis du bliver bedt om at sætte en fil til "664", betyder det, at ejeren og gruppen vil have rettigheder til at læse og skrive (4+2), besøgende på siden vil kun have læse-rettigheder (4), og ingen vil have rettigheder til at udføre.</p>
+
+			<p>Hvis du bruger "rwx-metoden" kan "664" omsættes til rw-rw-r-- (bindestregen "-" betyder, at rettigheden er udeladt).</p>
+
+			<p>Note: Mac OS X-brugere kan bruge DonationWare kaldet "BatChmod" (tilgængeligt her
+			<a href="http://www.versiontracker.com" target="_blank">VersionTracker.com</a> eller
+			<a href="http://www.macupdate.com" target="_blank">MacUpdate.com</a>) eller "Fetch" (kan hentes her <a href="http://fetchsoftworks.com/fetch/download/">Fetchsoftworks.com</a>) til at sætte rettighederne med et brugervenligt software.</p>
+
+			<p>Hvis du vil vide mere, kan du læse denne artikel (på engelsk) på TNG Wiki <a href="http://tng.lythgoes.net/wiki/index.php?title=Permissions_Explained" target="_blank">Permissions Explained</a>.</p>
+
+			<a href="javascript: prevStep(5);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(5);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s6">
+			<h3>Rettigheder</h3>
+
+			<p><strong>Trin 2: Sæt rettigheder</strong></p>
+
+			<p>Hvis du læser denne side fra din hjemmeside (ude på nettet), er det muligt, du kan sætte alle rettighederne ved at klikke på denne knap (prøv bare):</p>
+
+			<table>
+			  <tr>
+			    <td valign="top">
+					<form action="setperms" method="get" style="margin:0px">
+					<input name="perms" type="button" value="Sæt rettigheder" onclick="doPerms('permMsg')">
+					</form>
+				</td>
+			    <td valign="top" id="permMsg">&nbsp;</td>
+			  </tr>
+			</table>
+
+			<p>Hvis det ikke fungerede:</p>
+
+			<p>I <b>genealogy</b>-mappen skal du finde filerne: <b>adminlog.txt, config.php, genlog.txt, importconfig.php, logconfig.php, mapconfig.php, pedconfig.php, subroot.php and whatsnew.txt</b> og sætte rettighederne på dem til <b>Læs/skriv</b>-rettigheder = 666 eller rw-rw-rw-. 
+			Brug din fil-manager eller dit FTP-program til det. Alle fil-managere og FTP-programmer bruger forskellige metoder, når der skal sættes rettigheder. Det kan derfor være en god idé at spørge din udbyder eller læse dokumentationen til din software. Hvis du bruger Windows og FileZilla, skal du markere filen, højreklikke på den og vælge "Filtilladelser" nederst. Herefter kommer du til et vindue, hvor du enten kan sætte/fjerne flueben eller indtaste tallet (den numeriske værdi). Sidstnævnte er vist det letteste.</p>
+
+			<p><b>NOTE:</b> Af og til er 664-rettigheder (eller rw-rw-r--) tilstrækkeligt for filerne nævnt ovenfor.</p>
+
+			<p>Du skal formentlig også ændre/sætte rettigheder på disse mapper: photos, histories, documents, headstones, media, gedcom (eller hvad du har kaldt den), gendex og backups (eller hvad du har kaldt den). 755 virker som regel, og man bør altid gå efter de laveste rettigheder, men får du problemer med at uploade billeder, importere eller lave backup, så prøv 777 i stedet.</p>
+
+			<a href="javascript: prevStep(6);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(6);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s7">
+			<h3>Rettigheder</h3>
+
+			<p><strong>Trin 3: Avancerede indstillinger</strong></p>
+
+			<p>Hvis du har købt dig ind på et webhotel, er det meste af det, man kalder "miljøet", allerede defineret for dig og du vil kun yderst sjældent have behov for at tilgå PHP-konfigurationen. Det vil sige, at du som hovedregel kan springe over dette trin.</p>
+
+			<p>Men hvis du selv er administrator af siden, skal du sørge for, at din <b>php.ini</b>-fil (en del af PHP, ikke af TNG) har disse indstillinger:</p>
+
+			<p><b>file_uploads = On<br />
+			error_reporting = E_ALL & ~E_NOTICE</b></p>
+
+			<p>Hvis du kan finde en linje i php.ini, der rummer denne værdi <b>LimitRequestBody</b>, skal du enten udkommentere den (det gøres ved at sætte // foran koden, så udføres den ikke) eller slette den, da den vil forhindre dig i at uploade filer, der er større end det, der står 	
+			(af og til finder du værdien i filen "php.conf", så kig her i stedet, hvis du ikke finder den i php.ini).</p>
+
+			<p>Det er også muligt, du skal øge værdien angivet i <b>upload_max_filesize</b>, hvis du har en meget stor GEDCOM-fil. Det kan evt. også være fordelagtigt at sætte <b>output_buffering</b> til "On".</p>
+
+			<p>Hvis din PHP-installation kører på en Windows-maskine, skal du muligvis sætte <b>session.save_path</b>
+			til at pege på din mappe med midlertidige filer (fx C:\Temp). Hvis du ændrer i din php.ini-fil, skal du genstarte PHP, for at få ændringerne til at træde i kraft.</p>
+
+			<a href="javascript: prevStep(7);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(7);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s8">
+			<h3>Mapper</h3>
+
+			<p>Her har du mulighed for at ændre navnet på nogle af mapperne i <b>genealogy</b>-mappen. Mapperne var en del af TNG-zipfilen og bør derfor allerede ligge på din hjemmeside. Det er selvfølgelig valgfrit, men det <b>ANBEFALES KRAFTIGT</b>
+			at du omdøber <b>backups</b>-mappen og <b>gedcom</b>-mappen, da andre med bare et lille kendskab til TNG ellers kan tilrane sig (dvs. stjæle) dine filer. I feltet står det nuværende navn. Du skal skrive det navn, du i stedet ønsker og trykke på knappen "Omdøb mappe".</p>
+
+			<table>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til multimedier (media):</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="mediafrm" id="mediafrm" onsubmit="if( document.mediafrm.foldername.value != '' ) {doFolder('mediapath',document.mediafrm,'mediaFolderMsg');} return false">
+						<input type="text" value="media" name="foldername" size="30"><input type="hidden" value="media" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="mediaFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til billeder:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="photosfrm" id="photosfrm" onsubmit="if( document.photosfrm.foldername.value != '' ) {doFolder('photopath',document.photosfrm,'phFolderMsg');} return false;">
+						<input type="text" value="photos" name="foldername" size="30"><input type="hidden" value="photos" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="phFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til dokumenter:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="documentsfrm" id="documentsfrm" onsubmit="if( document.documentsfrm.foldername.value != '' ) {doFolder('documentpath',document.documentsfrm,'docFolderMsg');} return false;">
+						<input type="text" value="documents" name="foldername" size="30"><input type="hidden" value="documents" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="docFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til fortællinger:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="historiesfrm" id="historiesfrm" onsubmit="if( document.historiesfrm.foldername.value != '' ) {doFolder('historypath',document.historiesfrm,'histFolderMsg');} return false;">
+						<input type="text" value="histories" name="foldername" size="30"><input type="hidden" value="histories" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="histFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til gravsten:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="headstonesfrm" id="headstonesfrm" onsubmit="if( document.headstonesfrm.foldername.value != '' ) {doFolder('headstonepath',document.headstonesfrm,'hsFolderMsg');} return false;">
+						<input type="text" value="headstones" name="foldername" size="30"><input type="hidden" value="headstones" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="hsFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til GENDEX:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="gendexfrm" id="gendexfrm" onsubmit="if( document.gendexfrm.foldername.value != '' ) {doFolder('gendexfile',document.gendexfrm,'gendexFolderMsg');} return false;">
+						<input type="text" value="gendex" name="foldername" size="30"><input type="hidden" value="gendex" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="gendexFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til backups:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="backupsfrm" id="backupsfrm" onsubmit="if( document.backupsfrm.foldername.value != '' ) {doFolder('backuppath',document.backupsfrm,'buFolderMsg');} return false;">
+						<input type="text" value="backups" name="foldername" size="30"><input type="hidden" value="backups" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="buFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til GEDCOM-filer:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="gedcomfrm" id="gedcomfrm" onsubmit="if( document.gedcomfrm.foldername.value != '' ) {doFolder('gedpath',document.gedcomfrm,'gedFolderMsg');} return false;">
+						<input type="text" value="gedcom" name="foldername" size="30"><input type="hidden" value="gedcom" name="oldname"/>
+						<input type="submit" value="Omdøb mappe"/>
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="gedFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til MODs (udvidelser):</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="modsfrm" id="modsfrm" onsubmit="if( document.modsfrm.foldername.value != '' ) {doFolder('modspath',document.modsfrm,'modsFolderMsg');} return false;">
+						<input type="text" value="mods" name="foldername" size="30"><input type="hidden" value="mods" name="oldname"/>
+						<input type="submit" value="Omdøb mappe">
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="modsFolderMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><span class="normal">Mappe til andre udvidelser:</span></td>
+					<td>
+						<form action="" method="get" style="margin:0px" name="extensionsfrm" id="extensionsfrm" onsubmit="if( document.extensionsfrm.foldername.value != '' ) {doFolder('extspath',document.extensionsfrm,'extsFolderMsg');} return false;">
+						<input type="text" value="extensions" name="foldername" size="30"><input type="hidden" value="extensions" name="oldname"/>
+						<input type="submit" value="Omdøb mappe">
+						</form>
+					</td>
+				    <td valign="top">
+						<div id="extsFolderMsg"></div>
+					</td>
+				</tr>
+			</table>
+
+			<p>Hvis du ikke kan omdøbe mapperne ved hjælp af felterne og knapperne herover, skal du bruge dit FTP-program eller fil-manageren på dit webhotel til det. Hvis du bliver nødt til at gøre det, skal du BÅDE ændre med FTP-programmet OG i TNG, efter du har færdiggjort installationen ved at gå til <b>Opsætning >> Konfigurering >> Generelle indstillinger</b>.</p>
+
+			<p>Mapperne skal have rettighederne 755 (rwx r-x r-x). Hvis det ikke fungerer med 755, så prøv 777 (rwx rwx rwx) i stedet.
+			Hvis det lykkedes at omdøbe mapperne i de tidligere trin i denne guide, bør de allerede have de rigtige rettigheder, men det skader aldrig at tjekke en ekstra gang.</p>
+
+			<p><strong>NOTE:</strong> Opdager du senere, at du ikke kan tilføje billeder eller ikke kan skrive til disse mapper, kan det skyldes, at det var den forkerte "ejer", der oprettede dem. Det vil typisk kun ske, hvis du kører på din egen server. Hvis dine mapper har den forkerte ejer, skal du bruge dit FTP-program til at sætte ejeren manuelt eller oprette mapperne på ny.</p>
+
+			<a href="javascript: prevStep(8);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(8);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s9">
+			<h3>Sprog og tegnsæt</h3>
+
+			<p>TNG's standardsprog er engelsk med tegnsættet UTF-8. Hvis du ikke ændrer noget, vil de besøgende på din hjemmeside altså få vist siden på engelsk.</p>
+
+			<p>For at ændre standardsprog og/eller tegnsæt skal du vælge det nye sprog herunder. Du kan læse mere (på engelsk) om at køre <a href="http://tng.lythgoes.net/wiki/index.php?title=Installing_TNG_as_UTF-8" target="_blank">TNG med UTF-8</a> her.</p>
+			
+			<p>Hvis du vil tilbyde dine besøgende flere sprogvarianter, kan du sørge for det senere under Administration >> Sprog.</p>
+
+			<form action="#" onsubmit="return setLang(this,'langMsg2');">
+			<table class="normal">
+				<tr>
+					<td>Sprog:</td>
+					<td>
+						<select name="newlanguage" onchange="matchCharset(this,'newcharset2');">
+							<script type="text/javascript">showLanguageOptions();</script>
+						</select>
+					</td>
+				</tr>
+				<tr><td>Tegnsæt:</td><td><input type="text" name="newcharset" id="newcharset2" value="UTF-8"/></td></tr>
+				<tr><td><input name="setlang" type="submit" value="Gem"></td></tr>
+				<tr><td id="langMsg2" colspan="2"></td></tr>
+			</table>
+			</form>
+
+			<a href="javascript: prevStep(9);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(9);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s10">
+			<h3>Databasetabeller</h3>
+
+			<p><strong>Trin 1: Etabler forbindelse til databasen</strong></p>
+
+			<p>Du skal nu etablere forbindelse til din <b>MySQL-database</b>. Du skal oprette databasen, før du kan fortsætte! Ofte har din udbyder oprettet databasen for dig. Hvis ikke har du sikkert fået adgang til et "kontrolpanel" (det kan fx være cPanel), hvor du selv kan oprette databasen. TNG kan ikke oprette den for dig. Når databasen er oprettet, kan du vende tilbage til dette trin. Du kan læse mere om at oprette databaser <a href="http://tng.lythgoes.net/wiki/index.php?title=Database_-_Creating" target="_blank">på denne engelske side</a> i TNG Wiki. Note: Hvis du regner med at ville bruge TNG sammen med et CMS (content management system) som fx WordPress, Drupal, Joomla eller lignende, skal du bruge samme database til både TNG og dit CMS.</p>
+
+			<p>Når databasen er oprettet, skal du udfylde felterne herunder med de korrekte oplysninger, før TNG kan fungere. Hvis du ikke har oplysningerne, skal du bede din udbyder om dem.</p>
+			
+			<p>Herunder følger en kort beskrivelse af de nødvendige informationer.</p>
+
+			<p><b>Host Name:</b> Navnet på den computer/server hvor din database ligger. Som hovedregel er det samme sted, din hjemmeside ligger. Der skal typisk stå "localhost" (uden anførselstegn) i dette felt.</p>
+
+			<p><b>Databasenavn:</b> Af og til vil udbyderen oprette databasen for dig og give dig navnet på den. Andre gange skal du selv oprette den via det "kontrolpanel" (fx cPanel), der hører til din hjemmeside. TNG vil forsøge at gøre det for dig, hvis det databasenavn, du angiver, ikke findes, men meget ofte tillader udbyderne af sikkerhedsårsager ikke, at det gøres via et script (et lille program). Hvis det er tilfældet, skal du selv oprette databasen, navngive den og skrive navnet i feltet, før du kan fortsætte.</p>
+
+			<p><b>Brugernavn og password til databasen:</b> Oplysningerne er målrettet præcis til denne database og er sikkert forskellige fra andre brugernavne og passwords, du har fået fra din udbyder. Hvis du selv oprettede databasen, angav du brugernavn og password (husk at bruge et sikkert password, dvs. noget, der ligner "s3o!8!t!JnsDn!GR"). Husk også at tildele denne bruger ALLE rettigheder (privilegier) og at knytte brugeren til databasen. Tildelingen af privilegier er muligvis et separat trin i processen.</p>
+			
+			<p><b>Databasens port og "socket":</b> (Det giver ikke mening at oversætte "socket" til dansk). De færreste skal angive noget her, men hvis din udbyder har oplyst dig om port og socket, skal du indtaste de oplysninger.</p>
+			
+			<p>Du kan læse mere om disse emner <a href="http://tng.lythgoes.net/wiki/index.php?title=Setup_-_Database" target="_blank">på denne engelske side</a> i TNG Wiki. 
+
+			<p>Indtast dine oplysninger i felterne. Afslut med "Gem og bekræft":</p>
+			<form action="setdbparams" method="get" style="margin:0px" name="dbparamsfrm" onsubmit="return doDBParams(document.dbparamsfrm,'dbMsg');">
+			<table>
+				<tr><td valign="top"><span class="normal">Host Name:</span></td><td><input type="text" value="localhost" name="database_host" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Databasenavn:</span></td><td><input type="text" value="" name="database_name" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database brugernavn:</span></td><td><input type="text" value="" name="database_username" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database password:</span></td><td><input type="text" value="" name="database_password" size="20"></td></tr>
+				<tr><td valign="top"><span class="normal">Database port:</span></td><td><input type="text" value="" name="database_port" size="20"> (lad feltet være tomt som standard)</td></tr>
+				<tr><td valign="top"><span class="normal">Database socket:</span></td><td><input type="text" value="" name="database_socket" size="20"> (lad feltet være tomt som standard)</td></tr>
+				<tr>
+					<td valign="top"><input name="dbparams" type="submit" value="Gem og bekræft"></td>
+				    <td valign="top" id="dbMsg"></td>
+				</tr>
+			</table>
+			</form>
+
+			<p>Ovenstående oplysninger burde være gemt allerede under punkt 6 i den korte installationsvejledning. Du kan også sætte oplysningerne ind direkte ved at gå til <p>Opsætning >> Konfigurering >> Generelle indstillinger</b>. Hvis du læser dette på hjemmesiden, kan du klikke her: <a href="admin_setup.php" target="_blank">admin_setup.php</a>.</p>
+
+			<p><b>Hvad kan gå galt?</b> Du skal starte med at kigge efter:</p>
+
+			<p>1. Vær sikker på at du har stavet alt korrekt og har skrevet hhv. store og små bogstaver rigtigt ind.<br />
+			2. Nogle databaseværktøjer tilføjer en "forstavelse" (et præfiks) til databasenavnet og/eller brugernavnet. Et eksempel: du mener, du opretter en database med navn "slaegt". Men i virkeligheden kommer den til at hedde "xyz_slaegt". Derfor skal du kigge en ekstra gang for at se, hvad databasen og brugeren kom til at hedde.<br />
+			3. Af og til kræver udbyderen, at portnummeret ser sådan ud "localhost:3306" eller at stien til socket ser sådan ud "localhost:/path/to/socket". Det skal du tjekke med din udbyder.<br />
+			4. Udbydere kan have forskellige regler om databasenavn og brugernavn, fx at databasenavn og brugernavn er de samme eller at brugernavn og/eller password genbruges fra kontrolpanelet.<br />
+			5. Måske har du glemt at tildele brugeren til databasen?<br />
+			6. (Ikke ret sandsynligt i 2022): Hvis du er på MySQL 4.1 med mindre end PHP 5 kan forskellen i adgangskoder forårsage et problem. Kig her for at løse problemet: <a href="http://dev.mysql.com/docss/mysql/en/Old_client.html" target="_blank">http://dev.mysql.com/docss/mysql/en/Old_client.html</a></p>
+
+			<a href="javascript: prevStep(10);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(10);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s11">
+			<h3>Databasetabeller</h3>
+
+			<p><strong>Trin 2: Opret databasetabellerne</strong></p>
+
+			<p>Nu skal du oprette tabellerne i databasen. Alle data i TNG opbevares i tabeller, for at de kan blive vist på din hjemmeside. Du kan angive andre navne på tabellerne, men der er ingen grund til det.</p>
+
+			<p><b>VIGTIGT:</b> Hvis du allerede har oprettet tabellerne og fyldt indhold i dem (men det har du næppe, hvis du følger denne guide trin for trin), vil det medføre, at du sletter indholdet!</p>
+			
+			<p>Note til dansk oversættelse: forklaringen til tabellens indhold og tabellens navn er med vilje ikke oversat. Vores råd er at lade tabelnavnene stå, som de er, for de besøgende på din hjemmeside ser dem alligevel ikke, og det letter den eventuelle kommunikation med andre TNG-brugere i væsentlig grad.</p>
+
+			<form action="createtables" method="get" style="margin:0px" name="tablesfrm2" onsubmit="return doTables(document.tablesfrm2,'tableMsg');">
+			<table>
+				<tr>
+					<td valign="top">
+						<table>
+							<tr><td valign="top"><span class="normal">People:</span></td><td><input type="text" value="tng_people" name="people_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Families:</span></td><td><input type="text" value="tng_families" name="families_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Children:</span></td><td><input type="text" value="tng_children" name="children_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Albums:</span></td><td><input type="text" value="tng_albums" name="albums_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Album Links:</span></td><td><input type="text" value="tng_albumplinks" name="album2entities_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Album Media:</span></td><td><input type="text" value="tng_albumlinks" name="albumlinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Media:</span></td><td><input type="text" value="tng_media" name="media_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Media Links:</span></td><td><input type="text" value="tng_medialinks" name="medialinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Media Types:</span></td><td><input type="text" value="tng_mediatypes" name="mediatypes_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Addresses:</span></td><td><input type="text" value="tng_addresses" name="address_table" size="20"></td></tr>
+					 		<tr><td valign="top"><span class="normal">Languages:</span></td><td><input type="text" value="tng_languages" name="languages_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Places:</span></td><td><input type="text" value="tng_places" name="places_table" size="20"></td></tr>
+						</table>
+					</td>
+					<td>&nbsp;</td>
+					<td valign="top">
+						<table>
+							<tr><td valign="top"><span class="normal">Cemeteries:</span></td><td><input type="text" value="tng_cemeteries" name="cemeteries_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">States:</span></td><td><input type="text" value="tng_states" name="states_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Countries:</span></td><td><input type="text" value="tng_countries" name="countries_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Users:</span></td><td><input type="text" value="tng_users" name="users_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Sources:</span></td><td><input type="text" value="tng_sources" name="sources_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Citations:</span></td><td><input type="text" value="tng_citations" name="citations_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Image Tags:</span></td><td><input type="text" value="tng_image_tags" name="image_tags_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Repositories:</span></td><td><input type="text" value="tng_repositories" name="repositories_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Events:</span></td><td><input type="text" value="tng_events" name="events_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Event Types:</span></td><td><input type="text" value="tng_eventtypes" name="eventtypes_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Reports:</span></td><td><input type="text" value="tng_reports" name="reports_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Trees:</span></td><td><input type="text" value="tng_trees" name="trees_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Notes:</span></td><td><input type="text" value="tng_xnotes" name="xnotes_table" size="20"></td></tr>
+						</table>
+					</td>
+					<td>&nbsp;</td>
+					<td valign="top">
+						<table>
+							<tr><td valign="top"><span class="normal">Note Links:</span></td><td><input type="text" value="tng_notelinks" name="notelinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Save Import:</span></td><td><input type="text" value="tng_saveimport" name="saveimport_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Branches:</span></td><td><input type="text" value="tng_branches" name="branches_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Branch Links:</span></td><td><input type="text" value="tng_branchlinks" name="branchlinks_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Timeline Events:</span></td><td><input type="text" value="tng_timelineevents" name="tlevents_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Temp Events:</span></td><td><input type="text" value="tng_temp_events" name="temp_events_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Associations:</span></td><td><input type="text" value="tng_associations" name="assoc_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Most Wanted:</span></td><td><input type="text" value="tng_mostwanted" name="mostwanted_table" size="20"></td></tr>
+							<!--<tr><td valign="top"><span class="normal">Partner Requests:</span></td><td><input type="text" value="tng_mhrequests" name="mhrequests_table" size="20"></td></tr>-->
+							<tr><td valign="top"><span class="normal">DNA Tests:</span></td><td><input type="text" value="tng_dna_tests" name="dna_tests_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">DNA Groups:</span></td><td><input type="text" value="tng_dna_groups" name="dna_groups_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">DNA Links:</span></td><td><input type="text" value="tng_dna_links" name="dna_links_table" size="20"></td></tr>
+							<tr><td valign="top"><span class="normal">Template Settings:</span></td><td><input type="text" value="tng_templates" name="templates_table" size="20"></td></tr>
+						</table>
+					</td>
+				</tr>
+				<tr><td colspan="3">Database collation: <input type="text" name="collation" id="collation2" value=""/> (Hvis du kører med UTF-8, og det gør du nok, når du ser dette på dansk, skal du formentlig vælge utf8_unicode_ci, utf8_general_ci eller noget lignende) Hvis du er i tvivl <a href="https://www.google.com/search?q=what+mysql+database+collation+should+i+use" target="_blank">så læs mere her</a>.</td></tr>
+				<tr>
+					<td valign="top"><input name="dbparams" type="submit" value="Gem og opret"></td>
+				    <td valign="top" id="tableMsg" colspan="2"></td>
+				</tr>
+			</table>
+			</form>
+
+			<p>Hvis du tidligere kunne få forbindelse til databasen, hvad kan så gå galt?<br />
+			<b>Herunder har du tips til fejlsøgning:</b></p>
+			1. Tjek at du ser denne side og kører det lille program fra hjemmesiden og ikke på din PC.<br />
+			2. Tjek at din databasebruger har ALLE rettigheder/privilegier. Hvis det ikke er tilfældet, kan du ikke fuldføre dette trin.<br />
+			3. Kan du have glemt at tildele brugeren til databasen?<br />
+			4. (Ikke ret sandsynligt i 2022): Hvis du er på MySQL 4.1 med mindre end PHP 5 kan forskellen i adgangskoder forårsage et problem. Kig her for at løse problemet: <a href="http://dev.mysql.com/docss/mysql/en/Old_client.html" target="_blank">http://dev.mysql.com/docss/mysql/en/Old_client.html</a></p>
+
+			<a href="javascript: prevStep(11);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(11);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s12">
+			<h3>Andre indstillinger</h3>
+
+			<p><strong>Trin 1: Generelle indstillinger</strong></p>
+
+			<p>Der er flere generelle indstillinger, du kan ændre på, hvis du vil. Du kan finde dem ved at gå til <b>TNG's administrationsside</b>
+			Hvis du læser dette på din hjemmeside, så klik her: <a href="admin.php" target="_blank">admin.php</a>. Herefter vælger du <b>Opsætning >> Konfigurering >> Generelle indstillinger</b></p>
+
+			<p>Lav de nødvendige ændringer - du bør ikke ændre på tabellernes navne. Hvis du klikker på "Hjælp" øverst, får du en forklaring til hvert enkelt felt. Du kan til enhver tid vende tilbage til siden og lave flere ændringer.</p>
+
+			<p>Du kan evt. også læse TNG Wiki-artiklen (på engelsk) om <a href="http://tng.lythgoes.net/wiki/index.php?title=General_Settings" target="_blank">Generelle indstillinger</a>. Den fortæller - med illustrationer - om "Webstedets design og definitioner", "Media", "Privat" og "Kirkegårde". Herudover er der forklaring på indstillingerne i "Stier og mapper".</p>
+
+			<p><b>NOTE om Rodsti:</b> Du kan lade feltet være tomt, med mindre du vil pege på en specifik adresse, der er forskellig fra den aktuelle rod.</p>
+
+			<p><b>NOTE om konfig-sti:</b> Her kan du angive en anden sti over eller udenfor roden. Det er helt valgfrit at angive noget her. Hvis du angiver en sti her, SKAL du være i stand til at flytte de nævnte filer her til.</p>
+
+			<p>Husk at trykke på "Gem", når du er færdig.</p>
+
+			<a href="javascript: prevStep(12);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(12);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s13">
+			<h3>Andre indstillinger under Opsætning >> Konfigurering</h3>
+
+			<p><strong>Trin 2: Tavler, Import-, Log- og Kort-indstillinger</strong></p>
+
+			<p>Vælg <b>Indstillinger for tavler</b> for at indstille alle variabler for de forskellige tavler. Det er en god idé at vente med dette, til du er sikker på, hvilken skabelon, du vil bruge. Hvis du er tilfreds med skabelonens visninger, behøver du slet ikke ændre nogen variabler.</p>
+
+			<p>Vælg <b>Logindstillinger</b> for at bestemme alle variabler, der hører til logningerne. Bemærk igen at der er hjælp til alle variablerne øverst i skærmbilledet.</p>
+
+			<p>Vælg <b>Importindstillinger</b> for at bestemme alle variabler, der hører til importer. Vær atter opmærksom på knappen hjælp øverst. Vær især opmærksom på felterne til lokal(e) sti(er) til <b>Billeder/Fortællinger/Dokumenter/Gravsten/Andre billeder</b> Hvis du vil importere en GEDCOM-fil, der indeholder links til billeder, fortællinger eller andre billeder og du vil oprette en mappestruktur til de forskellige billeder (i stedet for at lægge alle billederne i samme mappe), skal du udfylde disse felter, inden du importerer GEDCOM-filen. Du kan læse mere om dette (på engelsk) i denne TNG Wiki-artikel <a href="https://tng.lythgoes.net/wiki/index.php?title=Media_-_Import" target="_blank">Setup - Import Settings</a>.</p>
+
+			<p>Vælg <strong>Kortindstillinger</strong> for at bestemme alle variabler, der hører til kortindstillinger.</p>
+
+			<p>Der er mere information (på engelsk) i denne TNG Wiki-artikel <a href="https://tng.lythgoes.net/wiki/index.php?title=Google_Maps_-_Getting_Started" target="_blank">Google Maps - Getting Started</a>. </p>
+
+			<p>Vælg <strong>Skabelonindstillinger</strong> for at vælge en anden skabelon. Det er også her, du ændrer tekst og billeder til din forside.</p>		
+			<p>Der er mere information (på engelsk) i denne TNG Wiki-artikel  <a href="https://tng.lythgoes.net/wiki/index.php?title=Templates_-_Getting_Started" taret="_blank">Template Settings</a>.</p>
+			
+			<a href="javascript: prevStep(13);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(13);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s14">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 1: Opsætning af brugere</strong></p>
+
+			<p>Herefter skal du have sat mindst én bruger op. En "bruger" kan være en eller flere personer med de samme rettigheder. Indtil du har mindst én bruger, vil dit "Administrations-område" være tilgængeligt for alle besøgende på siden. Det ønsker du naturligvis ikke. Du kan sætte den første bruger op her eller fra administratormenuen. Det letteste er at gøre det her. <u>Alle</u> felterne skal udfyldes. Afslut med at klikke på "Opret bruger". Da denne bruger er den første, sikkert dig selv, vil den have administrator-rettigheder. Du kan tilføje flere informationer om brugeren senere fra administratormenuen. Husk at vælge et sikkert password - fx noget der ligner "f?cxY&B4dbNXaT73".</p>
+
+			<form action="#" onsubmit="return createUser(this,'userMsg2');">
+			<table class="normal">
+				<tr><td>Brugernavn:</td><td><input type="text" name="newusername" value=""/></td></tr>
+				<tr><td>Password:</td><td><input type="password" name="newpassword" value=""/></td></tr>
+				<tr><td>Password igen:</td><td><input type="password" name="newpassword2" value=""/></td></tr>
+				<tr><td>Dit rigtige navn:</td><td><input type="text" name="newrealname" value=""/></td></tr>
+				<tr><td>Din e-mailadresse:</td><td><input type="text" name="newemail" value=""/></td></tr>
+				<tr><td valign="top"><input name="usercreate" type="submit" value="Opret bruger"></td></tr>
+				<tr><td valign="top" id="userMsg2" colspan="2"></td></tr>
+			</table>
+			</form>
+
+			<p>Hvis du vil oprette brugeren fra <b>Administrations-området</b>, så gå til <b>Brugere</b> og klik på <strong>Tilføj ny</strong>.</p>
+
+			<p>Du kan oprette så mange brugere, du vil, men den første SKAL være <b>administrator</b> (det er dig selv). En administrator skal have rettigheder til følgende: <b>"Tillad at tilføje nye poster", "Tillad at redigere nuværende poster" og "Tillad at slette nuværende poster".</b> Nederst under "Adgangsbegrænsninger" skal du tjekke, at der er mærke i "Tillad adgang til alle systemindstillinger og administrative funktioner og giv rettigheder til alle træer og grene."</p>
+
+			<p>Hvis den første bruger derimod ikke er oprettet som administrator, eller du senere sletter denne bruger, kan du få problemer med at komme tilbage til denne side, da den kun er til administratorer!</p>
+
+			<p>Der er flere forklaringer under "Hjælp" på siden "Brugere".</p>
+
+			<a href="javascript: prevStep(14);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(14);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s15">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 2: Træer</strong></p>
+
+			<p>Herefter skal du oprette mindst ét træ. Et "Træ" defineres som et uafhængigt datasæt eller en gruppe af personer, familier og kilder, der ikke hænger sammen med andre mage til. Du kan oprette dit første træ her eller fra administratormenuen. Hvis du vil oprette træet her, skal du udfylde <u>begge</u> felterne herunder og afslutte med at klikke på "Opret træ". Træ-ID kan ikke ændres senere. Træets navn kan fx være dine initialer. Det er kun dig selv, der ser disse informationer. Du kan tilføje flere informationer om træet senere på administrationssiden.</p>
+
+			<form action="#" onsubmit="return createTree(this,'treeMsg2');">
+			<table class="normal">
+				<tr><td>Træ-ID:</td><td><input type="text" name="newtreeid" value="tree1"/> (kun tal og bogstaver, ingen æ, ø, eller å og ingen mellemrum)</td></tr>
+				<tr><td>Træets navn:</td><td><input type="text" name="newtreename" value="initialer"/></td></tr>
+				<tr><td valign="top"><input name="treecreate" type="submit" value="Opret træ"></td></tr>
+				<tr><td valign="top" id="treeMsg2" colspan="2"></td></tr>
+			</table>
+			</form>
+
+			<p>Hvis du hellere vil oprettet træet fra administratormenuen, så gå til <b>Træer</b> og klik på <strong>Tilføj ny</strong>.</p>
+
+			<p>Har du brug for flere træer? Hovedreglen er følgende: De fleste slægtsforskere har kun behov for ét træ med mindre, der skal importeres flere forskellige GEDCOM-filer, der slet ikke deler nogen data. Og data er også kilder i denne forbindelse. Hvis den samme kilde, fx "Kirkebog" er brugt på personer, der godt nok ikke hænger sammen, skal du alligevel kun have ét enkelt træ.</p>
+
+			<p>Du skal ikke oprette "Grene" nu. Det gør du først, når du har importeret eller indtastet data.</p>
+
+			<p>Der er flere oplysninger (på engelsk) i denne TNG Wiki-artikel <a href="http://tng.lythgoes.net/wiki/index.php?title=Setup_-_Tree" target="_blank">Setup - Tree</a>, der også fortæller, hvordan man forhindrer, at besøgende downloader GEDCOM-filen.</p>
+
+			<a href="javascript: prevStep(15);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(15);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s16">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 3: GEDCOM-import</strong></p>
+
+			<p>Hvis du ikke forventer at importere GEDCOM-filer, kan du springe dette trin over (du kan altid vende tilbage). I modsat fald skal du gå til Administrationsmenuen og klikke på <strong>Import/Eksport</strong>, hvor du importerer en GEDCOM-fil. Filen skal være i standard 5.5- eller 4.0-format, og du kan importere den direkte fra din PC eller fra GEDCOM-mappen. Læs venligst hjælp-fanen, der findes lige under ordet "Import" i "Import/Eksport >> GEDCOM-import". Her er alle de forskellige import-muligheder forklarede.</p>
+
+			<p>Hvis du i dit slægtsprogram (Legacy, Brothers Keeper mv.) bruger et tegnsæt, som ikke findes på et standardiseret vestligt tastatur (oversætteres note: og det gælder dansk, da vi har specialtegnene æ, ø og å), skal du være opmærksom på enten at bruge 1) ANSI (kaldes til tider Windows) eller 2) UTF-8, når du eksporterer data fra slægtsprogrammet. Der er yderligere information (på engelsk) i denne TNG Wiki-artikel <a href="http://tng.lythgoes.net/wiki/index.php?title=Category:Charset" target="_blank">Character Sets</a>.</p>
+
+			<p>Hvis din GEDCOM-fil er meget stor, er det muligt, importen ikke fuldføres. Når importen er fuldført, får du en meddelelse om det. Du vil få oplyst, hvor mange personer, familier, kilder, media og steder, der er importeret. Hvis importen ikke fuldføres, kan det skyldes, at din udbyder har sat en grænse for, hvor store filer, der må uploades. Du kan i stedet sende filen til "GEDCOM-mappen" med dit FTP-program (fx FileZilla) og så fortsætte importen derfra. I dette tilfælde, skal det første felt på import-billedet være tomt. Der er mere hjælp til dette, hvis du klikker på "Hjælp".</p>
+
+			<p>Hvis importen starter men går i stå uden at blive færdig, er det muligt, at serveren standser processen for at gøre plads for andre processer. I det tilfælde skal du 1) sikre dig at GEDCOM-filen virkelig findes i GEDCOM-mappen og 2) gå tilbage til importvinduet og sætte flueben i "Gem import status". Prøv så at importere igen. Nu vil du se et link i toppen af siden, der oplyser "hvis importen fejler, så klik her for at genoptage den". Klik på linket, hvorefter importen fortsætter, derfra hvor den nåede til. Det er muligt, du skal gøre dette flere gange. Det afhænger af størrelsen på din fil og de begrænsninger, din udbyder har sat op.</p>
+
+			<p>Hvis din GEDCOM-fil rummer links til billeder, skal disse herefter uploades manuelt til den relevante mappe fx "photos", som du oprettede i et tidligere trin. Der er mere hjælp til dette (på engelsk) i TNG Wiki-artiklen: 
+			<a href="http://tng.lythgoes.net/wiki/index.php?title=Import_Data" target="_blank">Importing Data</a> og
+			<a href="http://tng.lythgoes.net/wiki/index.php?title=Setup_-_Import_Settings#Local_Paths" target="_blank">Importing Media</a>.</p>
+
+			<a href="javascript: prevStep(16);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(16);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s17">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 4: Begivenhedstyper - to slags</strong></p>
+
+			<p>TNG indeholder alle de almindelige begivenhedstyper (fx fødsel, død, vielse osv.) som "standard", hvilket vil sige, at de importeres hver gang. Øvrige begivenhedstyper, der måske er specielle for netop dit slægtsprogram, importeres og vises ikke, før du har bedt TNG acceptere dem.</p>
+
+			<p>Den letteste måde at få opsat alle standardbegivenhedstyper er at importere din GEDCOM-fil med flueben i "Importer kun Standardbegivenhedstyper", før du importerer resten af dine data. Herefter går du til "Begivenhedstyper" på administrationssiden. Alle begivenhedstyper vil blive vist her, men de, der ikke er standard, vil være sat til "ignorer". Sæt mærke i "Accepter" ved alle dem, du ønsker vist. I feltet "Vis" skal du også skrive noget mere meningsfyldt. Fx vil det være en god idé at ændre OCCU (der er en GEDCOM-kode) til "Beskæftigelse" eller "Erhverv". Tilbyder du flere sprog, er det også her, du skriver, hvad der skal vises, hvis brugeren foretrækker et andet sprog. Du skal ikke ændre "Knyttet til" eller "eller skriv".</p>
+
+			<p>Når du har lavet de ønskede rettelser, importerer du GEDCOM-filen igen (denne gang uden flueben i "Importer kun standardbegivenhedstyper"). Du vil nu få vist alle begivenhedstyperne sammen med alle dine øvrige data.</p>
+
+			<p>En anden mulighed er at lade det hele gå automatisk ved at sætte flueben i "Acceptér data for alle nye almindelige begivenhedstyper" i import-billedet.</p>
+			
+			<p>Hvis du ikke importerer en GEDCOM-fil, eller hvis du hellere vil oprette begivenhedstyperne manuelt, kan du gøre det ved at gå til "Begivenhedstyper" og vælge "Tilføj ny". Klik på "Hjælp", hvis du har brug for flere oplysninger.</p>
+
+			<a href="javascript: prevStep(17);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(17);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s18">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 5: Manuel indtastning af data</strong></p>
+
+			<p>Hvis du vil indtaste data manuelt, skal du vælge "Personer", "Familier", "Kilder" eller "Arkiver" fra administrationssiden for at komme i gang. Det meste burde være nogenlunde selvforklarende, men alle siderne har en hjælpeside, du kan ty til om nødvendigt. Det er uden betydning, om du starter med at indtaste personer eller familier.</p>
+
+			<a href="javascript: prevStep(18);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(18);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s19">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 6: Sekundære processer</strong></p>
+
+			<p>Efter import eller indtastning skal du returnere til Import/Eksport >> <b>Sekundære processer</b> for at udføre de forskellige trin. Hjælpeknappen forklarer, hvad hvert trin omfatter.</p>
+
+			<p>Hvis dit slægtsprogram ikke sorterer børn eller ægtefæller korrekt, kan TNG gøre det for dig her.</p>
+
+			<p>Det er også her, du kan danne en GENDEX-fil, der sikrer, at din hjemmeside indekseres på <a href="http://www.gendexnetwork.org">GenDex Network</a> eller <a href="http://www.familytreeseeker.com">FamilyTreeSeeker.com</a>.</p>
+
+			<p>Endnu en mulighed er "Redigér grennavne". (Du kan oprette "Grene" i et træ for at begrænse brugerrettigheder til kun en del af træet. Hvis du vil oprette grene i et træ, skal du gå til administrationssiden og vælge Grene >> Tilføj en ny gren.) Hvis du importerer data igen og vælger Erstat alle aktuelle data, slettes grenen også. Knappen Redigér grennavne bringer dem på plads igen.</p>
+
+			<a href="javascript: prevStep(19);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(19);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s20">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 7: Media (Billeder/Fortællinger/Dokumenter/Gravsten/Andre etc.)</strong></p>
+
+			<p>Links til de forskellige typer af Media importeres typisk som en del af din GEDCOM-fil, og ellers kan du sætte dem op manuelt på administrationssiden. Hvis du importerer, er det kun linket, der importeres. Selve billedet, dokumentet mv. skal du stadig selv uploade med fx FileZilla til den rigtige mappe.</p>
+
+			<p>"Kirkegårde" er ikke en del af GEDCOM-standarden. Derfor vil de ikke blive importeret som en del af din GEDCOM-fil. Du bliver nødt til at bruge administrationssiden til at oprette dem. Hvis du har links til billeder af gravsten i din GEDCOM-fil, vil de blive placeret sammen med de øvrige billeder i fx photos-mappen. Du kan bruge TNG til at omdanne dem til Gravsten. Tjek knappen "Hjælp" under Media for at få yderligere forklaring på dette.</p>
+
+			<p>Alt i Media skal have en entydig placering (dvs. sti og filnavn) derfor vil du få en fejlmeddelelse, hvis du forsøger at tilføje fx endnu et billede med det samme filnavn.</p>
+
+			<p>Media kan være knyttet til personer, familier, kilder, arkiver, begivenheder eller steder. Alle medialinks kan importeres som en del af GEDCOM-filen lige bortset fra media, der er knyttet til steder.</p>
+
+			<p>Links til media opbevares i særskilte tabeller i databasen. Det betyder, at eksisterende links ikke ødelægges, når du importerer en ny GEDCOM-fil, med mindre du har ændret på ID-numrene. Det er en blandt flere årsager til, at du aldrig skal ændre ID-numrene eller genbruge ubrugte ID-numre. NOTE: Hvis du laver ændringer i din Rodsti (Opsætning >> Konfigurering >> Generelle indstillinger >> Stier og mapper), vil TNG opfatte linkene som værende nye, så en ny import vil generere kopier. For at undgå dette skal du sørge for, at der <i>ikke</i> er flueben i "Importér nuværende billeder m.m." i Import/Eksport.</p>
+
+			<p>Der er mere hjælp (på engelsk) i TNG Wiki-artiklen <a href="http://tng.lythgoes.net/wiki/index.php?title=Media_-_Import" target="_blank">Media - Import</a>.</p>
+
+			<a href="javascript: prevStep(20);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(20);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s21">
+			<h3>Dine data</h3>
+
+			<p><strong>Trin 8: Hjælpeprogrammer: Backup/Optimering/Gendannelse</strong></p>
+
+			<p>Det anbefales, at du meget jævnligt laver <b>backup</b> af dine data. Det danner en mængde filer med endelsen .bak i backup-mappen. Af sikkerhedsårsager anbefales det, at du giver mappen rettighederne 771 (rwxrwx-x) for at opnå den højeste sikkerhed (det gøres *efter* backuppen er dannet). For at sikre mod datatab, hvis der skulle ske noget med serveren hos din udbyder, bør du kopiere .bak-filerne til din PC.</p>
+
+			<p>Hvis du mister dine data eller der sker noget med dem, kan du bruge <b>Gendan</b> til at reetablere dem.</p>
+
+			<p><b>Optimér</b> kan bruges til at få data på din hjemmeside vist hurtigere. Funktionen sletter plads, der måtte være blevet ledig, hvis noget er blevet slettet.</p>
+			
+			<p>Der er yderligere information (på engelsk) i denne TNG Wiki-artikel <a href="http://tng.lythgoes.net/wiki/index.php?title=Category:Data_Protection" target="_blank">Data Protection</a>.</p>
+
+			<a href="javascript: prevStep(21);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(21);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s22">
+			<h3>Tilpasning af dine TNG-sider</h3>
+
+			<p><strong>Trin 1: Skabeloner</strong></p>
+
+			<p>En let måde hurtigt at få din TNG-side til at se professionel ud er ved at installere en af de medfølgende skabeloner. Filerne findes i "templates"-mappen. Du vælger en (anden) skabelon ved at gå til Opsætning >> Konfigurering >> Skabelonindstillinger. Tjek at "Aktivér Valg af skabelon" er sat til Ja. Klik Gem nederst. Du kan vælge en anden skabelon, så ofte du har lyst. Hvis du derimod ikke vil bruge en af de medfølgende skabeloner men selv vil tilpasse hjemmesidens forside, sidehoved og sidefod skal "Aktivér Valg af skabelon" sættes til Nej.</p>
+
+			<p>Det er nemt at ændre de fleste billeder og tekster via Opsætning >> Konfigurering >> Skabelonindstillinger. Du kan også ændre i filerne direkte (forsiden: index.php  og det tilpassede sidehoved: topmenu.php). Der er mere hjælp (på engelsk) i: 
+			<a href="http://tng.lythgoes.net/wiki/index.php?title=Template_Settings">Template Settings</a>
+			 som er en TNG Wiki-artikel.</p>
+
+ 			<p>Yderligere hjælp til skabeloner findes (på engelsk) her på <a href="http://tng.lythgoes.net/wiki/index.php?title=Category:Templates" target="_blank">denne side</a> på TNG Wiki.</p>
+
+			<a href="javascript: prevStep(22);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(22);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s23">
+			<h3>Tilpasning af dine TNG-sider</h3>
+
+			<p><strong>Trin 2: Stilark</strong></p>
+
+			<p>Selvom du bruger en af de medfølgende skabeloner, vil du muligvis ændre skrifttyper, farver, tekster, størrelser og andre elementer. Alt det styres af "stilark" - og "stilark-filer" har endelsen .css. Kernen i stilarkene er <b>genstyle.css</b> (generelle regler) og findes i css-mappen. I samme mappe findes standardversionerne af skabelonens stilark (templatestyle.css), <strong>mytngstyle.css</strong> (som du bruger til selv at ændre i) og nogle få andre blandt andet tngtabs1.css/tngtabs2.css (som giver to forskellige typer af faner).</p>
+
+			<p>Hver skabelon indeholder sin egen kopi af <strong>templatestyle.css</strong>, <strong>mytngstyle.css</strong> og stilarkene til fanerne, som overskriver standarderne.</p>
+
+			<p>Hvis du vil ændre i nogen af disse filer eller tilføje dine egne CSS-regler, skal du gøre det i filen ved navn <strong>mytngstyle.css</strong>, da den ikke vil blive overskrevet ved fremtidige opdateringer. VIGTIGT: Du skal lave dine ændringer i den kopi af mytngstyle.css, der ligger i den CSS-mappe, som hører til din skabelon. Hvis du fx bruger skabelon nummer 3, skal du lave dine ændringer i templates/template3/css/mytngstyle.css. Hvis du vil skifte mellem adskillige skabeloner, skal du sikkert også lave ændringerne i de andre skabeloners mytngstyle.css. Hvis du derimod ikke bruger en skabelon, skal du lave ændringer/tilføjelser i den overordnede css/mytngstyle.css.</p>
+
+			<p>For at ændre i mytngstyle.css åbner du den med en editor (aldrig med Word, men meget gerne med Notepad++ eller bare Notepad). Foretag dine ændringer, gem filen og upload den til den rigtige mappe med FTP-programmet. Hvis du vil ændre en blok af koder fra genstyle.css, kopierer du den og sætter den ind i mytngstyle.css, hvor du så foretager dine ændringer. Alt hvad du ændrer her tager forrang, så du skal kun kopiere de linjer, du vil ændre. I genstyle.css er der indsat kommentarer, der skal hjælpe dig med at finde ud af hvilke linjer, der styrer hvilke elementer. Hvis du er usikker på, hvad du kan gøre i et stilark, anbefaler vi, at du prøver <a href="http://www.htmlhelp.com/reference/css" target="_blank">http://www.htmlhelp.com/reference/css</a>, eller bare søger på nettet efter "stylesheets hjælp".</p>
+
+			<p><b>Faner:</b> Nogle TNG-sider har en række faner øverst. Du kan vælge mellem to forskellige former for faner (se Opsætning >> Konfigurering >> Generelle indstillinger >> Webstedets design og definitioner for yderligere information). Hvis du vælger den firkantede type, kan du ændre farverne på fanerne i tngtabs2.css. Du skal være sikker på, at den valgte type fane matcher "fieldnameback"-definitionen fra genstyle.css, og du skal sikre dig, at den inaktive type fane matcher "databack"-definitionen i genstyle.css.</p>
+			
+			<p>Hvis du vælger de skrå faner, kan du ændre attributterne (de særlige kendetegn) i tngtabs1.css, men farverne kommer fra billedfiler. For at danne nye billeder i en anden farve, skal du være sikker på, at din photos-mappe er skrivbar, gå herefter til <b>switchcolor.php</b> med din browser (https://www.dinside.dk/switchcolor.php). Hvis du læser dette på din hjemmeside, kan du klikke her: <a href="switchcolor.php" target="_blank">switchcolor.php</a>. Her finder du et hjælpeprogram, der vil bistå dig med at danne de nye billeder. Også her skal din aktive fane-type matche informationen i "fieldnameback"-definitionen fra genstyle.css, og du skal sikre dig, at den inaktive type fane matcher "databack"-definitionen i genstyle.css. Hvis værktøjet ikke virker for dig, kan det skyldes, at du ikke har "GD image library" på din hjemmeside. Prøv i stedet at oprette fanerne her: <a href="http://lythgoes.net/genealogy/switchcolor.php" target="_blank">http://lythgoes.net/genealogy/switchcolor.php</a>.</p>
+			
+			<p>Inden du begynder at ændre nogen af alle disse ting, er det en god idé at lave en backup, så du altid kan "komme tilbage" igen.</p>
+
+			<a href="javascript: prevStep(23);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(23);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+			<li style="display:none;" id="s24">
+			<h3>Tilpasning af dine TNG-sider</h3>
+
+			<p><strong>Trin 3: Sidehoved, sidefod og "Meta"-filer</strong></p>
+
+			<p>Hvis du har andre stilark, du vil inkorporere, eller hvis du har kode eller meta-tags, du vil vise på alle dine TNG-sider, skal de tilføjes i filerne ved navn <b>meta.php</b> (offentlige sider) og adminmeta.php (administrators sider).</p>
+
+			<p>For at ændre udseendet på det sidehoved, der vises på alle TNG-sider (bortset fra forsiden), skal du redigere filen <b>topmenu.php</b> med en editor (aldrig Word, men gerne Notepad++ eller evt. Notepad). Filen indeholder det indledende BODY-tag. Hvis du vil bruge en anden fil end topmenu.php som sidehoved, skal du angive det i feltet "Tilpasset sidehoved" i "Webstedets design og definitioner".</p>
+
+			<p>For at ændre den sidefod, der vises på alle TNG-sider (undtagen forsiden), skal du ændre i filen <b>footer.php</b>. Filens indhold vil blive vist på alle sider lige før det afsluttende BODY-tag. Hvis du vil bruge en anden fil end footer.php, angiver du det i feltet "Tilpasset sidefod" i "Webstedets design og definitioner".</p>
+
+			<p>Ting at være opmærksom på vedr. disse sider:<br />
+			1. Siderne er kun udsnit af sider, hvilket betyder, at de rummer stykker af HTML men ikke er fulde HTML-sider. Derfor må de ikke åbnes med fx FrontPage eller en anden "smart" editor, fordi den vil prøve at "reparere" filerne ved at tilføje de koder, der "mangler". Det er endnu en god grund til at åbne filerne med Notepad++ eller bare Notepad og også at starte med at lave en backup af filen.<br />
+			
+			2. Du kan omdøbe filerne, hvis du vil. Hvis du gør det, så husk at ændre i felterne i "Webstedets design og definitioner", hvor filnavnene er angivet. ".php" skal bevares som filtype, for uden den kan der ikke afvikles php-kode.</p>
+
+			<a href="javascript: prevStep(24);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(24);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s25">
+			<h3>Tilpasning af dine TNG-sider</h3>
+
+			<p><strong>Trin 4: Forside</strong></p>
+
+			<p>Din forside hedder <b>index.php</b>. Hvis du tidligere har haft en forside der hed "index.htm" eller "index.html", skal du sikkert slette den, for at få den nye side vist, når kun domænenavnet tastes ind i browseren.</p>
+
+			<p>Du tilpasser din forside ved at åbne index.php med en editor og foretage de ønskede ændringer. Du kan give filen et andet navn, men der er ingen grund til det. Hvis du alligevel gør det, skal du huske at ændre parallelt hermed i "Webstedets design og definitioner" (feltet "Hjemmeside").</p>
+
+			<p>Der er mere hjælp (på engelsk) i TNG Wiki-artiklerne:
+			<a href="http://tng.lythgoes.net/wiki/index.php?title=Home_Pages_-_Getting_Started" target="_blank">Home Pages - Getting Started</a> og
+			<a href="http://tng.lythgoes.net/wiki/index.php?title=User_Pages_-_Getting_Started" target="_blank">User Pages - Getting Started</a>.</p>
+
+			<a href="javascript: prevStep(25);"><strong><< Forrige</strong></a> &nbsp;&nbsp;&nbsp; <a href="javascript: nextStep(25);"><strong>Næste >></strong></a>
+			<br /><br /><br /><br />
+			</li>
+
+
+			<li style="display:none;" id="s26">
+			<h3>Slutnoter</h3>
+
+			<p><strong>Søgning:</strong><br />
+			Når du foretager en simpel søgning fra standard-startsiden (index.php), kigger TNG efter, om søgeordet findes. En søgning efter "Ed" vil både finde "Edward", "Fred" og "Cedrick". Dette er tilsigtet for at få så mange resultater som muligt. Hvis du vil begrænse resultaterne til dem, der <i>starter med </i>søgeordene, skal du redigere den index.php, der hører til din skabelon og medtage følgende skjulte felter: Inqualify (for efternavne; value="starts with") og fnqualify (for fornavne; samme værdi). Dette vil tvinge søgningen til kun at returnere navne, hvor søgeordet findes i starten. Dette kan medføre en væsentlig forbedring af svartiden for den enkelte søgning. Hvis du har en stor database, bør du overveje dette.</p>
+			
+			<p>Det er ikke alle skabeloner, der tilbyder muligheden for at lave ovenstående ændring. Du finder <i>din index.php</i> således: hvis du fx bruger skabelon nummer 5, skal du kigge i: /templates/template5/index.php. Du skal finde linjen <input type="hidden" name="mybool" value="AND" /> (I skabelon 5 findes den i linje 168). For at ændre måden, søgningen foregår på, skal du indsætte denne kode lige efter (bemærk at der ikke skal være mellemrum i "startswith") <input type="hidden" name="lnqualify" value="startswith" />. Du kan også begrænse søgeresultater vedrørende efternavne ved at tilføje følgende kode: <input type="hidden" name="lnqualify" value="equals" />. Hvis du vil gøre det samme for så vidt angår fornavne, skal du bruge "fnqualify" (begge kan tilføjes på en gang).
+
+			<p><strong>RSS:</strong><br />
+			For at bruge RSS-funktionen skal du åbne din foretrukne RSS-læser og abonnere på denne URL: https://ditdomæne.dk/tngrss.php.
+			Du kan få feedet vist på et andet sprog ved at tilføje "&lang=yourlanguage" hvor "yourlanguage" er navnet på sproget i TNG.</p>
+
+			<p><strong>Tidslinjer:</strong><br />
+			Afhængig af marginer eller bredden på sidebarer, er det muligt, tidslinjerne ikke vises rigtigt. Hvis det er tilfældet, skal du redigere filen timeline2.php og tilpasse værdierne $lineoffset, $chartwidth, $checkboxcellwidth og $division til problemet er løst.</p>
+			
+			<p><strong>Filer der kan slettes:</strong><br />
+			Når installationen er færdig, bør du, af hensyn til sikkerheden på din side, slette følgende filer: readme.html (denne fil), ajx_tnginstall.php og appendix.html.</p>
+
+			<p><strong>Yderligere information:</strong><br/>
+			Du kan evt. også have glæde af at læse <a href="http://tng.lythgoes.net/wiki/index.php?title=Category:Getting_Started" target="_blank">Getting Started</a>-artiklerne på TNG Wiki.</p>
+
+			<p>Gå til <a href="index.php">Forside</a></p>
+			<p>Gå til <a href="admin.php">Admin Hjem</a></p>
+
+			<a href="javascript: prevStep(26);"><strong><< Forrige</strong></a><br /><br /><br /><br />
+			</li>
+			</ul>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

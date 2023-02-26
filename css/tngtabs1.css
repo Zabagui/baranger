@@ -1,0 +1,96 @@
+#a0 { left: 10px;}
+#a1 { left: -15px;}
+#a2 { left: -40px;}
+#a3 { left: -65px;}
+#a4 { left: -90px;}
+#a5 { left: -115px;}
+#a6 { left: -140px;}
+#a7 { left: -165px;}
+
+/*main method*/
+ul#tngnav {
+	margin:0 0px 0px;
+	padding: 0 0 0 0px;
+	list-style: none;
+	border: none;
+} 
+
+#tngnav li {
+	display: block;
+	margin: 0;
+	padding: 0;
+	float:left;
+}
+#tngnav a#a0 { left: 10px;}
+#tngnav a#a1 { left: -15px;}
+#tngnav a#a2 { left: -40px;}
+#tngnav a#a3 { left: -65px;}
+#tngnav a#a4 { left: -90px;}
+#tngnav a#a5 { left: -115px;}
+#tngnav a#a6 { left: -140px;}
+#tngnav a#a7 { left: -165px;}
+
+/*inactive tab*/
+#tngnav a {
+	display:block;
+	color:#444;
+	text-decoration:none;
+	background: url(../img/tngtab.png) no-repeat;
+	margin:0;
+	padding: 0.3em 1.9em 0.3em 26px;
+	border-right: 1px solid #aaa;
+	position: relative;
+	font: 11px arial, helvetica, sans-serif;
+}
+
+/*active tab*/	
+#tngnav a:hover {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFFFFF;
+}
+
+/*active tab*/
+#tngnav a.here {
+	position:relative;
+	z-index:10;
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFCC00;
+	border-right: 1px solid #777;
+	padding: 0.3em 1em 0.4em 26px;
+	margin: 0 4px 0 0;
+}
+
+/*everything below this point is to keep older browsers happy*/
+#tabs div {
+	position: relative;
+	float:left;
+	height: 21px;
+}
+
+#tabs .divhere {
+	z-index:10;
+	margin: 0 4px 0 0;
+}
+
+/*inactive tab*/
+#tabs a {
+	background: url(../img/tngtab.png) no-repeat;
+	color:#444;
+	padding: 0.3em 1.9em .6em 26px;
+	font: 11px arial, helvetica, sans-serif;
+	text-decoration: none;
+	border-right: 1px solid #aaa;
+}
+
+/*active tab*/
+#tabs a:hover {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFFFFF;
+}
+
+/*active tab*/
+#tabs a.here {
+	background: url(../img/tngtabactive.png) no-repeat;
+	color:#FFCC00;
+	padding: 0.3em 1.0em .6em 26px;
+}

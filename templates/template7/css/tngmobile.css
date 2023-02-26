@@ -1,0 +1,18 @@
+#mast {
+  background-color: #B9B186;
+  background-image: -webkit-linear-gradient(to bottom, #C5BD93 0%, #A59C6F 100%);
+  background-image: linear-gradient(to bottom, #C5BD93 0%, #A59C6F 100%);
+  border-top: 1px solid #DAD3B0;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #D6D6BC;
+  border-bottom: 1px solid #7A7A58;
+  border-top: 1px solid #FFFFFD;
+  text-shadow: white 1px 1px 0px;
+  color: #666666;
+}

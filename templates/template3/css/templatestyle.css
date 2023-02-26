@@ -1,0 +1,320 @@
+/* templatestyle.css for template 3 overrides to TNG genstyle.css   */
+
+/* override to TNG genstyle.css for DNA Compare reports for template 3   */
+.overflowauto {
+	width: 98vw;
+}
+/*  reduce overflowauto for laptops and tablets */
+@media only screen and (min-width:1200px) and (max-width:1550px) {
+	.overflowauto {
+		width: 97.9vw;
+	}
+}
+@media only screen and (max-width:1280px) {
+	.overflowauto {
+		width: 97.5vw;
+	}
+}
+@media only screen and (max-width:1024px) {
+	.overflowauto {
+		width: 97vw;
+	}
+}
+@media only screen and (max-width:768px) {
+	.overflowauto {
+		width: 95vw;
+	}
+}
+/* end overrides of for DNA Compare reports */
+
+/* header: heading text */
+.header, .plainheader {
+	color: #39692A;
+}
+
+/* body: describes page background color and all non-table text not governed by any other style */
+body {
+	background-color : #FAF4E6;
+	margin: 10px 20px 10px 20px;
+}
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #39692A;
+}
+
+/* visited: previously visited links */
+a:visited {
+	color: #46AB28;
+}
+
+/* sideback: background color for side and top frames */
+.sideback {
+	background-color: #28541B;
+}
+
+/* background color for admin menu items while active*/
+a.admincell:hover, a.leftlink:hover {
+	background-color: #46AB28;
+}
+
+.adminbody {
+	background-color: #efddb2;
+}
+
+/* fieldnameback: background color for column and row title sections */
+/* sideback: background color for side and top frames */
+.LB_closeAjaxWindow, .bar, .sideback, .fieldnameback,
+.tablesaw-cell-label {
+	background-color : #39692A;
+}
+
+/* line: is defined to replace the bgcolor="#660000"  */
+.line {
+  	color: #660000;
+}
+
+.left-indent {
+	padding-left: 20px;
+}
+
+.newspaper2 {
+	-webkit-column-count:2; /* Safari and Chrome */
+	column-count:2;
+	padding-top: 15px;
+}
+
+.newspaper2 p {
+	margin: 0 0 10px;
+	padding: 0px;
+}
+
+/* page:  */
+.t3hdr {
+	background-color : #D0BC91;
+	width: 186px;
+}
+
+.t3shadow {
+  -webkit-box-shadow: 1px 1px 2px 1px #666;
+  box-shadow:         1px 1px 2px 1px #666;
+}
+
+/* style definitions in topmenu.php moved here */
+
+.topmenu {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #39692A;
+	text-decoration : none;
+}
+
+a.topmenu:link  {text-decoration : none; color: #39692A;}
+a.topmenu:visited  {text-decoration : none; color: #39692A;}
+a.topmenu:active  {text-decoration : none;}
+a.topmenu:hover  {
+	color: #000000;
+	text-decoration : none;
+}
+
+/* tableborder to replace hard-coded style in topmenu.php */
+/* bordercolor="#000000" bgcolor="#D0BC91" style="border-collapse: collapse; border: 1; border-color: black;" */
+.tableborder {
+	background-color: #D0BC91;
+	border-collapse: collapse;
+	border-color: black;
+	margin-bottom:15px;    /* added to replace <br /> after table */
+}
+
+/* footer added to replace <font face="Arial,Helvetica,sans-serif" size="1"> */
+.footer {
+   font-family: Arial,Helvetica,sans-serif;
+   font-size: 11px;
+}
+
+/* styles added for index.php *.
+/* homebody added to replace style="background-color:#D0BC91;" in index.php */
+.homebody {
+	background-color: #D0BC91;
+}
+
+.mainmenu {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #39692A;
+	text-decoration : none;
+	text-align: center;
+}
+
+/* additional styles added for XHTML 1.0 Strict validation */
+.indexpage {
+  	margin-left: auto;
+	margin-right: auto;
+	width: 800px;
+	text-align: left;
+}
+
+/* titleimg added to replace width="630" height="93" hspace="10" border="0" in index.php for title.gif */
+.titleimg {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 10px;			/* replaces hspace="10" */
+	margin-right: 10px;			/* replaces hspace="10" */
+	border: 0px;
+}
+
+/* mainimg added to replace width="530" height="303" border="0" in index.php for mainstreet.jpg */
+.mainimg {
+	margin: 0 0 0 0;
+	border: 0px;
+}
+
+/* mainimg added to replace width="186" height="110" border="0" in topmenu for headerphoto.jpg */
+.headerphoto {
+	margin: 0 0 0 0;
+	border: 0px;
+}
+
+/* menutitle added to replace width="565" height="86" border="0" in topmenu for title.gif */
+.menutitle {
+	margin: 0 0 0 0;
+	width: 565px;
+	height: 86px;
+	border: 0px;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#D0BC91;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#39692A;
+	color:#fff;
+}
+
+.LB_window {
+	background: #D0BC91;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #999;
+}
+
+ul.tngdd {
+    background-color:#FAF4E6;
+}
+
+ul.tngdd a {
+	color:#39692A;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#ddeedd;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #D0BC91 url(../img/ArrowDown.gif) 2px 8px no-repeat;
+	background-image: url(../img/ArrowDown.gif), -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E8D5A9), to(#B8A579));
+	background-image: url(../img/ArrowDown.gif), -webkit-linear-gradient(top, #E8D5A9, #B8A579);
+	background-image:         url(../img/ArrowDown.gif), linear-gradient(top, #E8D5A9, #B8A579);
+	background-position: 2px 8px, 0px 0px;
+	background-repeat: no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border-bottom-color:#999;
+	border-right-color:#999;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border-bottom:1px solid #444;
+	border-right:1px solid #444;
+	color: #ffffff;
+	background: #39692A url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #D0BC91;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E8D5A9), to(#B8A579));
+	background-image: -webkit-linear-gradient(top, #E8D5A9, #B8A579);
+	background-image:         linear-gradient(top, #E8D5A9, #B8A579);
+}
+
+.databack, .reportcol li:hover {
+    background-color: #D0BC91;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #DFD1B4;
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+.maintitle {
+	font-size:68px;
+	color:#39692A;
+}
+
+.mmaintitle {
+	font-style: italic;
+	color:#39692A;
+}
+
+.mainimg {
+	max-height: 303px;
+	float: left;
+	padding-right: 20px;
+}
+
+.toptitle {
+	font-size:48px;
+	color:#39692A;
+}
+
+.maintitle, .mmaintitle, .toptitle, .admin-banner h1 {
+  	font-family:Georgia,Arial,sans-serif;
+}
+
+#searchpane {
+	float: right;
+}
+
+.fambackground {
+	background-color: #D0BC91;
+}
+
+@media (max-width: 730px) {
+	#searchpane {
+		float:left;
+		width: 100%;
+	}
+}
+
+@media (max-width: 530px) {
+	.maintitle {
+		font-size: 30px;
+	}
+	.mainimg {
+		width: 100%;
+	}
+	body {
+		margin: 8px;
+	}
+}

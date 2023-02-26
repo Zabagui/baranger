@@ -1,0 +1,30 @@
+.mmaintitle {
+	font-family: 'Dancing Script', cursive;
+	font-size: 18pt;
+	text-shadow: 0.6px 0.6px #000;
+	color: #01b183;
+}
+
+body {
+	background-color: #daeffd;
+}
+
+#mast {
+  background-color: #8fc1e3;
+  background-image: -webkit-linear-gradient(to bottom, #8fc1e3 0%, #4b8cb7 100%);
+  background-image: linear-gradient(to bottom, #8fc1e3 0%, #4b8cb7 100%);
+  border-top: 1px solid #4444ff;
+}
+
+.mhead ul li {
+  color: #FFFFFF;
+}
+
+.mhead li a {
+  background-color: #c9f2e7;
+  border-bottom: 1px solid #aaaaaa;
+  border-top: 1px solid #dddddd;
+  color: #24607c;
+}
+
+c9f2e7

@@ -1,0 +1,46 @@
+a, a:link, a:active, a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+/* body: describes page background color and all non-table text not governed by any other style */
+body {
+    background-image: none;
+    background-color: #ffffff;
+}
+
+.publicbody {
+	background: none;
+}
+
+/* class to suppress printing of display items not covered by the tngprint calling function */
+.noprint { display: none; }
+
+.databack, .fieldnameback, .snlink, .snlinkact {
+	background-color: #fff;
+	border:1px solid #000;
+}
+
+.fieldname {
+	background-color: #fff;
+	font-weight: bold;
+}
+
+.databack, .fieldnameback, .fieldname, .snlink, .snlinkact {
+	color: #000;
+}
+
+.whiteback {
+	border-spacing:0px;
+	border-collapse: collapse;
+}
+
+.titlebox {
+	background-color: #fff;
+}
+
+.notearea {
+	max-height: none;
+}
+/* Equivalent of Hard Page Break - keeps headings and photos together on printed page */
+.beginpage { page-break-before: always;}

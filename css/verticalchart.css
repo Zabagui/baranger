@@ -1,0 +1,63 @@
+#vcontainer {
+	position: relative;
+	overflow:auto;
+}
+#vcontainer div.ascender {
+	position:absolute;
+	border-top: 1px solid black;
+}
+#vcontainer div.father {
+	border-right: 1px solid black;
+}
+#vcontainer div.mother {
+	border-left: 1px solid black;
+}
+#vcontainer div.descender_container {
+	position:absolute;
+}
+#vcontainer div.descender {
+	width:50%;
+	border-bottom:1px solid black;
+}
+#vcontainer div.husband {
+	border-left:1px solid black;
+	float:right
+}
+#vcontainer div.wife {
+	border-right:1px solid black;
+}
+#vcontainer div.single {
+	border-right:1px solid black;
+	width:0;
+}
+#vcontainer div.box {
+	position:absolute;
+	text-align:center;
+}
+#vcontainer div.box div.inner {
+	line-height: 1.2em;
+	overflow:hidden;
+	border: 1px solid black;
+	border-radius: 8px;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 7pt;
+	padding: 2px;
+	margin-left:auto;
+	margin-right:auto;
+	box-shadow: 2px 2px 2px 1px #ccc;
+}
+#vcontainer div.box div.inner div {
+	display:table-cell;
+	vertical-align:middle;
+}
+@media print {
+	#vcontainer div.box div.inner {
+		border-color: black;
+	}
+	#vcontainer div.box div.fieldnameback {
+		background-color: white;
+	}
+	#vcontainer div.box div.fieldname, a.lightlink3:link, a.lightlink3:visited, a.lightlink3:hover, a.lightlink3:active {
+		color: black;
+	}
+}

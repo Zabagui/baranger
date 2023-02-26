@@ -1,0 +1,795 @@
+/* Prevents double vertical scroll bars in mm listing */
+html, body {
+  /* removes outer scroll bar */
+  overflow:hidden !important;
+
+  /* Some templates have height:100% - prevents scrolling */
+  height:auto !important;
+}
+
+.mainback {
+  /* fixes tng header when using anchor to position in scrollable table */
+  position:fixed;
+  z-index:-200;
+}
+
+form {
+  width:100%;
+}
+
+/***************************************************************
+  TABLES
+***************************************************************/
+/* Unstyled tables need 'cellspacing="0"' in the MM markup. */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* mmtable2 in admin_analyzemods to prevent
+** internal tables inheriting from the outer mmtable2
+** table. All mm pages use mmtable.*/
+table.mmtable2,
+table.mmtable {
+table-layout:fixed;
+  width:100%;
+  border-collapse:separate;
+  border-spacing:2px;
+  margin-left:-2px;
+  margin-top:-2px;
+  font-size:12px;
+}
+
+table.nested {
+  table-layout:fixed;
+  width:100%;
+  border-collapse:separate;
+  border-spacing:1px;
+  margin-top:-2px;
+  margin-bottom:1px;
+  font-size:12px;
+}
+
+table.mmtable thead {
+  z-index:3;
+}
+
+/* modlister, admin_analyzemods, admin_modtables
+** row highlighting */
+table.mmtable>tbody>tr:hover td.flink,
+table.mmtable>tbody>tr:hover td.flink {
+  background-color:#EEEB8D;
+}
+
+table#modlist tr {
+  height:35px;
+}
+
+
+/* modlister - affected files popups */
+.cellspace1 {
+  border-spacing: 2px;
+  border-collapse: separate;
+}
+
+/***************************************************************
+  TABLES TD (CELLS)
+***************************************************************/
+/* modlister */
+td.flink {
+  cursor:pointer;
+  vertical-align:top;
+}
+
+td.flink a:visited,
+td.flink a:link {
+  color:#000;
+  text-decoration:none;
+}
+
+/* added for Mod Manager error messages */
+td.avail{
+  border-bottom:2px solid #00CC7A;
+  border-right:2px solid #00CC7A;
+  border-top:1px solid #00FF33;
+  border-left:1px solid #00FF33;
+  background-color:#FFFFFF;
+  text-align: center;
+}
+
+td.inst{
+  border-bottom:2px solid #00CC7A;
+  border-right:2px solid #00CC7A;
+  border-top:1px solid #00FF33;
+  border-left:1px solid #00FF33;
+  background-color:#CCFFCC;
+  text-align: center;
+}
+
+td.failed{
+  border-bottom:2px solid #CC0000;
+  border-right:2px solid #CC0000;
+  border-top:1px solid #CC0000;
+  border-left:1px solid #CC0000;
+  background-color:#FFE5E5;  /* was FFCCCC in admin_modmanager.php */
+}
+
+/***************************************************************
+  DIVS
+***************************************************************/
+/* Wrapped around a table, this allows a it
+** to scroll underneath its <thead> row */
+div.tableFixedHead {
+  overflow-y:auto;
+  height:100%;
+  height:calc(100vh - 260px);
+  padding:0px;
+  margin:0px;
+}
+
+div.tableFixedHead thead {
+  position:sticky;
+  top:0;
+}
+
+/* modlister */
+div.list-indent {
+  margin-left:2em;
+  text-indent:-2em;
+}
+
+div.edreturn {
+  padding:1em 0.5em;
+}
+
+div.edreturn form {
+  padding-left:10px;
+}
+
+/***************************************************************
+  MODLISTER AFFECTED FILES
+***************************************************************/
+/* modlister - affected files */
+.afcell {
+  vertical-align:top;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+/* modlister - affected files popups */
+.mmpad2 {
+  padding:2px;
+}
+/* modlister - affected rows - from tngv103 */
+.mmpadleft {
+  padding-left:3px;
+}
+/* modlister - affected files popups */
+.cellspace1 {
+  border-spacing: 1px;
+    border-collapse: separate;
+}
+.imgcenter {
+    left:40%;
+    margin-right:-40%;
+}
+/* modlister -- affected files popups */
+/* from tngv103 */
+.mmpopuptable {
+  width:100%;
+}
+/* modlister - affected files popups */
+/* from tngv103 */
+.mmpopuphdr {
+  line-height:150%;padding-left:3px;
+}
+
+div.descpop1 {
+  position: relative;
+  width:16px;
+  margin:0;
+  z-index:1;
+}
+
+div.descpop1 div {
+  position: absolute;
+  display:none;
+  right:16px;
+  top:0px;
+  overflow-y:auto;
+  background: #ffffff;
+  padding: 3px 3px 3px 3px;
+  border-style:solid;
+  border-color:black;
+  border-width:2px;
+  /*z-index: 1001;*/
+}
+
+div.descpop1:hover div {
+  display:block;
+  max-height:150px;
+}
+
+@media screen and (max-width:750px)
+{
+  div.descpop1:hover div {
+    width:300px;
+  }
+}
+
+@media screen and (min-width:750px)
+{
+  div.descpop1:hover div {
+    width:500px;
+  }
+}
+
+/***************************************************************
+  GENERAL STYLES
+***************************************************************/
+/* Adjust TNG .admin-main for padding-left
+** to line up with TNG adm-innermenu. */
+.admin-main {
+  position:relative;
+  padding-left:12px;
+}
+
+/* modlister column widths (layout-fixed) */
+.colselct {width:4%;}
+.colmodnm {width:20%;}
+.colcfgnm {width:20%;}
+.colversn {width:8%;}
+.colwiki {width:4%;}
+.colstatus {width:40%;}
+.colaflist {width:4%;}
+
+/* admin_showmodslog */
+.mmpanel {
+  border: 1px solid #bbb;
+  padding-top:5px;
+  padding-bottom:5px
+}
+
+/* admin_modhandler, modlister - prevents status
+** column content overflow */
+.moddiv {
+  overflow:hidden;
+  padding:5px;
+}
+
+/* MM tabbed scripts */
+.mmrounded {
+  border-radius:8px;
+}
+
+/* admin_modopotions */
+.mmrounded20 {
+  border-radius:20px;
+}
+
+/* modlister, MM tabbed scripts */
+.roundtop {
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+}
+
+/* modlister */
+.roundleft {
+  border-top-left-radius:8px;
+  border-bottom-left-radius:8px;
+}
+
+/* modlister */
+.roundbl {
+  border-bottom-left-radius:8px;
+}
+
+/* modlister */
+.hilighterr {
+  background-color: #FFCCF9;
+}
+
+/* modlister, modinstaller, modremover, modeditor */
+.tag {
+  font-style:italic;
+}
+
+/* modlister */
+.checkpad {padding-left: 0px;
+  padding-top: 0px;
+}
+
+.copyfile, .mkdir, .newfile {
+  color:navy;
+}
+
+/* modlister */
+.hilight {
+  background-color:yellow;
+}
+
+.imgcenter {
+  left:40%;
+  margin-right:-40%;
+}
+
+
+/* mod listing table cells */
+.mmcell, .stcell {
+  border:1px solid #aaa;
+  vertical-align:top;
+  padding:3px;
+}
+
+/* modlister status column content */
+.stcell div {
+  padding-right:7px;
+}
+
+/* modlister - affected files popups */
+.mmpad2 {
+  padding:2px;
+}
+
+/* modlister - affected rows - from tngv103 */
+.mmpadleft {
+  padding-left:3px;
+}
+
+/* admin_analyzemods */
+.mmpadtop5 {
+  padding-top:5px !important;
+}
+
+/* modlister -- affected files popups */
+/* from tngv103 */
+.mmpopuptable {
+  width:100%;
+}
+
+/* modlister - affected files popups */
+/* from tngv103 */
+.mmpopuphdr {
+  line-height:150%;padding-left:3px;
+}
+
+/* modlister */
+.mmsysmsg {
+  font-size:150%;
+  text-align:center;
+  color:red;   /* was #77777; */
+}
+
+/* modlister */
+.results {
+  list-style-type:square;
+  list-style-position:inside;
+  font-style:italic;
+  font-weight:bold;
+  padding:5px;
+}
+
+/* modlister */
+span.opened {
+  padding-left:14px;
+  cursor: pointer;
+  background: url(../img/tng_collapse.gif) no-repeat left center;
+}
+
+/* modlister */
+span.closed {
+  padding-left:14px;
+  cursor: pointer;
+  background: url(../img/tng_expand.gif) no-repeat left center;
+}
+
+/* modlister */
+span.modlink {
+  display:inline-block;
+  width:96%;
+  padding-left:16px;
+  cursor:pointer;
+}
+
+.fieldname a:visited,
+.fieldname a:link {
+  color:inherit;
+  cursor:pointer;
+}
+
+/* modlister */
+.target {
+  color:brown;
+}
+
+/* modlister */
+.target-note,
+.location-note {
+  display:inline-block;
+  width:100%;
+  padding-left:3px;
+  border:1px solid gray;
+}
+
+/* modlister */
+.tgtfile {
+  font-weight:bold;
+}
+
+/* admin_showmodslog */
+.action {
+  cursor: pointer;
+  background: url(../img/tng_expand.gif) no-repeat left center;
+  padding:7px;
+  padding-left:15px;
+}
+
+/* admin_showmodslog */
+.logheader {
+  padding-left:15px;
+}
+
+/* modlister -- provides space on bottom to show
+** affected files popup for last couple of rows .*/
+#modlist {
+  padding-bottom:150px;
+}
+
+/* modlister filter bar */
+table#fbar {
+  padding-left:2px;
+  width:100%;
+  margin-left:0px;
+}
+
+/*Analyze only installed mods Mod - #1 - MichelK */
+input[type='radio'], label{
+  vertical-align: baseline;
+  padding: 1px;
+  margin: 0px;
+ }
+
+/* admin_analyzemods */
+.hideoverflow{
+  overflow: hidden;
+  white-space : nowrap;
+}
+
+/* admin_analyzemods */
+.centerit {
+  text-align: center;
+ }
+
+/* admin_analyzemods */
+.mmhighlight {
+  color:#990000;
+}
+
+/* admin_analyzemods */
+.mmfilenmfont {
+  font-size:120%;
+}
+
+/* admin_analyzemods */
+.mmlochdr {
+  color:blue;
+}
+
+/* admin_analyzemods */
+.mmkeyword {
+  color:#AA0000;
+}
+
+/* admin_analyzemods */
+.mmrightalign {
+  text-align:right;
+}
+
+/* modlister */
+.mmpopuptable {
+  width:100%;
+}
+
+/*modlister */
+.mmpadleft {
+  padding-left:3px;
+}
+
+/* modlister aff popup img */
+.imgcenter {
+  left:40%;
+  margin-right:-40%;
+}
+
+/* modlister - affected files popups */
+.mmpopuphdr {
+  line-height:150%;
+  padding-left:3px;
+}
+
+/* modlister */
+.results {
+  list-style-type:square;
+  list-style-position:inside;
+  font-style:italic;
+  font-weight:bold;
+  padding:5px;
+}
+
+/* modlister */
+.w100 {
+  width:100%;
+}
+
+/* modeditor */
+.w99 {
+  width:99%;
+}
+
+.hidden {
+  display:none;
+}
+
+/*** modlister status backgrounds ***/
+.ready, .ok2inst {
+  background-color:#F5FFF5;
+}
+
+.installed {
+  background-color:#C6F6C6;
+}
+
+.partinst {
+background-color:#FFE8BD;
+}
+
+.badcfg, .cantinst {
+  background-color:#FFE5E5 !important;
+}
+
+.html, body {
+   height:100%;
+}
+
+.lightback, .whiteback {
+  border:0px;
+}
+
+/* modlister */
+.results {
+  border-radius:6px;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+}
+
+/* modeditor */
+.edbuttonbar {
+text-align:center;
+  padding-top:5px;
+}
+
+.mmsubhead {
+text-align:center;
+padding:5;
+font-size:12px;
+}
+.grayborder {
+border:1px solid #aaa;
+}
+
+.edpanel {
+  border:1px solid #888;
+  vertical-align:top;
+  padding:15px;
+}
+
+/* Analyser and Edit Parameter */
+.mmleftcol {
+  width: 36%;
+  vertical-align:top;
+}
+
+/* Analyser and Edit Parameter */
+.mmrightcol {
+  vertical-align:top;
+  min-height:350px;
+}
+
+/* bars attached to bottom of head section */
+.fbar {
+  border-color:transparent;
+  border-bottom:1px solid white;
+}
+
+/* modlister */
+.mmsysmsg {
+  font-size:150%;
+  text-align:center;
+  color:red;   /* was #77777; */
+}
+
+/******************************************************
+  MMv14 Deprecated Styles no longer used
+*******************************************************/
+/*
+.adminback {
+background-image:url(../img/background.gif);
+}
+  table.list tr:first-child td:first-child,
+  table.list tr:last-child td:last-child {
+}
+
+table.list td {
+  padding-left:0px;
+}
+
+table.list tr:first-child td {
+  border-left:0px;
+}
+
+table.mmlist-fixed {
+}
+
+table.m2table-fixed {
+  padding-left:0px;
+}
+
+table.m3table-fixed {
+margin-top:5px;
+}
+
+table.mmlist-scroll, table.m2table-scroll,
+table.m3table-scroll, table.mmlog-scroll {
+margin-top:0;
+}
+
+table.mmlist-fixed, table.mmlist-scroll,
+table.m2table-fixed, table.m2table-scroll,
+table.m3table-fixed, table.m3table-scroll,
+{
+  table-layout:fixed;
+  padding:0;
+  padding-top:0;
+  width:100%;
+  border:1px solid red;
+}
+
+#mmhead-section {
+  position:fixed;
+  top:0;
+  width:99%;
+  background-image:url(../img/background.gif);
+  padding:5px 1px 1px 1px;
+}
+
+h2.parse-table-title,
+p.parse-error {
+  color:#990000;
+}
+
+.parse-table {
+  position:absolute;
+  min-width:98%;
+  top:120;
+  left:05;
+  padding:5px;
+}
+
+.admintop {
+    overflow-x:hidden;
+    white-space:nowrap;
+}
+
+.topbanner {
+    z-index:5;
+}
+
+#tngnav a.here {
+  position:relative;
+  z-index:0 !important;
+}
+
+table.list {
+  border-collapse:separate;
+  width:100%;
+  margin-left:-3px;
+}
+
+table.m3table-fixed {
+  margin-top:0;
+}
+
+table.mmlist-fixed {
+    margin-top:0 !important;
+}
+
+#mmpage {
+  padding-top:110px;
+}
+
+#mmoutter {width:99.8%;}
+
+.ptr {cursor:pointer;}
+.colcb {width:5%;}
+.colmn {width:35%;}
+.colfn {width:35%;}
+.colvr {width:10%;}
+.colst {width:15%;}
+
+tr.modline:hover td.mmcell:nth-child(-n+5) {
+  background-color:#EEEB8D;
+}
+
+.mmmenuwrap {
+  position:relative;
+  padding-bottom:1px;
+}
+
+.mmcontainer {
+  height:calc(100vh - 180px);
+}
+
+#mmgrid.lightback {
+  border-bottom:0px;
+  padding-bottom:175px;
+}
+
+#mmgrid td.tngshadow {
+  border: 0px;
+}
+
+.mmhead-fixed {
+  top:0;
+}
+.mmhead-scroll {
+  position:relative;
+  margin-top:0;
+}
+.mmhead-fixed, .mmhead-scroll {
+  width: 99.5%;
+  min-width:640px;
+}
+
+.fbar-scroll, .tbar-scroll, .ibar-scroll {
+  position:relative;
+  margin-top:0;
+}
+
+.fbar-fixed, .fbar-scroll,
+.tbar-fixed, .tbar-scroll,
+.ibar-fixed, .ibar-scroll {
+  margin-top: 0;
+  padding-bottom:1px;
+  width:99.5%;
+  z-index:1;
+}
+
+#mmlog {
+  background-color:transparent;
+  border-spacing:0 2px;
+  width: calc( 100% - 4px );
+}
+
+#mmlog td {
+  border:1px solid #aaa;
+}
+
+.leftmmanalyzer {
+  width: 34.7%;
+  vertical-align:top;
+  padding-left:7px
+}
+
+.rightmmanalyzer {
+  width:65%;
+  vertical-align:top;
+}
+
+.mmlinks {
+  text-decoration:none;
+}
+
+.mmhdrtable {width:100%;}
+
+*/
+

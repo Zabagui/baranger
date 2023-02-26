@@ -1,0 +1,376 @@
+/* templatestyle.css for template 6 overrides to TNG genstyle.css   */
+
+/* override to TNG genstyle.css for DNA Compare reports for template 6   */
+.overflowauto {
+	width: 99vw;
+}
+/*  reduce overflowauto for laptops and tablets */
+@media only screen and (min-width:1200px) and (max-width:1550px) {
+	.overflowauto {
+		width: 98vw;
+	}
+}
+@media only screen and (max-width:1280px) {
+	.overflowauto {
+		width: 97vw;
+	}
+}
+@media only screen and (max-width:768px) {
+	.overflowauto {
+		width: 96vw;
+	}
+}
+
+/* fieldname: regular text within column or row title sections */
+.fieldname {
+	color: #F2E6CC;
+}
+
+/* body: describes page background color and all non-table text not governed by any other style */
+/* overrides replace bgcolor="#3E331D" leftmargin=0 topmargin=0 rightmargin=0 bottommargin=0 marginwidth=0 in topmenu.php */
+.templatebody {
+	background-color: #3E331D;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+/* header: heading text */
+.header, .plainheader {
+	color: #660000;
+}
+a.headerlink:link {
+	color: #CCCCCC;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+
+/* link: normal links, active: links in use */
+a:link, a:active, div.icons a {
+	color : #676037;
+}
+
+/* visited: previously visited links */
+a:visited {
+	color: #8B8776;
+}
+
+/* fieldnameback: background color for column and row title sections */
+.fieldnameback,
+.tablesaw-cell-label {
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #663333;
+	border-bottom-color: #663333;
+	background-image: url(../img/fieldbg.jpg);
+}
+
+/* databack: background color for data areas */
+.databack, .reportcol li:hover {
+	background-color: #F2E6CC;
+}
+
+/* added in TNG 10.1 for alternate row striping to databack */
+.databackalt {
+	background-color: #FCF9F3;
+}
+
+div.icons {
+	position: absolute;
+}
+
+a.lightlink:hover, a.lightlink:active {
+	color: #F2E6CC;
+	text-decoration: none;
+}
+
+/* sideback: background color for side and top frames */
+.sideback {
+	background-color: #660002;
+}
+
+.LB_closeAjaxWindow, .bar, .sideback, .fieldnameback,
+.tablesaw-cell-label {
+	background-color : #660002;
+}
+
+/* background color for admin menu items while active*/
+a.admincell:hover, a.leftlink:hover {
+	background-color: #C3B165;
+	background-image: none;
+}
+
+.adminbody {
+	background-color: #bfa17b;
+}
+
+#navcontainer {
+	width: 100px;
+}
+#navcontainer ul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 3px;
+	padding-left: 0px;
+	list-style-type: none;
+	font-size: 10px;
+}
+#navcontainer a {
+	background-color: #FFFFFF;
+	display: block;
+	width: 100px;
+	padding: 3px;
+}
+.navtext {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #3E331D;
+	padding-left: 7px;
+}
+
+#navcontainer a:link {
+	color: #3E331D;
+	text-decoration: none;
+}
+#navlist a:visited {
+	color: #3E331D;
+	text-decoration: none;
+}
+#navcontainer a:hover {
+	background-color: #F2E6CC;
+}
+
+.tablebkground {
+	background-color:#FFFFFF;
+}
+
+
+#mnav a {
+	font-size: 12px;
+	color: #b99852;
+}
+
+#mnav li { /* all list items */
+	background: #3e331d; /*same as "databack" background color */
+	border-bottom:0px solid #777;
+	border-right:0px solid #777;
+	border-top:0px solid #e0e0f7; /*same as "databack" background color */
+	border-left:0px solid #e0e0f7; /*same as "databack" background color */
+}
+
+#mnav li:hover, #mnav li.sfhover { /* lists nested under hovered list items */
+	background-color: #3e331d;
+	border-top:0px solid #aaa;
+	border-left:0px solid #aaa;
+}
+
+
+/* New style definitions added in 7.0.0  */
+/* to replace hard-coded styles in topmenu.php or footer.php */
+
+/* page: is defined to override the body bgcolor=#3E331D; width="100%" border="0" align="center" cellpadding="0" cellspacing="0" in the top table for the page */
+.page {
+	background-color : #3E331D;
+	padding: 0;
+	margin: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+/* header-title is defined to replace the hard-coded style in topmenu.php */
+/* <span style="letter-spacing:2px;filter:dropshadow(color=#450000, OffX=3, OffY=3);color:#b99852;font-style:italic;font-size:40px;font-family:Verdana,Arial,Helvetica,sans-serif;height:28px;">  */
+/*  Note the filter:dropshadow style was left in the topmenu since it was only working in IE */
+.headertitle {
+	background-color : #660000;
+  	letter-spacing: 2px;
+	color:#b99852;
+	font-style:italic;
+	font-size:40px;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	padding-left: 10px;
+}
+
+.mmaintitle {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	color: #3E331D;
+	font-style: italic;
+}
+
+/* headertext-sm added to replace <font size=1> */
+.headertext-sm {
+	font-size: 10px;
+	color: #B99852;
+}
+
+/* headertext added to replace <font size=2 color=#B99852> */
+.headertext {
+	font-size: 12px;
+	color: #B99852;
+}
+
+/* headerback: is defined to replace the bgcolor=#3E331D; in the top table and footer */
+.headerback {
+	background-color : #3E331D;
+	padding: 10px;
+}
+
+/* row is defined to replace the height="60" in <tr> */
+.row60 {
+	height: 60px;
+	padding: 0px;
+}
+
+/* row5 is defined to replace the height="5" in <tr> */
+.row5 {
+	height: 5px;
+}
+/* titlemid is defined to replace the height=58 align="left" valign="top" background="titlemid.jpg" */
+.titlemid {
+	height: 58px;
+	text-align: left;
+   	margin-top: 0px;
+	background-image: url(../img/titlemid.jpg);
+	padding: 0px;
+}
+
+/* footer added to replace <font size="1" color="#cccc99"> in footer */
+.footer {
+	font-size: 11px;
+	color: #cccc99;
+}
+
+/* footer:link added to replace <font color="#E1B964"> in footer */
+a.footer:link {color: #B99852;}
+a.footer:visited  {color: #B99852;}
+
+a.footer:hover {
+	color: #FFCC33;
+}
+
+.footerbold {
+	color: #FFCC33;
+	font-weight: bold;
+}
+/* gradientup added to replace background=gradientup.gif" bgcolor="#F8EDE3" in footer */
+.gradientup {
+	background-image: url(../img/gradientup.gif);
+	background-color: #3E331D;
+}
+
+/* gradient added to replace background=gradient.gif" bgcolor="#F8EDE3" in topmenu */
+.gradient {
+	background-image: url(../img/gradient.gif);
+	background-color: #3E331D;
+}
+
+/* padding added to replace align="left" style="padding:5px" in topmenu */
+.padding {
+	text-align: left;
+	padding: 5px;
+}
+
+/* section replaces width="33%" valign="top" for the 3 home page sections */
+.section {
+	width: 33%;
+	vertical-align: top;
+}
+
+.snlink {
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
+	background-color:#F2E6CC;
+	color:black;
+}
+
+a.snlink:hover, .snlinkact, .adminnav .snlinkact {
+	background-color:#660002;
+	color:#fff;
+}
+
+.LB_window {
+	background: #F2E6CC;
+	border: 2px solid #000000;
+	color:#000000;
+}
+
+div.innercontainer {
+    border-bottom: 1px solid #3E331D;
+}
+
+ul.tngdd {
+    background-color:#3E331D;
+}
+
+ul.tngdd a {
+	color:#F2E6CC;
+}
+
+ul.tngdd ul li a, .slidedown {
+	background-color:#F2E6CC;
+	color: #000;
+}
+
+ul.tngdd ul li a:hover {
+	background-color:#ffffff;
+}
+
+ul.tngdd .menulink {
+	background: #3E331D url(../img/ArrowDown.gif) 2px 8px no-repeat;
+}
+
+ul.tngdd .menulink, ul.tngdd .langmenu {
+	border:1px solid #3E331D;
+}
+
+ul.tngdd .menulink:hover, ul.tngdd .menuhover {
+	border:1px solid #3E331D;
+	color: #ffffff;
+	background: #3E331D url(../img/arrowdown2.gif) 2px 8px no-repeat;
+}
+
+/* databack: background color for data areas */
+div.innercontainer, ul.tngdd .langmenu, ul.tngdd .stubmenu {
+    background-color: #3E331D;
+}
+
+ul.tngdd .sub {
+	background:#d1d1d1 url(../img/arrow.gif) 146px 7px no-repeat
+}
+
+ul.tngdd .topline {
+	border-top:1px solid #777
+}
+
+div.icons a, div.icons-rt a {
+	color:#EBDEC5;
+}
+
+.fambackground {
+	background-color: #F2E6CC;
+}
+
+@media (max-width: 800px) {
+	.section {
+		display:inline;
+	}
+	.section p.center {
+		text-align: left;
+	}
+
+}
+
+@media (max-width: 560px) {
+	.titlemid {
+		display:none;
+	}
+	.headertitle {
+		font-size: 30px;
+	}
+	.row60 {
+		height: 50px;
+	}
+
+}

@@ -1,0 +1,6 @@
+#mast {
+  background-color: #333366;
+  background-image: -webkit-linear-gradient(to bottom, #444477 0%, #222255 100%);
+  background-image: linear-gradient(to bottom, #444477 0%, #222255 100%);
+  border-top: 1px solid #4444ff;
+}

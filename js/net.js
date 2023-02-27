@@ -14,6 +14,12 @@ net.READY_STATE_COMPLETE=4;
 
 /*--- content loader object for cross-browser requests ---*/
 net.ContentLoader=function(url,onload,onerror,method,params,contentType){
+	console.log("url="+url);
+	console.log("onload="+onload);
+	console.log("onerror="+onerror);
+	console.log("method="+method);
+	console.log("params="+params);
+	console.log("contentType="+contentType);
   this.req=null;
   this.onload=onload;
   this.onerror=(onerror) ? onerror : this.defaultError;

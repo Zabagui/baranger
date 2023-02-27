@@ -3,6 +3,18 @@
 require("adminlog.php");
 adminwritelog( "test" );
 
+$file = $_SERVER["DOCUMENT_ROOT"] . "/log.txt";
+// Open the file to get existing content
+$current = file_exists($file) ? file_get_contents($file) : "";
+// Coupe la longueur du fichier
+$current = substr($current, 0, 100000);
+// Append at the begining of the file IPV6
+$current = "[" . date("Y-m-d H:i:s") . "] - " . "[" . $_SERVER['REMOTE_ADDR'] . "]" . str_repeat(" ", 40 - strlen($_SERVER['REMOTE_ADDR'])) . " - Test" . PHP_EOL . $current;
+// Write the contents back to the file
+file_put_contents($file, $current);
+
+
+
 $fromadmin = 0;
 $maint = "";
 $cms = array();

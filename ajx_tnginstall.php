@@ -1,4 +1,8 @@
 <?php
+
+require("adminlog.php");
+adminwritelog( "test" );
+
 $fromadmin = 0;
 $maint = "";
 $cms = array();
